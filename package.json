@@ -1,64 +1,28 @@
 {
-  "name": "vuetest",
-  "version": "0.1.0",
-  "private": true,
+  "name": "owlinventory",
+  "version": "1.0.0",
+  "description": "",
+  "typings": "server/index.js",
+  "main": "index.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "nodemon server/index.js"
   },
+  "author": "Caleb Abernathy",
+  "license": "ISC",
   "dependencies": {
-    "@babel/polyfill": "^7.4.4",
     "@hapi/joi": "^15.1.1",
-    "aws-amplify": "^1.1.28",
-    "aws-amplify-vue": "^0.2.11",
-    "axios": "^0.18.1",
-    "bcryptjs": "^2.4.3",
-    "bootstrap": "^4.3.1",
-    "bootstrap-vue": "^2.0.0-rc.19",
-    "core-js": "^3.0.1",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "client-sessions": "^0.8.0",
     "cors": "^2.8.5",
-    "epilogue": "^0.7.1",
-    "es6": "0.0.7",
-    "express": "^4.16.4",
-    "express-session": "^1.16.2",
-    "sequelize": "^5.17.2",
-    "sqlite": "^3.0.3",
-    "vue": "^2.6.10",
-    "vue-cli-plugin-s3-deploy": "^3.0.0",
-    "vue-router": "^3.0.6",
-    "vuex": "^3.1.1"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.7.0",
-    "@vue/cli-plugin-eslint": "^3.7.0",
-    "@vue/cli-service": "^3.7.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.5.21"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "express-session": "^1.16.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^1.6.5",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "sequelize": "^5.16.0",
+    "volleyball": "^1.5.1"
+  }
 }
