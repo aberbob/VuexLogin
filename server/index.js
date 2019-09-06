@@ -16,6 +16,7 @@ const AuthRouter = require('./routes/api/auth/index.js');
 const app = express();
 const volleyball = require('volleyball');
 const session = require('express-session');
+require('./config/passport');
 
 const middlwares = require('./routes/api/auth/middlewares')
 
@@ -53,7 +54,7 @@ app.use(session({
     secure: false,
   }
 }));
-app.use(middlwares.checkTokenSetUser);
+//app.use(middlwares.checkTokenSetUser);
 
 //STATIC ROUTE
 app.use('/', express.static(__dirname + '/public'));

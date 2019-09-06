@@ -5,6 +5,7 @@ const UsersTable = require("../../../models/UsersTable");
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 
 require('dotenv').config();
 
@@ -31,46 +32,70 @@ AuthRouter.get("/", async (req, res) => {
 });
 
 AuthRouter.post("/login", async (req, res) => {
-    const result = Joi.validate(req.body.data, schema);
-    if (result.error === null) {
-        UsersTable
-            .findOne({
-                where: { username: req.body.data.username }
-            })
-            .then(user => {
-                if (user) {
-                    console.log(user)
-                    bcrypt.compare(req.body.data.password, user.password).then((result) => {
-                        if (result) {
-                            const payload = {
-                                id: user.id,
-                                username: user.username
-                            }
-                            // req.session.user = user.id;
-
-                            jwt.sign(payload, "process.env.TOKEN_SECRET", {
-                                expiresIn: '1h'
-                            }, (err, token) => {
-                                if (err) {
-                                    responderror422(res);
-                                } else {
-                                    console.log(token)
-                                    res.json(token)
-                                }
-                            });
-                            console.log(result)
-                        } else {
-                            responderror422(res)
-                        }
-                    });
-                } else {
-                    responderror422(res)
-                }
-            })
-    } else {
-        responderror422(res)
-    }
+    console.log('loginRoute')
+    //console.log(user)
+    passport.authenticate('local', { session: false }, (err, user, info) => {
+        console.log ('after passport')
+        console.log(user)
+        console.log(err)
+        if (err || !user) {
+            return res.status(400).json({
+                message: 'Something is not right',
+                user: user
+            });
+        }
+        req.login(user, { session: false }, (err) => {
+            if (err) {
+                res.send(err);
+            }
+            // generate a signed son web token with the contents of user object and return it in the response
+            const token = jwt.sign(user, 'your_jwt_secret');
+            return res.json({ user, token });
+        });
+    })(req, res);
 });
+
+// AuthRouter.post("/login", async (req, res) => {
+//     const result = Joi.validate(req.body.data, schema);
+//     if (result.error === null) {
+//         UsersTable
+//             .findOne({
+//                 where: { username: req.body.data.username }
+//             })
+//             .then(user => {
+//                 if (user) {
+//                     console.log(user)
+//                     bcrypt.compare(req.body.data.password, user.password).then((result) => {
+//                         if (result) {
+//                             const payload = {
+//                                 id: user.id,
+//                                 username: user.username
+//                             }
+//                             // req.session.user = user.id;
+
+//                             jwt.sign(payload, "process.env.TOKEN_SECRET", {
+//                                 expiresIn: '1h'
+//                             }, (err, token) => {
+//                                 if (err) {
+//                                     responderror422(res);
+//                                 } else {
+//                                     console.log(token)
+//                                     res.json(token)
+//                                 }
+//                             });
+//                             console.log(result)
+//                         } else {
+//                             responderror422(res)
+//                         }
+//                     });
+//                 } else {
+//                     responderror422(res)
+//                 }
+//             })
+//     } else {
+//         responderror422(res)
+//     }
+// });
 
 AuthRouter.post("/signup", async (req, res) => {
     console.log(req.body.data);

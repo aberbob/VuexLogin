@@ -1,40 +1,29 @@
-const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 // Load User model
-const User = require('../models/UsersTable');
+const UserDB = require('../models/UsersTable');
 
-module.exports = function(passport) {
-  passport.use(
-    new LocalStrategy({ usernameField: 'username' }, (email, password, done) => {
-      // Match user
-      User.findOne({
-        username: username
-      }).then(user => {
+//passport.js
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+passport.use(new LocalStrategy({
+  usernameField: 'username',
+  passwordField: 'password'
+},
+  function (username, password, cb) {
+    //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
+    console.log(username)
+    return UserDB
+      .findOne({
+        where: { username: username }
+      })
+      .then(user => {
+        console.log(user)
         if (!user) {
-          return done(null, false, { message: 'That username is not registered' });
+          return cb(null, false, { message: 'Incorrect email or password.' });
         }
-
-        // Match password
-        bcrypt.compare(password, user.password, (err, isMatch) => {
-          if (err) throw err;
-          if (isMatch) {
-            return done(null, user);
-          } else {
-            return done(null, false, { message: 'Password incorrect' });
-          }
-        });
-      });
-    })
-  );
-
-  passport.serializeUser(function(user, done) {
-    done(null, user.id);
-  });
-
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
-    });
-  });
-};
+        return cb(null, user, { message: 'Logged In Successfully' });
+      })
+      .catch(err => cb(err));
+  }
+));
