@@ -5,11 +5,11 @@
     <form @submit.prevent="login">
       Username:
       <br />
-      <input type="username" name="username" v-model="login.username" required />
+      <input type="username" name="username" v-model="loginDetails.username" required />
       <br />
       <br />Password:
       <br />
-      <input type="password" name="password" v-model="login.password" required />
+      <input type="password" name="password" v-model="loginDetails.password" required />
       <br />
       <input type="submit" value="Login" />
     </form>
@@ -93,7 +93,7 @@ export default {
       // let email = this.email
       // let password = this.password
       this.$store
-        .dispatch("login", { data: this.loginDetails })
+        .dispatch("login", this.loginDetails )
         .then(() => this.$router.push("/"))
         .catch(err => console.log(err));
     }

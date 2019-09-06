@@ -15,7 +15,8 @@ passport.use(new LocalStrategy({
     console.log(username)
     return UserDB
       .findOne({
-        where: { username: username }
+        where: { username: username },
+        raw: true
       })
       .then(user => {
         console.log(user)
