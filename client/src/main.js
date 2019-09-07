@@ -15,8 +15,8 @@ import App from './App.vue'
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 Vue.prototype.$apiURL = 'http://sagelysown.owlinventory.com/api/'
-// axios.defaults.baseURL = 'http://sagelysown.owlinventory.com/'
-// axios.defaults.withCredentials = true;
+Axios.defaults.baseURL = 'http://sagelysown.owlinventory.com/'
+Axios.defaults.withCredentials = true;
 Vue.prototype.$http = Axios;
 const token = localStorage.getItem('token')
 if (token) {
