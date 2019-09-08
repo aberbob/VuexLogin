@@ -7,16 +7,16 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     status: '',
-    token: localStorage.getItem('token') || '',
+    token: window.$cookies.get('auth') || '',
     user: {}
   },
   mutations: {
     auth_request(state) {
       state.status = 'loading'
     },
-    auth_success(state, token, user) {
+    auth_success(state, user) {
       state.status = 'success'
-      state.token = token
+      state.token = window.$cookies.get('auth')
       state.user = user
     },
     auth_error(state) {
@@ -31,8 +31,7 @@ const store = new Vuex.Store({
     logout({ commit }) {
       return new Promise((resolve, reject) => {
         commit('logout')
-        localStorage.removeItem('token')
-        delete axios.defaults.headers.common['Authorization']
+        window.$cookies.remove('auth')
         resolve()
       })
     },
@@ -41,16 +40,13 @@ const store = new Vuex.Store({
         commit('auth_request')
         axios({ url: "api/auth/login", data: user, method: 'POST' })
           .then(resp => {
-            const token = resp.data.token
             const user = resp.data.user
-            localStorage.setItem('token', token)
-            axios.defaults.headers.common['Authorization'] = token
-            commit('auth_success', token, user)
+            commit('auth_success', user)
             resolve(resp)
           })
           .catch(err => {
             commit('auth_error')
-            localStorage.removeItem('token')
+            window.$cookies.remove('auth')
             reject(err)
           })
       })

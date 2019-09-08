@@ -51,7 +51,13 @@ AuthRouter.post("/login", async (req, res) => {
             // generate a signed son web token with the contents of user object and return it in the response
             // When giving the JWT library the user data, it needs to be a plain/vanilla javascript object
             const token = jwt.sign(user, 'your_jwt_secret');
-            return res.json({ user, token });
+            res.cookie('auth', token, {
+                maxAge: 1209600000,  // Login expiry time, two weeks in milliseconds
+                // secure: true,  // Only pass cookie over https to prevent interception
+                sameSite: true,
+                httpOnly: false
+            })
+            return res.json({ user });
         });
     })(req, res);
 });
