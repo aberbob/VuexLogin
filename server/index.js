@@ -43,6 +43,7 @@ app.use(bodyParser.json());
 app.use(cors({
   origin: 'http://sagelysown.owlinventory.com'
 }));
+app.use(cookieParser())
 app.use(volleyball);
 app.use(session({
   name: SESS_ID,
