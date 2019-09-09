@@ -4,17 +4,8 @@ import store from './stores/store'
 
 const session = require('express-session')
 
-function checkjwt(to, from, next) {
-    if (req.session.user.id) {
-        next();
-    } else {
-        next('/login');
-    }
-}
-
 Vue.use(Router)
-
-export default new Router({
+let appRouter = new Router({
     mode: 'history',
     routes: [
         {
@@ -23,14 +14,16 @@ export default new Router({
         {
             path: '/about',
             name: 'about',
-            component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
-            beforeEnter: checkjwt
+            component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
         },
         {
             path: '/admin',
             name: 'admin',
             component: () => import(/* webpackChunkName: "about" */ './views/Admin.vue'),
-            beforeEnter: checkjwt
+            meta: {
+              requiresAuth: true,
+              isUser: 'adminUser'
+            }
         },
         {
             path: '/login',
@@ -45,7 +38,10 @@ export default new Router({
         {
             path: '/products',
             name: 'Products',
-            component: () => import(/* webpackChunkName: "about" */ './views/Products.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/Products.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
             path: '/products/NewProduct',
@@ -135,3 +131,25 @@ export default new Router({
         // }
     ]
 })
+appRouter.beforeEach((to, from, next) => {
+    // First check all possible blocks to being able to access the route
+    if (to.matched.some(record => record.meta.requiresAuth)) {  // Route requires logged in users
+        if (!store.getters.isLoggedIn) {
+            next('/login')
+            return
+        }
+    }
+
+    if (to.matched.some(record => record.meta.isUser)) {  // Route requires a specific username
+        let user = store.getters.user
+        if (to.meta.isUser != user.username) {
+            next('/products')
+            return
+        }
+    }
+
+    // If no reason is found to keep the user from the route, then allow them through
+    next()
+})
+
+export default appRouter
