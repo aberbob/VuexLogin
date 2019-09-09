@@ -3,6 +3,7 @@ const apiRouter = express.Router();
 const reset = "yes"
 const Sequelize = require('sequelize');
 const db = require('../config/db');
+const passport = require('passport');
 
 
 //Databases
@@ -27,8 +28,11 @@ const OrgInvoicingTypesTable = require("../models/OrgInvoicingTypesTable");
 const OrgFarmTypesTable = require("../models/OrgFarmTypesTable");
 const OrgAccountTypesTable = require("../models/OrgAccountTypesTable");
 
-apiRouter.get('/createDatabaseTables', (req, res) => {
-  if (reset === "yes") {
+apiRouter.get('/createDatabaseTables', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  if (req.user.username != 'adminUser') {
+    res.sendStatus(403);  // Only allow adminUser to use this endpoint
+  } else if (reset === "yes") {
 
     //Creates and Alters the tables
     productsTable.sync({ alter: true })
@@ -73,9 +77,9 @@ apiRouter.get('/createDatabaseTables', (req, res) => {
     // OrgInvoicingTypesTable.shasMany(InvoiceItemsTable);
     // OrgFarmTypesTable.hasMany(InvoiceItemsTable);
     // OrgAccountTypesTable.hasMany(InvoiceItemsTable);
-  }
 
-  res.sendStatus(200)
+    res.sendStatus(200)
+  }
 });
 
 apiRouter.get('/deleteDefaultData', (req, res) => {

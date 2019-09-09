@@ -6,6 +6,11 @@ const UserDB = require('../models/UsersTable');
 //passport.js
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+
+const passportJWT = require('passport-jwt')
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJWT;
+
 passport.use(new LocalStrategy({
   usernameField: 'username',
   passwordField: 'password'
@@ -28,3 +33,16 @@ passport.use(new LocalStrategy({
       .catch(err => cb(err));
   }
 ));
+
+passport.use(new JWTStrategy({
+    jwtFromRequest: function(req) {
+        let token = null;
+        if (req && req.cookies) {
+            token = req.cookies['auth'];
+        }
+        return token;
+    },
+    secretOrKey: 'your_jwt_secret'
+}, function(jwt_payload, done) {
+    done(null, jwt_payload);  // Giving that there was no error and the payload itself to access user data
+}));

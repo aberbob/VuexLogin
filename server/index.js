@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 const productsRouter = require('./routes/api/productsRouter');
 const usersRouter = require('./routes/api/usersRouter');
 const apiRouter = require('./routes/apiRouter');
@@ -42,6 +43,7 @@ app.use(bodyParser.json());
 app.use(cors({
   origin: 'http://sagelysown.owlinventory.com'
 }));
+app.use(cookieParser())
 app.use(volleyball);
 app.use(session({
   name: SESS_ID,
