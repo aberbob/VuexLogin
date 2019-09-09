@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+const jwt = require('jsonwebtoken');
 
 Vue.use(Vuex)
 
@@ -8,7 +9,7 @@ const store = new Vuex.Store({
   state: {
     status: '',
     token: window.$cookies.get('auth') || '',
-    user: {}
+    user: jwt.decode(window.$cookies.get('auth'))
   },
   mutations: {
     auth_request(state) {
