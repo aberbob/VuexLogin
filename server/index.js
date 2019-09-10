@@ -13,6 +13,12 @@ const WorkOrdersRouter = require('./routes/api/WorkOrdersRouter');
 const WOStatusesRouter = require('./routes/api/WOStatusesRouter');
 const WOPrioritiesRouter = require('./routes/api/WOPrioritiesRouter');
 const WOCategoriesRouter = require('./routes/api/WOCategoriesRouter');
+const OrgAccountTypesRouter = require('./routes/api/OrgAccountTypesRouter');
+const OrgFarmTypesRouter = require('./routes/api/OrgFarmTypesRouter');
+const OrgInvoicingTypesRouter = require('./routes/api/OrgInvoicingTypesRouter');
+const OrgMarketsRouter = require('./routes/api/OrgMarketsRouter');
+const OrgServicePlanTypesRouter = require('./routes/api/OrgServicePlanTypesRouter');
+const OrgST101TypesRouter = require('./routes/api/OrgST101TypesRouter');
 const AuthRouter = require('./routes/api/auth/index.js');
 const app = express();
 const volleyball = require('volleyball');
@@ -77,6 +83,12 @@ app.use('/api/WorkOrders', WorkOrdersRouter);
 app.use('/api/WOStatuses', WOStatusesRouter);
 app.use('/api/WOPriorities', WOPrioritiesRouter);
 app.use('/api/WOCategories', WOCategoriesRouter);
+app.use('/api/OrgAccountTypes', OrgAccountTypesRouter);
+app.use('/api/OrgFarmTypes', OrgFarmTypesRouter);
+app.use('/api/OrgInvoicingTypes', OrgInvoicingTypesRouter);
+app.use('/api/OrgMarkets', OrgMarketsRouter);
+app.use('/api/OrgServicePlanTypes', OrgServicePlanTypesRouter);
+app.use('/api/OrgST101Types', OrgST101TypesRouter);
 
 //Catch ALL
 app.get('/*', (req, res) => {

@@ -71,12 +71,12 @@ apiRouter.get('/createDatabaseTables', passport.authenticate('jwt', { session: f
 
     InvoicesTable.hasMany(InvoiceItemsTable);
 
-    // OrgST101TypesTable.hasMany(InvoiceItemsTable);
-    // OrgServicePlanTypesTable.hasMany(InvoiceItemsTable);
-    // OrgMarketsTable.hasMany(InvoiceItemsTable);
-    // OrgInvoicingTypesTable.shasMany(InvoiceItemsTable);
-    // OrgFarmTypesTable.hasMany(InvoiceItemsTable);
-    // OrgAccountTypesTable.hasMany(InvoiceItemsTable);
+    OrgST101TypesTable.hasMany(CustOrganizationsTable);
+    OrgServicePlanTypesTable.hasMany(CustOrganizationsTable);
+    OrgMarketsTable.hasMany(CustOrganizationsTable);
+    OrgInvoicingTypesTable.hasMany(CustOrganizationsTable);
+    OrgFarmTypesTable.hasMany(CustOrganizationsTable);
+    OrgAccountTypesTable.hasMany(CustOrganizationsTable);
 
     res.sendStatus(200)
   }
