@@ -13,7 +13,6 @@
     <table id="contactsTable" class="table table-bordered table-hover table-sm">
       <thead class="thead-dark">
         <tr>
-          <th>ID</th>
           <th>First Name</th>
           <th>Last Name</th>
           <th>Email</th>
@@ -25,13 +24,12 @@
       </thead>
       <tbody>
         <tr v-for="row in filteredList" v-bind:key="row.id">
-          <td>{{row.id}}</td>
           <td>{{row.fn}}</td>
           <td>{{row.ln}}</td>
           <td>{{row.email}}</td>
           <td>{{row.phonenumber}}</td>
-          <td>{{row.CustOrganizationId}}</td>
-          <td>{{row.CustContactStatusId}}</td>
+          <td>{{row.COName}}</td>
+          <td>{{row.CSName}}</td>
           <td>
             <a v-bind:href="'contacts/'+ row.id">Edit</a>
           </td>
@@ -43,12 +41,12 @@
 
 <script>
 import axios from "axios";
-import SubHeaderCustomers from "../components/layout/SubHeaderCustomers.vue";
+//import SubHeaderCustomers from "../components/layout/SubHeaderCustomers.vue";
 
 export default {
   name: "Contacts",
   components: {
-    SubHeaderCustomers
+    //SubHeaderCustomers
   },
   methods: {},
   data() {
@@ -60,7 +58,7 @@ export default {
   },
   created() {
     axios
-      .get(this.$apiURL + "contacts")
+      .get(this.$apiURL + "contacts/alldetails")
       .then(res => (this.AllContacts = res.data));
     axios
       .get(this.$apiURL + "custcontactstatuses")

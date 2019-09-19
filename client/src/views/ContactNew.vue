@@ -5,19 +5,23 @@
         <h2 id="EditItemID">Add Contact</h2>
       </legend>
       <form method="post" @submit.prevent="postNow">
-        <br>First Name:
-        <input type="text" name="description" v-model="OneCustomer.fn">
-        <br>Last Name:
-        <input type="text" name="group" v-model="OneCustomer.ln">
-        <br>Email:
-        <input type="text" name="description" v-model="OneCustomer.email">
-        <br>Phone Number:
-        <input type="text" name="category" v-model="OneCustomer.phonenumber">
-        <br>Organization:
+        <br />First Name:
+        <input type="text" name="description" v-model="OneCustomer.fn" />
+        <br />Last Name:
+        <input type="text" name="group" v-model="OneCustomer.ln" />
+        <br />Email:
+        <input type="text" name="description" v-model="OneCustomer.email" />
+        <br />Phone Number:
+        <input type="text" name="category" v-model="OneCustomer.phonenumber" />
+        <br />Organization:
         <select v-model="OneCustomer.CustOrganizationId">
-          <option v-bind:key="org.id" v-for="org in AllOrgs" :value="org.id">{{org.name}}</option>
+          <option
+            v-bind:key="org.CustOrganizationsId"
+            v-for="org in AllOrgs"
+            :value="org.CustOrganizationsId"
+          >{{org.CustOrganizationsname}}</option>
         </select>
-        <br>Status:
+        <br />Status:
         <select v-model="OneCustomer.CustContactStatusId">
           <option
             v-bind:key="status.id"
@@ -25,7 +29,7 @@
             :value="status.id"
           >{{status.name}}</option>
         </select>
-        <br>
+        <br />
         <button type="submit" name="button">Submit</button>
       </form>
       {{OneCustomer}}
@@ -35,12 +39,12 @@
 
 <script>
 import axios from "axios";
-import SubHeaderCustomers from "../components/layout/SubHeaderCustomers.vue";
+//import SubHeaderCustomers from "../components/layout/SubHeaderCustomers.vue";
 
-export default { 
+export default {
   name: "NewContact",
   components: {
-    SubHeaderCustomers
+    //SubHeaderCustomers
   },
   data() {
     return {
@@ -52,11 +56,19 @@ export default {
     postNow: async function() {
       await axios.post(this.$apiURL + "contacts/add", {
         data: this.OneCustomer
-      });
-      this.$router.push("/Customers/Contacts");
-      Object.keys(this.OneCustomer).forEach(function(key, index) {
-        self.data.form[key] = "";
-      });
+      })
+      .then(
+          setTimeout(
+            function() {
+              this.$router.push("/Customers/Contacts");
+            }.bind(this),
+            1000
+          )
+        );
+      // this.$router.push("/Customers/Contacts");
+      // Object.keys(this.OneCustomer).forEach(function(key, index) {
+      //   self.data.form[key] = "";
+      // });
       //.then(res =>{
       //  console.log(re.data);
       //});

@@ -35,9 +35,10 @@ export default {
   margin: 0;
   padding: 0;
 }
-body {
+.body {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.4;
+  padding-left: 10px;
 }
 .btn {
   display: inline-block;

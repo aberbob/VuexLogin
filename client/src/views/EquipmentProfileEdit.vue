@@ -6,40 +6,81 @@
       </legend>
       <form method="post" @submit.prevent="postNow">
         Name:
-        <br>
-        <input type="text" name="name" v-model="OneItem.name">
-        <br>Organization:
+        <br />
+        <input type="text" name="name" v-model="OneItem.name" />
+        <br />Organization:
         <select v-model="OneItem.CustOrganizationId">
           <option v-bind:key="org.id" v-for="org in AllOrgs" :value="org.id">{{org.name}}</option>
         </select>
-        <br>Make:
-        <br>
-        <input type="text" name="make" v-model="OneItem.make">
-        <br>Model:
-        <br>
-        <input type="text" name="model" v-model="OneItem.model">
-        <br>Row QTY:
-        <br>
-        <input type="text" name="rowqty" v-model="OneItem.rowqty">
-        <br>DownForce:
-        <br>
-        <input type="text" name="downforce" v-model="OneItem.downforce">
-        <br>Monitor:
-        <br>
-        <input type="text" name="monitor" v-model="OneItem.monitor">
-        <br>DriveType:
-        <br>
-        <input type="text" name="drivetype" v-model="OneItem.drivetype">
-        <br>Meter:
-        <br>
-        <input type="text" name="meter" v-model="OneItem.meter">
-        <br>Harnessing:
-        <br>
-        <input type="text" name="harnessing" v-model="OneItem.harnessing">
-        <br>LiquidInsecticide:
-        <br>
-        <input type="text" name="liquidinsecticide" v-model="OneItem.liquidinsecticide">
-        <br>
+        <br />Make:
+        <br />
+        <input type="text" name="make" v-model="OneItem.make" />
+        <br />Model:
+        <br />
+        <input type="text" name="model" v-model="OneItem.model" />
+        <br />Row QTY:
+        <br />
+        <input type="text" name="rowqty" v-model="OneItem.rowqty" />
+        <br />Depth Adjust:
+        <br />
+        <select v-model="OneItem.PlanterDepthAdjustId">
+          <option v-bind:key="org.id" v-for="org in PlanterDepthAdjust" :value="org.id">{{org.name}}</option>
+        </select>
+        <br />DownForce:
+        <br />
+        <select v-model="OneItem.PlanterDownForceId">
+          <option v-bind:key="org.id" v-for="org in PlanterDownForce" :value="org.id">{{org.name}}</option>
+        </select>
+        <br />Drive Type:
+        <br />
+        <select v-model="OneItem.PlanterDriveId">
+          <option v-bind:key="org.id" v-for="org in PlanterDrive" :value="org.id">{{org.name}}</option>
+        </select>
+        <br />Insecticide:
+        <br />
+        <select v-model="OneItem.PlanterInsecticideId">
+          <option v-bind:key="org.id" v-for="org in PlanterInsecticide" :value="org.id">{{org.name}}</option>
+        </select>
+        <br />Liquid:
+        <br />
+        <select v-model="OneItem.PlanterLiquidId">
+          <option v-bind:key="org.id" v-for="org in PlanterLiquid" :value="org.id">{{org.name}}</option>
+        </select>
+        <br />Meter:
+        <br />
+        <select v-model="OneItem.PlanterMeterId">
+          <option v-bind:key="org.id" v-for="org in PlanterMeter" :value="org.id">{{org.name}}</option>
+        </select>
+        <br />Monitor:
+        <br />
+        <select v-model="OneItem.PlanterMonitorId">
+          <option v-bind:key="org.id" v-for="org in PlanterMonitor" :value="org.id">{{org.name}}</option>
+        </select>
+        <br />Seed Firmer:
+        <br />
+        <select v-model="OneItem.PlanterSeedFirmerId">
+          <option v-bind:key="org.id" v-for="org in PlanterSeedFirmers" :value="org.id">{{org.name}}</option>
+        </select>
+        <br />Seed Tube:
+        <br />
+        <select v-model="OneItem.PlanterSeedTubeId">
+          <option v-bind:key="org.id" v-for="org in PlanterSeedTubes" :value="org.id">{{org.name}}</option>
+        </select>
+        <br />Closing Wheel:
+        <br />
+        <select v-model="OneItem.PlanterClosingWheelId">
+          <option
+            v-bind:key="org.id"
+            v-for="org in PlanterClosingWheels"
+            :value="org.id"
+          >{{org.name}}</option>
+        </select>
+        <br />Harnessing:
+        <br />
+        <select v-model="OneItem.PlanterHarnessingId">
+          <option v-bind:key="org.id" v-for="org in PlanterHarnessing" :value="org.id">{{org.name}}</option>
+        </select>
+        <br />
         <button type="submit" name="button">Submit</button>
         <button type="button" name="deletebutton" v-on:click="deleteitem">Delete</button>
       </form>
@@ -50,17 +91,28 @@
 <script>
 import axios from "axios";
 import Router from "vue-router";
-import SubHeaderProducts from "../components/layout/SubHeaderProducts.vue";
+//import SubHeaderProducts from "../components/layout/SubHeaderProducts.vue";
 
 export default {
   name: "Editproduct",
   components: {
-    SubHeaderProducts
+    //SubHeaderProducts
   },
   data() {
     return {
+      PlanterClosingWheels: [],
+      PlanterDepthAdjust: [],
+      PlanterDownForce: [],
+      PlanterDrive: [],
+      PlanterHarnessing: [],
+      PlanterInsecticide: [],
+      PlanterLiquid: [],
+      PlanterMeter: [],
+      PlanterMonitor: [],
+      PlanterSeedFirmers: [],
+      PlanterSeedTubes: [],
+      AllOrgs: [],
       OneItem: [],
-      AllOrgs: []
     };
   },
   created() {
@@ -70,6 +122,39 @@ export default {
     axios
       .get(this.$apiURL + "organizations")
       .then(res => (this.AllOrgs = res.data));
+    axios
+      .get(this.$apiURL + "PlanterClosingWheels")
+      .then(res => (this.PlanterClosingWheels = res.data));
+    axios
+      .get(this.$apiURL + "PlanterDepthAdjust")
+      .then(res => (this.PlanterDepthAdjust = res.data));
+    axios
+      .get(this.$apiURL + "PlanterDownForce")
+      .then(res => (this.PlanterDownForce = res.data));
+    axios
+      .get(this.$apiURL + "PlanterDrive")
+      .then(res => (this.PlanterDrive = res.data));
+    axios
+      .get(this.$apiURL + "PlanterHarnessing")
+      .then(res => (this.PlanterHarnessing = res.data));
+    axios
+      .get(this.$apiURL + "PlanterInsecticide")
+      .then(res => (this.PlanterInsecticide = res.data));
+    axios
+      .get(this.$apiURL + "PlanterLiquid")
+      .then(res => (this.PlanterLiquid = res.data));
+    axios
+      .get(this.$apiURL + "PlanterMeter")
+      .then(res => (this.PlanterMeter = res.data));
+    axios
+      .get(this.$apiURL + "PlanterMonitor")
+      .then(res => (this.PlanterMonitor = res.data));
+    axios
+      .get(this.$apiURL + "PlanterSeedFirmers")
+      .then(res => (this.PlanterSeedFirmers = res.data));
+    axios
+      .get(this.$apiURL + "PlanterSeedTubes")
+      .then(res => (this.PlanterSeedTubes = res.data));
   },
   methods: {
     deleteitem: function() {
@@ -87,7 +172,15 @@ export default {
             data: this.OneItem
           }
         )
-        .then(this.$router.push("/Customers/EquipmentProfiles"))
+        //.then(this.$router.push("/Customers/EquipmentProfiles"))
+        .then(
+          setTimeout(
+            function() {
+              this.$router.push("/Customers/EquipmentProfiles");
+            }.bind(this),
+            1000
+          )
+        )
         .catch(function(error) {
           console.log(error);
         });

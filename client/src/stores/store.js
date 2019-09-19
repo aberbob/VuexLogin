@@ -7,11 +7,15 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    cart:[],
     status: '',
     token: window.$cookies.get('auth') || '',
     user: jwt.decode(window.$cookies.get('auth'))
   },
   mutations: {
+    addToCart(state, item){
+        state.cart.push(item);
+    },
     auth_request(state) {
       state.status = 'loading'
     },

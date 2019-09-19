@@ -36,8 +36,8 @@
 
 <script>
 import axios from "axios";
-import Header from "../components/layout/Header.vue";
-import SubHeaderAdmin from "../components/layout/SubHeaderAdmin.vue";
+//import Header from "../components/layout/Header.vue";
+//import SubHeaderAdmin from "../components/layout/SubHeaderAdmin.vue";
 import Joi from "joi";
 
 const schema = Joi.object().keys({
@@ -53,8 +53,8 @@ const schema = Joi.object().keys({
 export default {
   name: "NewItem",
   components: {
-    Header,
-    SubHeaderAdmin
+    //Header,
+    //SubHeaderAdmin
   },
   // watch: {
   //   NewUser: {
@@ -88,11 +88,23 @@ export default {
           .post(this.$apiURL + "auth/signup", {
             data: this.NewUser
           })
-          .then(response => {
-            this.signingup = false;
-            this.$router.push("/login");
-            console.log(response.statusText);
-          })
+          .then(
+            setTimeout(
+              function() {
+                response => {
+                  this.signingup = false;
+                  //this.$router.push("/login");
+                  console.log(response.statusText);
+                };
+              }.bind(this),
+              1000
+            )
+          )
+          // .then(response => {
+          //   this.signingup = false;
+          //   //this.$router.push("/login");
+          //   console.log(response.statusText);
+          // })
           .catch(error => {
             this.signingup = false;
             this.errormessage = error.response.statusText;

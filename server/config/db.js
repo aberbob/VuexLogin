@@ -1,12 +1,12 @@
 const Sequelize = require('sequelize');
 
-module.exports =  new Sequelize("oidev", "oidev", "Tf2sk~sK7!8A", {
+module.exports = new Sequelize("oidev", "oidev", "Tf2sk~sK7!8A", {
   host: 'den1.mysql2.gear.host',
   dialect: "mysql",
-  operatorsAliases:false,
+  operatorsAliases: false,
 
   pool: {
-    max: 100,
+    max: 200,
     min: 0,
     acquire: 30000,
     idle: 10000

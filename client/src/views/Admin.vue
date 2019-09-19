@@ -7,12 +7,12 @@
 <script>
 import router from "../router";
 import axios from "axios";
-import SubHeaderAdmin from "../components/layout/SubHeaderAdmin.vue";
+//import SubHeaderAdmin from "../components/layout/SubHeaderAdmin.vue";
 
 export default {
   name: "Contacts",
   components: {
-    SubHeaderAdmin
+    //SubHeaderAdmin
   }
 };
 </script>

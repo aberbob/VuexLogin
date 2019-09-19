@@ -8,7 +8,6 @@
     <table class="table table-bordered table-hover table-sm">
       <thead class="thead-dark">
         <tr>
-          <th>ID</th>
           <th>Name</th>
           <th>Street</th>
           <th>Street2</th>
@@ -22,8 +21,7 @@
       </thead>
       <tbody>
         <tr v-for="row in filteredList" v-bind:key="row.id">
-          <td>{{row.id}}</td>
-          <td>{{row.name}}</td>
+          <td>{{row.CustOrganizationsname}}</td>
           <td>{{row.street}}</td>
           <td>{{row.street2}}</td>
           <td>{{row.city}}</td>
@@ -32,7 +30,7 @@
           <td>{{row.country}}</td>
           <td>{{row.phone}}</td>
           <td>
-            <a v-bind:href="'organizations/' + row.id">Edit</a>
+            <a v-bind:href="'organizations/' + row.CustOrganizationsId">Edit</a>
           </td>
         </tr>
       </tbody>
@@ -42,12 +40,12 @@
 
 <script>
 import axios from "axios";
-import SubHeaderCustomers from "../components/layout/SubHeaderCustomers.vue";
+//import SubHeaderCustomers from "../components/layout/SubHeaderCustomers.vue";
 
 export default {
   name: "Organizations",
   components: {
-    SubHeaderCustomers
+    //SubHeaderCustomers
   },
   data() {
     return {
@@ -68,7 +66,7 @@ export default {
     },
     filteredList() {
       return this.AllOrganizations.filter(item => {
-        return item.name.toLowerCase().match(this.search.toLowerCase());
+        return item.CustOrganizationsname.toLowerCase().match(this.search.toLowerCase());
       });
     }
   }

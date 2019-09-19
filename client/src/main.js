@@ -20,6 +20,7 @@ Vue.prototype.$apiURL = 'http://sagelysown.owlinventory.com/api/'
 Axios.defaults.baseURL = 'http://sagelysown.owlinventory.com/'
 Axios.defaults.withCredentials = true;
 Vue.prototype.$http = Axios;
+Vue.config.devtools = true
 
 
 new Vue({

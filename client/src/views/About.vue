@@ -2,14 +2,14 @@
   <div class="about">
     <h1>About</h1>
     <p>This is and awesome App</p>
-    <p>elcome {{user.username}}</p>
+    <p>welcome {{user.username}}</p>
   </div>
 </template>
 
 <script>
 import router from "../router";
 import axios from "axios";
-import SubHeaderAdmin from "../components/layout/SubHeaderAdmin.vue";
+//import SubHeaderAdmin from "../components/layout/SubHeaderAdmin.vue";
 
 export default {
   data: () => ({
@@ -35,7 +35,7 @@ export default {
   },
   name: "Contacts",
   components: {
-    SubHeaderAdmin
+    //SubHeaderAdmin
   }
 };
 </script>

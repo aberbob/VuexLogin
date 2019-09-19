@@ -1,146 +1,178 @@
 <template>
-  <b-container fluid id="TableHeader">
-    <!-- User Interface controls -->
-    <b-row>
-      <b-col md="6" class="my-1">
-        <!-- <router-link class="mr-1" size="sm" to="/NewWorkOrder" tag="button">NewWorkOrder</router-link>
-        <b-button class="mr-1" size="sm">New</b-button> -->
-        <router-link to="/NewWorkOrder">
-          <b-button class="mr-1" size="sm">New</b-button>
-        </router-link>
-      </b-col>
-      <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="" class="mb-0">
-          <b-input-group>
-            <b-form-input v-model="filter" placeholder="Search..."></b-form-input>
-            <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
-            </b-input-group-append>
-          </b-input-group>
-        </b-form-group>
-      </b-col>
-      <b-col md="6" class="my-1"></b-col>
-    </b-row>
+  <div>
+    <b-container fluid id="TableHeader">
+      <!-- User Interface controls -->
+      <b-row>
+        <b-col md="6" class="my-1">
+          <!-- <router-link class="mr-1" size="sm" to="/NewWorkOrder" tag="button">NewWorkOrder</router-link>
+          <b-button class="mr-1" size="sm">New</b-button>-->
+          <router-link to="/NewWorkOrder">
+            <b-button class="mr-1" size="sm">New</b-button>
+          </router-link>
+        </b-col>
+        <b-col md="6" class="my-1">
+          <b-form-group label-cols-sm="3" label class="mb-0">
+            <b-input-group>
+              <b-form-input v-model="filter" placeholder="Search..."></b-form-input>
+              <b-input-group-append>
+                <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+              </b-input-group-append>
+            </b-input-group>
+          </b-form-group>
+        </b-col>
+        <b-col md="6" class="my-1"></b-col>
+      </b-row>
 
-    <!-- Main table element -->
-    <b-table
-      id="Table"
-      show-empty
-      stacked="md"
-      :items="AllItems"
-      :fields="fields"
-      :current-page="currentPage"
-      :per-page="perPage"
-      :filter="filter"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      :sort-direction="sortDirection"
-      @filtered="onFiltered"
-    >
-      <template slot="name" slot-scope="row">{{ row.item.id }}</template>
+      <!-- Main table element -->
+      <b-table
+        id="Table"
+        show-empty
+        stacked="md"
+        :items="AllItems"
+        :fields="fields"
+        :current-page="currentPage"
+        :per-page="perPage"
+        :filter="filter"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        :sort-direction="sortDirection"
+        @filtered="onFiltered"
+      >
+        <template slot="name" slot-scope="row">{{ row.item.WorkOrderId }}</template>
 
-      <template slot="isActive" slot-scope="row">{{ row.item.id }}</template>
+        <template slot="isActive" slot-scope="row">{{ row.item.WorkOrderId }}</template>
 
-      <template slot="actions" slot-scope="row">
-        <b-button size="sm" @click="info(row.item, row.item.id, $event.target)" class="mr-1">Edit</b-button>
-        <b-button
-          size="sm"
-          @click="row.toggleDetails"
-        >{{ row.detailsShowing ? 'Hide' : 'Show' }} Details</b-button>
-      </template>
+        <template slot="actions" slot-scope="row">
+          <b-button
+            size="sm"
+            @click="info(row.item, row.item.WorkOrderId, $event.target)"
+            class="mr-1"
+          >Edit</b-button>
+          <b-button
+            size="sm"
+            @click="row.toggleDetails"
+          >{{ row.detailsShowing ? 'Hide' : 'Show' }} Details</b-button>
+        </template>
 
-      <template slot="row-details" slot-scope="row">
-        <b-card>
-          <ul>
-            <h5>Notes:</h5>
-            <h6>{{row.item.notes}}</h6>
-          </ul>
-        </b-card>
-      </template>
-    </b-table>
+        <template slot="row-details" slot-scope="row">
+          <b-card>
+            <ul>
+              <h5>Notes:</h5>
+              <h6>{{row.item.notes}}</h6>
+            </ul>
+          </b-card>
+        </template>
+      </b-table>
 
-    <b-row>
-      <b-col md="6" class="my-1">
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="totalRows"
-          :per-page="perPage"
-          class="my-0"
-        ></b-pagination>
-      </b-col>
-    </b-row>
-
+      <b-row>
+        <b-col md="6" class="my-1">
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            class="my-0"
+          ></b-pagination>
+        </b-col>
+      </b-row>
+    </b-container>
     <!-- Edit modal -->
-    <b-modal :id="infoModal.id" :title="infoModal.title" @hide="resetInfoModal" @ok="postNow">
-      <fieldset>
-        <form method="post" @submit.prevent="postNow">
-          Description:
-          <br />
-          <input type="text" name="partnumber" v-model="infoModal.content.description" />
-          <br />Type:
-          <br />
-          <input type="text" name="description" v-model="infoModal.content.type" />
-          <br />Notes:
-          <br />
-          <b-form-textarea
-            id="textarea"
-            v-model="infoModal.content.notes"
-            placeholder="..."
-            rows="3"
-            max-rows="3"
-          ></b-form-textarea>
-          <input type="text" name="group" v-model="infoModal.content.notes" />
-          <br />EquipmentProfileId:
-          <select v-model="infoModal.content.EquipmentProfileId">
-            <option
-              v-bind:key="status.id"
-              v-for="status in EquipmentProfiles"
-              :value="status.id"
-            >{{status.name}}</option>
-          </select>
-          <br />Category:
-          <select v-model="infoModal.content.WOCategoryId">
-            <option
-              v-bind:key="status.id"
-              v-for="status in WOCategories"
-              :value="status.id"
-            >{{status.name}}</option>
-          </select>
-          <br />Status:
-          <select v-model="infoModal.content.WOStatusId">
-            <option
-              v-bind:key="status.id"
-              v-for="status in WOStatuses"
-              :value="status.id"
-            >{{status.name}}</option>
-          </select>
-          <br />Organization:
-          <select v-model="infoModal.content.CustOrganizationId">
-            <option v-bind:key="org.id" v-for="org in AllOrgs" :value="org.id">{{org.name}}</option>
-          </select>
-          <br />Tech:
-          <br />
-          <input type="text" name="listprice" v-model="infoModal.content.UserId" />
-          <br />Prioirty:
-          <select v-model="infoModal.content.WOPrioirtyId">
-            <option v-bind:key="org.id" v-for="org in WOPriorities" :value="org.id">{{org.name}}</option>
-          </select>
-        </form>
-      </fieldset>
-      <div slot="modal-footer" class="modal-footer">
-        <button
-          type="submit"
-          class="btn btn-success"
-          @click="postNow(); closeModal($event.target);"
-        >Save</button>
-        <button
-          type="button"
-          class="btn btn-default"
-          @click="resetInfoModal(); closeModal($event.target);"
-        >Cancel</button>
-      </div>
-    </b-modal>
-  </b-container>
+    <b-container fluid>
+      <b-modal
+        size="lg"
+        :id="infoModal.id"
+        :title="infoModal.title"
+        @hide="resetInfoModal"
+        @ok="postNow"
+      >
+        <b-row>
+          <b-col>
+            Prioirty:
+            <select v-model="infoModal.content.WOPrioirtyId">
+              <option
+                v-bind:key="org.id"
+                v-for="org in WOPriorities"
+                :value="org.id"
+              >{{org.WOPrioritiesname}}</option>
+            </select>
+          </b-col>
+          <b-col>
+            Description:
+            <input
+              type="text"
+              name="partnumber"
+              v-model="infoModal.content.description"
+            />
+          </b-col>
+          <b-col>
+            Status:
+            <select v-model="infoModal.content.WOStatusId">
+              <option
+                v-bind:key="status.id"
+                v-for="status in WOStatuses"
+                :value="status.id"
+              >{{status.WOStatusesname}}</option>
+            </select>
+          </b-col>
+          <b-col>
+            Category:
+            <select v-model="infoModal.content.WOCategoryId">
+              <option
+                v-bind:key="status.id"
+                v-for="status in WOCategories"
+                :value="status.id"
+              >{{status.WOCategoriesname}}</option>
+            </select>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col cols="4">
+            <fieldset>
+              <form method="post" @submit.prevent="postNow">
+                <br />EquipmentProfileId:
+                <select v-model="infoModal.content.EquipmentProfileId">
+                  <option
+                    v-bind:key="status.id"
+                    v-for="status in EquipmentProfiles"
+                    :value="status.id"
+                  >{{status.name}}</option>
+                </select>
+                <br />
+                <br />Organization:
+                <select v-model="infoModal.content.CustOrganizationId">
+                  <option
+                    v-bind:key="org.CustOrganizationsId"
+                    v-for="org in AllOrgs"
+                    :value="org.CustOrganizationsId"
+                  >{{org.CustOrganizationsname}}</option>
+                </select>
+                <br />Tech:
+                <br />
+                <input type="text" name="listprice" v-model="infoModal.content.UserId" />
+              </form>
+            </fieldset>
+          </b-col>
+          <b-col cols="8">
+            Notes:
+            <br />
+            <input type="text" name="group" v-model="infoModal.content.notes" />
+          </b-col>
+        </b-row>
+
+        <div slot="modal-footer" class="modal-footer">
+          <button
+            type="submit"
+            class="btn btn-success"
+            @click="postNow(); closeModal($event.target);"
+          >Save</button>
+          <button
+            type="button"
+            class="btn btn-default"
+            @click="resetInfoModal(); closeModal($event.target);"
+          >Cancel</button>
+        </div>
+      </b-modal>
+    </b-container>
+  </div>
 </template>
 
 <script>
@@ -155,17 +187,23 @@ export default {
   data() {
     return {
       fields: [
-        { key: "id", label: "ID", sortable: true, sortDirection: "desc" },
+        {
+          key: "WorkOrderId",
+          label: "ID",
+          sortable: true,
+          sortDirection: "desc"
+        },
         {
           key: "description",
           label: "Description",
           sortable: true,
           class: "text-center"
         },
-        { key: "type", label: "Type" },
+        { key: "WOCategoriesname", label: "Category" },
         { key: "CustContactId", label: "CustContactId" },
-        { key: "CustOrganizationId", label: "Organization" },
-        { key: "WOPrioirtyId", label: "Prioirty" },
+        { key: "CustOrganizationsname", label: "Organization" },
+        { key: "WOPrioritiesname", label: "Prioirty" },
+        { key: "WOStatusesname", label: "Status" },
         { key: "actions", label: "Actions" }
       ],
       AllItems: [],
@@ -213,19 +251,24 @@ export default {
       .get(this.$apiURL + "EquipmentProfiles")
       .then(res => (this.EquipmentProfiles = res.data));
     axios
-      .get(this.$apiURL + "workorders/")
+      .get(this.$apiURL + "workorders/WODetailJoin")
       .then(res => (this.AllItems = res.data));
     //.catch(err => console.log(err));
   },
   methods: {
     deleteitem: function() {
-      axios.delete(this.$apiURL + "workorders/" + this.infoModal.content.id);
+      axios.delete(
+        this.$apiURL + "workorders/" + this.infoModal.content.WorkOrderId
+      );
       this.$router.push("/workorders");
     },
     postNow: function() {
       axios
         .post(
-          this.$apiURL + "workorders/" + this.infoModal.content.id + "/update",
+          this.$apiURL +
+            "workorders/" +
+            this.infoModal.content.WorkOrderId +
+            "/update",
           {
             data: this.infoModal.content
           }

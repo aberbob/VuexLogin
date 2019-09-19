@@ -17,6 +17,22 @@ let appRouter = new Router({
             component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
         },
         {
+            path: '/PartsAvailability/:id',
+            name: 'PartsAvailability',
+            component: () => import(/* webpackChunkName: "about" */ './views/PartsAvailability.vue'),
+            meta: {
+              noAuth: true,
+            }
+        },
+        {
+            path: '/LocationInventory/:id',
+            name: 'LocationInventory',
+            component: () => import(/* webpackChunkName: "about" */ './views/LocationInventory.vue'),
+            meta: {
+              noAuth: true,
+            }
+        },
+        {
             path: '/admin',
             name: 'admin',
             component: () => import(/* webpackChunkName: "about" */ './views/Admin.vue'),
@@ -28,95 +44,167 @@ let appRouter = new Router({
         {
             path: '/login',
             name: 'Login',
-            component: () => import(/* webpackChunkName: "about" */ './views/Login.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/Login.vue'),
+            meta: {
+                noAuth: true,
+              }
         },
         {
             path: '/adduser',
             name: 'adduser',
-            component: () => import(/* webpackChunkName: "about" */ './views/UserAdd.vue')
-        },
-        {
-            path: '/products',
-            name: 'Products',
-            component: () => import(/* webpackChunkName: "about" */ './views/Products.vue'),
+            component: () => import(/* webpackChunkName: "about" */ './views/UserAdd.vue'),
             meta: {
               requiresAuth: true
             }
         },
         {
-            path: '/products/NewProduct',
-            name: 'NewProduct',
-            component: () => import(/* webpackChunkName: "about" */ './views/ProductNew.vue')
+            path: '/parts',
+            name: 'parts',
+            component: () => import(/* webpackChunkName: "about" */ './views/Parts.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
-            path: '/products/:id',
-            name: 'EditProduct',
-            component: () => import(/* webpackChunkName: "about" */ './views/ProductEdit.vue')
+            path: '/parts/NewPart',
+            name: 'NewPart',
+            component: () => import(/* webpackChunkName: "about" */ './views/PartNew.vue'),
+            meta: {
+              requiresAuth: true
+            }
+        },
+        {
+            path: '/Parts/:id',
+            name: 'EditPart',
+            component: () => import(/* webpackChunkName: "about" */ './views/PartEdit.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
             path: '/Customers',
             name: 'Customers',
-            component: () => import(/* webpackChunkName: "about" */ './views/Customers.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/Customers.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
             path: '/Customers/Organizations',
             name: 'Organizations',
-            component: () => import(/* webpackChunkName: "about" */ './views/Organizations.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/Organizations.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
             path: '/Customers/NewOrganization',
             name: 'NewOrganization',
-            component: () => import(/* webpackChunkName: "about" */ './views/OrganizationNew.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/OrganizationNew.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
             path: '/Customers/Organizations/:id',
             name: 'EditOrganization',
-            component: () => import(/* webpackChunkName: "about" */ './views/OrganizationEdit.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/OrganizationEdit.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
-        // {
-        //     path: '/Customers/ContactStatuses',
-        //     name: 'ContactStatuses',
-        //     component: () => import(/* webpackChunkName: "about" */ './views/ContactStatuses.vue')
-        // },
+        {
+            path: '/Cart',
+            name: 'Cart',
+            component: () => import(/* webpackChunkName: "about" */ './views/Cart.vue')
+        },
         {
             path: '/Customers/Contacts',
             name: 'Contacts',
-            component: () => import(/* webpackChunkName: "about" */ './views/Contacts.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/Contacts.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
             path: '/Customers/NewContact',
             name: 'NewContact',
-            component: () => import(/* webpackChunkName: "about" */ './views/ContactNew.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/ContactNew.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
             path: '/Customers/Contacts/:id',
             name: 'EditContacts',
-            component: () => import(/* webpackChunkName: "about" */ './views/ContactEdit.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/ContactEdit.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
             path: '/Customers/EquipmentProfiles',
             name: 'EquipmentProfiles',
-            component: () => import(/* webpackChunkName: "about" */ './views/EquipmentProfiles.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/EquipmentProfiles.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
             path: '/Customers/NewEquipmentProfile',
             name: 'NewEquipmentProfile',
-            component: () => import(/* webpackChunkName: "about" */ './views/EquipmentProfileNew.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/EquipmentProfileNew.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
             path: '/Customers/EquipmentProfiles/:id',
             name: 'EditEquipmentProfile',
-            component: () => import(/* webpackChunkName: "about" */ './views/EquipmentProfileEdit.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/EquipmentProfileEdit.vue'),
+            meta: {
+              requiresAuth: true
+            }
+        },
+        {
+            path: '/InventoryLocations/:id',
+            name: 'InventoryLocationsEdit',
+            component: () => import(/* webpackChunkName: "about" */ './views/InventoryLocationEdit.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
             path: '/WorkOrders',
             name: 'WorkOrders',
-            component: () => import(/* webpackChunkName: "about" */ './views/WorkOrders.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/WorkOrders.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         {
             path: '/NewWorkOrder',
             name: 'NewWorkOrder',
-            component: () => import(/* webpackChunkName: "about" */ './views/WorkOrderNew.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/WorkOrderNew.vue'),
+            meta: {
+              requiresAuth: true
+            }
+        },
+        {
+            path: '/InventoryLocations',
+            name: 'InventoryLocations',
+            component: () => import(/* webpackChunkName: "about" */ './views/InventoryLocations.vue'),
+            meta: {
+              requiresAuth: true
+            }
+        },
+        {
+            path: '/NewInventoryLocation',
+            name: 'NewInventoryLocation',
+            component: () => import(/* webpackChunkName: "about" */ './views/InventoryLocationNew.vue'),
+            meta: {
+              requiresAuth: true
+            }
         },
         // {
         //     path: '/WorkOrder/:id',
@@ -140,10 +228,17 @@ appRouter.beforeEach((to, from, next) => {
         }
     }
 
+    if (to.matched.some(record => record.meta.noAuth)) {  // Route requires unlogged in users
+        if (store.getters.isLoggedIn) {
+            next('/WorkOrders')
+            return
+        }
+    }
+
     if (to.matched.some(record => record.meta.isUser)) {  // Route requires a specific username
         let user = store.getters.user
         if (to.meta.isUser != user.username) {
-            next('/products')
+            next('/parts')
             return
         }
     }

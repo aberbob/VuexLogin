@@ -1,6 +1,6 @@
 const express = require("express");
 const usersRouter = express.Router();
-const productsTable = require("../../models/ProductsTable");
+const PartsTable = require("../../models/inventory/PartsTable");
 const UsersTable = require("../../models/UsersTable");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -10,7 +10,7 @@ const passport = require('passport');
 
 // GET
 usersRouter.get("/login", async (req, res) => {
-  productsTable
+  PartsTable
     .findAll()
     .then(products => {
       console.log(products);

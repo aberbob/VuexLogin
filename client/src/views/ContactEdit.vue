@@ -6,22 +6,26 @@
       </legend>
       <form method="post" @submit.prevent="postNow">
         First Name:
-        <br>
-        <input type="text" name="partnumber" v-model="OneItem.fn" required>
-        <br>Last Name:
-        <br>
-        <input type="text" name="description" v-model="OneItem.ln" required>
-        <br>Email:
-        <br>
-        <input type="text" name="description" v-model="OneItem.email" required>
-        <br>Phone Number:
-        <br>
-        <input type="text" name="group" v-model="OneItem.phonenumber">
-        <br>Organization:
+        <br />
+        <input type="text" name="partnumber" v-model="OneItem.fn" required />
+        <br />Last Name:
+        <br />
+        <input type="text" name="description" v-model="OneItem.ln" required />
+        <br />Email:
+        <br />
+        <input type="text" name="description" v-model="OneItem.email" required />
+        <br />Phone Number:
+        <br />
+        <input type="text" name="group" v-model="OneItem.phonenumber" />
+        <br />Organization:
         <select v-model="OneItem.CustOrganizationId">
-          <option v-bind:key="org.id" v-for="org in AllOrgs" :value="org.id">{{org.name}}</option>
+          <option
+            v-bind:key="org.CustOrganizationsId"
+            v-for="org in AllOrgs"
+            :value="org.CustOrganizationsId"
+          >{{org.CustOrganizationsname}}</option>
         </select>
-        <br>Status:
+        <br />Status:
         <select v-model="OneItem.CustContactStatusId">
           <option
             v-bind:key="status.id"
@@ -29,7 +33,7 @@
             :value="status.id"
           >{{status.name}}</option>
         </select>
-        <br>
+        <br />
         <button type="submit" name="button">Submit</button>
         <button type="button" name="deletebutton" v-on:click="deleteitem">Delete</button>
       </form>
@@ -40,13 +44,13 @@
 <script>
 import axios from "axios";
 //import Header from "../components/layout/Header.vue";
-import SubHeaderCustomers from "../components/layout/SubHeaderCustomers.vue";
+//import SubHeaderCustomers from "../components/layout/SubHeaderCustomers.vue";
 import Router from "vue-router";
 
 export default {
   name: "EditContacts",
   components: {
-    SubHeaderCustomers
+    //SubHeaderCustomers
     //Header
   },
   data() {
@@ -74,13 +78,19 @@ export default {
       this.$router.push("/Customers/Contacts");
     },
     postNow: async function() {
-      await axios.post(
-        this.$apiURL + "contacts/" + this.$route.params.id + "/update",
-        {
+      await axios
+        .post(this.$apiURL + "contacts/" + this.$route.params.id + "/update", {
           data: this.OneItem
-        }
-      );
-      this.$router.push("/Customers/Contacts");
+        })
+        .then(
+          setTimeout(
+            function() {
+              this.$router.push("/Customers/Contacts");
+            }.bind(this),
+            1000
+          )
+        );
+
       //.then(res =>{
       //  console.log(re.data);
       //});

@@ -3,10 +3,11 @@
     <b-navbar toggleable="lg" type="dark" variant="dark">
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-navbar-brand href="/">Sagely Sown</b-navbar-brand>
-      <b-collapse id="nav-collapse" is-nav>
+      <b-collapse v-if="isLoggedIn" id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item href="/workorders">Work Orders</b-nav-item>
-          <b-nav-item href="/products">Products</b-nav-item>
+          <b-nav-item href="/parts">Parts</b-nav-item>
+          <b-nav-item href="/InventoryLocations">Inventory Locations</b-nav-item>
 
           <b-nav-item-dropdown text="Customers">
             <b-dropdown-item href="/Customers/Organizations">Organizations</b-dropdown-item>
@@ -19,28 +20,58 @@
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-item-dropdown text="Admin">
+        <b-nav-item href="/cart">Cart</b-nav-item>
+        <b-nav-item-dropdown v-if="userAuthLevel == '123'" text="Admin">
+          <b-dropdown-item href="/NewInventoryLocation">Add Location</b-dropdown-item>
           <b-dropdown-item href="/Customers/NewOrganization">Add Organization</b-dropdown-item>
           <b-dropdown-item href="/Customers/NewContact">Add Contact</b-dropdown-item>
-          <b-dropdown-item href="/Products/NewProduct">New Product</b-dropdown-item>
+          <b-dropdown-item href="/Parts/NewPart">New Part</b-dropdown-item>
           <!-- <b-dropdown-item href="/Customers/ContactStatuses">New Contact Status</b-dropdown-item> -->
           <b-dropdown-item href="/Customers/NewEquipmentProfile">New Equipment Profile</b-dropdown-item>
           <!-- <b-dropdown-item href="/NewWorkOrder">New Work Order</b-dropdown-item> -->
         </b-nav-item-dropdown>
-        <b-nav-item href="/login">Login</b-nav-item>
-        <b-nav-item-dropdown text="User" right>
-          <b-dropdown-item @click="logouta()">Logout</b-dropdown-item>
-        </b-nav-item-dropdown>
+        <b-nav-item v-if="!isLoggedIn" href="/login">Login</b-nav-item>
+        <div v-if="isLoggedIn">
+          <b-nav-item-dropdown text="User" right>
+            <b-dropdown-item>Settings</b-dropdown-item>
+            <b-dropdown-item>{{userAuthLevel}}</b-dropdown-item>
+            <b-dropdown-item @click="logout()">Logout</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </div>
       </b-navbar-nav>
     </b-navbar>
+    <b-modal
+      id="cart"
+      ref="modal"
+      title="Cart"
+      @show="resetModal"
+      @hidden="resetModal"
+      @ok="handleOk"
+    >
+      <form ref="form" @submit.stop.prevent="handleSubmit">
+        <b-form-group
+          :state="nameState"
+          label="Name"
+          label-for="name-input"
+          invalid-feedback="Name is required"
+        >
+          <b-form-input id="name-input" v-model="name" :state="nameState" required></b-form-input>
+        </b-form-group>
+      </form>
+    </b-modal>
   </div>
 </template>
 
 <script>
 export default {
-  computed : {
-      isLoggedIn : function(){ return this.$store.getters.isLoggedIn}
+  computed: {
+    isLoggedIn: function() {
+      return this.$store.getters.isLoggedIn;
     },
+    userAuthLevel: function() {
+      return this.$store.getters.user.authLevel;
+    }
+  },
   methods: {
     logout: function() {
       this.$store.dispatch("logout").then(() => {

@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div class="body">
     <fieldset>
       <legend>
         <h2 id="EditItemID">New ID: {{OneItem.id}}</h2>
       </legend>
       <form method="post" @submit.prevent="postNow">
         Description:
-        <br>
-        <input type="text" name="partnumber" v-model="OneItem.description">
-        <br>Type:
-        <br>
-        <input type="text" name="description" v-model="OneItem.type">
-        <br>Notes:
-        <br>
+        <br />
+        <input type="text" name="partnumber" v-model="OneItem.description" />
+        <br />Type:
+        <br />
+        <input type="text" name="description" v-model="OneItem.type" />
+        <br />Notes:
+        <br />
         <b-form-textarea
           id="textarea"
           v-model="OneItem.notes"
@@ -20,7 +20,7 @@
           rows="3"
           max-rows="3"
         ></b-form-textarea>
-        <br>EquipmentProfileId:
+        <br />EquipmentProfileId:
         <select v-model="OneItem.EquipmentProfileId">
           <option
             v-bind:key="status.id"
@@ -28,34 +28,38 @@
             :value="status.id"
           >{{status.name}}</option>
         </select>
-        <br>Category:
+        <br />Category:
         <select v-model="OneItem.WOCategoryId">
           <option
             v-bind:key="status.id"
             v-for="status in WOCategories"
             :value="status.id"
-          >{{status.name}}</option>
+          >{{status.WOCategoriesname}}</option>
         </select>
-        <br>Status:
+        <br />Status:
         <select v-model="OneItem.WOStatusId">
           <option
             v-bind:key="status.id"
             v-for="status in WOStatuses"
             :value="status.id"
-          >{{status.name}}</option>
+          >{{status.WOStatusesname}}</option>
         </select>
-        <br>Organization:
+        <br />Organization:
         <select v-model="OneItem.CustOrganizationId">
-          <option v-bind:key="org.id" v-for="org in AllOrgs" :value="org.id">{{org.name}}</option>
+          <option v-bind:key="org.CustOrganizationsId" v-for="org in AllOrgs" :value="org.CustOrganizationsId">{{org.CustOrganizationsname}}</option>
         </select>
-        <br>Tech:
-        <br>
-        <input type="text" name="listprice" v-model="OneItem.UserId">
-        <br>Prioirty:
+        <br />Tech:
+        <br />
+        <input type="text" name="listprice" v-model="OneItem.UserId" />
+        <br />Prioirty:
         <select v-model="OneItem.WOPrioirtyId">
-          <option v-bind:key="org.id" v-for="org in WOPriorities" :value="org.id">{{org.name}}</option>
+          <option
+            v-bind:key="org.id"
+            v-for="org in WOPriorities"
+            :value="org.id"
+          >{{org.WOPrioritiesname}}</option>
         </select>
-        <br>
+        <br />
         <button type="submit" name="button">Submit</button>
       </form>
     </fieldset>
@@ -65,13 +69,13 @@
 <script>
 import axios from "axios";
 import Header from "../components/layout/Header.vue";
-import SubHeaderProducts from "../components/layout/SubHeaderProducts.vue";
+//import SubHeaderProducts from "../components/layout/SubHeaderProducts.vue";
 
 export default {
   name: "NewProduct",
   components: {
-    Header,
-    SubHeaderProducts
+    Header
+    //SubHeaderProducts
   },
   data() {
     return {
@@ -88,7 +92,15 @@ export default {
         .post(this.$apiURL + "workorders/add", {
           data: this.OneItem
         })
-        .then(this.$router.push("/workorders"))
+        .then(
+          setTimeout(
+            function() {
+              this.$router.push("/workorders");
+            }.bind(this),
+            1000
+          )
+        )
+        // .then(this.$router.push("/workorders"))
         .catch(function(error) {
           console.log(error);
         });

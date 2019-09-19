@@ -4,40 +4,48 @@
     <div class="container-fluid">
       <h3>Equipment Profiles - Total: {{ rows }}</h3>
       <div class="search-wrapper">
-        <input type="text" v-model="search" placeholder="Search...">
+        <input type="text" v-model="search" placeholder="Search..." />
       </div>
       <table class="table table-bordered table-hover table-sm">
         <thead class="thead-dark">
           <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Organization</th>
             <th>Make</th>
             <th>Model</th>
             <th>Row QTY</th>
-            <th>DownForce</th>
-            <th>Monitor</th>
-            <th>DriveType</th>
-            <th>Meter</th>
             <th>Harnessing</th>
-            <th>LiquidInsecticide</th>
+            <th>Closing Wheels</th>
+            <th>Seed Tubes</th>
+            <th>Seed Firmers</th>
+            <th>Monitor</th>
+            <th>Meter</th>
+            <th>Liquid</th>
+            <th>Drives</th>
+            <th>Insecticide</th>
+            <th>Down Force</th>
+            <th>Depth Adjust</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="row in filteredList" v-bind:key="row.id">
-            <td>{{row.id}}</td>
             <td>{{row.name}}</td>
-            <td>{{row.CustOrganizationId}}</td>
+            <td>{{row.COname}}</td>
             <td>{{row.make}}</td>
             <td>{{row.model}}</td>
             <td>{{row.rowqty}}</td>
-            <td>{{row.downforce}}</td>
-            <td>{{row.monitor}}</td>
-            <td>{{row.drivetype}}</td>
-            <td>{{row.meter}}</td>
-            <td>{{row.harnessing}}</td>
-            <td>{{row.liquidinsecticide}}</td>
+            <td>{{row.PHName}}</td>
+            <td>{{row.PCWname}}</td>
+            <td>{{row.PSTname}}</td>
+            <td>{{row.PSFname}}</td>
+            <td>{{row.PMonname}}</td>
+            <td>{{row.PMname}}</td>
+            <td>{{row.PLname}}</td>
+            <td>{{row.PDname}}</td>
+            <td>{{row.PIname}}</td>
+            <td>{{row.PDFname}}</td>
+            <td>{{row.PDAname}}</td>
             <td>
               <a v-bind:href="'EquipmentProfiles/' + row.id">Edit</a>
             </td>
@@ -50,12 +58,12 @@
 
 <script>
 import axios from "axios";
-import SubHeaderProducts from "../components/layout/SubHeaderProducts.vue";
+//import SubHeaderProducts from "../components/layout/SubHeaderProducts.vue";
 
 export default {
   name: "EquipmentProfiles",
   components: {
-    SubHeaderProducts
+    //SubHeaderProducts
   },
   data() {
     return {
@@ -65,7 +73,7 @@ export default {
   },
   created() {
     axios
-      .get(this.$apiURL + "EquipmentProfiles/")
+      .get(this.$apiURL + "EquipmentProfiles/alldetails")
       .then(res => (this.AllItems = res.data));
     //.catch(err => console.log(err));
   },
@@ -75,16 +83,7 @@ export default {
     },
     filteredList() {
       return this.AllItems.filter(item => {
-        return (
-          item.name.toLowerCase().match(this.search.toLowerCase()) ||
-          item.make.toLowerCase().match(this.search.toLowerCase()) ||
-          item.model.toLowerCase().match(this.search.toLowerCase()) ||
-          item.downforce.toLowerCase().match(this.search.toLowerCase()) ||
-          item.monitor.toLowerCase().match(this.search.toLowerCase()) ||
-          item.drivetype.toLowerCase().match(this.search.toLowerCase()) ||
-          item.meter.toLowerCase().match(this.search.toLowerCase()) ||
-          item.harnessing.toLowerCase().match(this.search.toLowerCase())
-        );
+        return item.name.toLowerCase().match(this.search.toLowerCase());
       });
     }
   }

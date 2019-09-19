@@ -10,12 +10,12 @@
 <script>
 import axios from "axios";
 import Router from "vue-router";
-import SubHeaderCustomers from "../components/layout/SubHeaderCustomers.vue";
+//import SubHeaderCustomers from "../components/layout/SubHeaderCustomers.vue";
 
 export default {
   name: "Customers",
   components: {
-    SubHeaderCustomers
+    //SubHeaderCustomers
   },
   data() {
     return {

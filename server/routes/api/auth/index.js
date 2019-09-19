@@ -3,7 +3,6 @@ const AuthRouter = express.Router();
 const Joi = require('@hapi/joi');
 const UsersTable = require("../../../models/UsersTable");
 const bcrypt = require('bcrypt');
-const session = require('express-session');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
@@ -40,8 +39,7 @@ AuthRouter.post("/login", async (req, res) => {
         console.log(err)
         if (err || !user) {
             return res.status(400).json({
-                message: 'Something is not right',
-                user: user
+                message: 'Something is not right'
             });
         }
         req.login(user, { session: false }, (err) => {

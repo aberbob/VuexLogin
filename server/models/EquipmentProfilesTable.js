@@ -20,38 +20,38 @@ const EquipmentProfilesTable = db.define('EquipmentProfiles', {
     rowqty: {
         type: Sequelize.STRING(15)
     },
-    downforce: {
-        type: Sequelize.STRING(15)
+    PlanterClosingWheelId: {
+        type: Sequelize.STRING(20)
     },
-    monitor: {
-        type: Sequelize.STRING(15)
+    PlanterDepthAdjustId: {
+        type: Sequelize.STRING(20)
     },
-    drivetype: {
-        type: Sequelize.STRING(15)
+    PlanterDownForceId: {
+        type: Sequelize.STRING(20)
     },
-    meter: {
-        type: Sequelize.STRING(15)
+    PlanterDriveId: {
+        type: Sequelize.STRING(20)
     },
-    harnessing: {
-        type: Sequelize.STRING(15)
+    PlanterInsecticideId: {
+        type: Sequelize.STRING(20)
     },
-    seedtubes: {
-        type: Sequelize.STRING(15)
+    PlanterMeterId: {
+        type: Sequelize.STRING(20)
     },
-    seedfirmers: {
-        type: Sequelize.STRING(15)
+    PlanterLiquidId: {
+        type: Sequelize.STRING(20)
     },
-    liquid: {
-        type: Sequelize.STRING(15)
+    PlanterMonitorId: {
+        type: Sequelize.STRING(20)
     },
-    insecticide: {
-        type: Sequelize.STRING(15)
+    PlanterHarnessingId: {
+        type: Sequelize.STRING(20)
     },
-    closingwheels: {
-        type: Sequelize.STRING(15)
+    PlanterSeedFirmerId: {
+        type: Sequelize.STRING(20)
     },
-    depthadjust: {
-        type: Sequelize.STRING(15)
+    PlanterSeedTubeId: {
+        type: Sequelize.STRING(20)
     },
     CustOrganizationId: {
         type: Sequelize.INTEGER(100)
