@@ -20,7 +20,7 @@
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-item href="/cart">Cart</b-nav-item>
+        <b-nav-item to="cart">Cart</b-nav-item>
         <b-nav-item-dropdown v-if="userAuthLevel == '123'" text="Admin">
           <b-dropdown-item href="/NewInventoryLocation">Add Location</b-dropdown-item>
           <b-dropdown-item href="/Customers/NewOrganization">Add Organization</b-dropdown-item>

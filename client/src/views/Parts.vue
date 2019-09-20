@@ -55,7 +55,7 @@ export default {
       addtocart(data) {
         this.test = data
         console.log(data)
-        store.commit('addToCart', data)
+        this.$store.commit('addToCart', data)
       }
   },
   name: "Items",
