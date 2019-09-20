@@ -33,6 +33,7 @@
 
 <script>
 import axios from "axios";
+import { mapGetters } from "vuex";
 //import SubHeaderProducts from "../components/layout/SubHeaderProducts.vue";
 
 export default {
@@ -70,9 +71,9 @@ export default {
     //.catch(err => console.log(err));
   },
   computed: {
-    rows() {
-      return this.$store.state.cart;
-    },
+    ...mapGetters({
+      rows: 'cart'
+    }),
     filteredList() {
       return this.partnumbers.filter(item => {
         return item.partnumber.match(this.search);

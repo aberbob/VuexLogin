@@ -37,7 +37,7 @@
               <a v-bind:href="'parts/' + row.partnumber">Edit</a>
             </td>
             <td>
-              <a @click="addtocart(row)">Add</a>
+              <a @click="addToCart(row)">Add</a>
             </td>
           </tr>
         </tbody>
@@ -48,15 +48,12 @@
 
 <script>
 import axios from "axios";
+import { mapActions } from 'vuex';
 //import SubHeaderProducts from "../components/layout/SubHeaderProducts.vue";
 
 export default {
   methods:{
-      addtocart(data) {
-        this.test = data
-        console.log(data)
-        store.commit('addToCart', data)
-      }
+    ...mapActions(['addToCart'])
   },
   name: "Items",
   components: {

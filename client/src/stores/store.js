@@ -13,7 +13,7 @@ const store = new Vuex.Store({
     user: jwt.decode(window.$cookies.get('auth'))
   },
   mutations: {
-    addToCart(state, item){
+    addToCartMutation(state, item){
         state.cart.push(item);
     },
     auth_request(state) {
@@ -56,11 +56,15 @@ const store = new Vuex.Store({
           })
       })
     },
+    addToCart({ commit }, item) {
+      commit('addToCartMutation', item);
+    }
   },
   getters: {
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
-    user: state => state.user
+    user: state => state.user,
+    cart: state => state.cart
   }
 })
 
