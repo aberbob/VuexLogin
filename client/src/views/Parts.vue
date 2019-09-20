@@ -37,7 +37,7 @@
               <a v-bind:href="'parts/' + row.partnumber">Edit</a>
             </td>
             <td>
-              <a @click="addToCart(row)">Add</a>
+              <a @click="addtocart(row)">Add</a>
             </td>
           </tr>
         </tbody>
@@ -53,7 +53,11 @@ import { mapActions } from 'vuex';
 
 export default {
   methods:{
-    ...mapActions(['addToCart'])
+    addtocart(data) {
+      this.test = data
+      console.log(data)
+      this.$store.commit('addToCart', data)
+    }
   },
   name: "Items",
   components: {

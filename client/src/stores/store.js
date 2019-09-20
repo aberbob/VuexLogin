@@ -13,7 +13,7 @@ const store = new Vuex.Store({
     user: jwt.decode(window.$cookies.get('auth'))
   },
   mutations: {
-    addToCartMutation(state, item){
+    addToCart(state, item){
         state.cart.push(item);
     },
     auth_request(state) {
