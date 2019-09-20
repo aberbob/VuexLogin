@@ -48,16 +48,15 @@
 
 <script>
 import axios from "axios";
-import { mapActions } from 'vuex';
 //import SubHeaderProducts from "../components/layout/SubHeaderProducts.vue";
 
 export default {
   methods:{
-    addtocart(data) {
-      this.test = data
-      console.log(data)
-      this.$store.commit('addToCart', data)
-    }
+      addtocart(data) {
+        this.test = data
+        console.log(data)
+        this.$store.commit('addToCart', data)
+      }
   },
   name: "Items",
   components: {

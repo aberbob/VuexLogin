@@ -55,16 +55,12 @@ const store = new Vuex.Store({
             reject(err)
           })
       })
-    },
-    addToCart({ commit }, item) {
-      commit('addToCartMutation', item);
     }
   },
   getters: {
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
-    user: state => state.user,
-    cart: state => state.cart
+    user: state => state.user
   }
 })
 
