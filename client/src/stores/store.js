@@ -55,7 +55,7 @@ const store = new Vuex.Store({
             reject(err)
           })
       })
-    }
+    },
   },
   getters: {
     isLoggedIn: state => !!state.token,
