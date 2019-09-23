@@ -2,20 +2,17 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 const jwt = require('jsonwebtoken');
+import cartStoreModule from './modules/cart.js'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    cart:[],
     status: '',
     token: window.$cookies.get('auth') || '',
     user: jwt.decode(window.$cookies.get('auth'))
   },
   mutations: {
-    addToCart(state, item){
-        state.cart.push(item);
-    },
     auth_request(state) {
       state.status = 'loading'
     },
@@ -61,6 +58,9 @@ const store = new Vuex.Store({
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
     user: state => state.user
+  },
+  modules: {
+    cartStoreModule
   }
 })
 
