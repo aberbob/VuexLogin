@@ -19,5 +19,8 @@ export default {
         state.cart.push(item);
         saveCart(state.cart);
     }
+  },
+  getters: {
+    cart: state => state.cart
   }
 };
