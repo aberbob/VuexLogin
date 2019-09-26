@@ -25,6 +25,11 @@ export default {
       saveCart(state.cart);
     }
   },
+  actions: {
+    persistCart(context) {
+      saveCart(context.state.cart);
+    }
+  },
   getters: {
     cart: state => state.cart
   }

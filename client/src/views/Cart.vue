@@ -20,7 +20,7 @@
           <tr v-for="row in rows" v-bind:key="row.PartId">
             <td>{{row.partnumber}}</td>
             <td>{{row.description}}</td>
-            <td>{{row.qty}}</td>
+            <td><input class="item-qty" type="number" v-model='row.qty' @input='persistCart()' /></td>
             <td><a @click="removeFromCart(row)">Remove</a></td>
           </tr>
         </tbody>
@@ -35,11 +35,13 @@
 
 <script>
 import axios from "axios";
+import { mapActions } from "vuex";
 //import SubHeaderProducts from "../components/layout/SubHeaderProducts.vue";
 
 export default {
   name: "LocationInventory",
   methods: {
+    ...mapActions(['persistCart']),
     addRow() {
       if (filteredList.length == 0) {
         this.rows.push(filteredList[0]); // what to push unto the rows array?
@@ -102,5 +104,8 @@ export default {
 #itemsTable {
   width: 80%;
   border-spacing: px;
+}
+input.item-qty {
+  width: 40px;
 }
 </style>
