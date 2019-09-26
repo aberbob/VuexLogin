@@ -13,13 +13,15 @@
             <th>Partnumber</th>
             <th>Description</th>
             <th>Qty</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="row in NewItems" v-bind:key="row.PartId">
-            <td>{{row.PartId}}</td>
+          <tr v-for="row in rows" v-bind:key="row.PartId">
+            <td>{{row.partnumber}}</td>
             <td>{{row.description}}</td>
             <td>{{row.qty}}</td>
+            <td><a @click="removeFromCart(row)">Remove</a></td>
           </tr>
         </tbody>
       </table>
@@ -44,6 +46,9 @@ export default {
       } else {
         console.log("Can't... needs only one in the search")
       }
+    },
+    removeFromCart(item) {
+      this.$store.commit('removeFromCart', item);
     }
   },
   components: {
