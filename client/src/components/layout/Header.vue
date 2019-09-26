@@ -20,7 +20,7 @@
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-item to="cart">Cart</b-nav-item>
+        <b-nav-item v-b-modal.cart>Cart</b-nav-item>
         <b-nav-item-dropdown v-if="userAuthLevel == '123'" text="Admin">
           <b-dropdown-item href="/NewInventoryLocation">Add Location</b-dropdown-item>
           <b-dropdown-item href="/Customers/NewOrganization">Add Organization</b-dropdown-item>
@@ -48,22 +48,16 @@
       @hidden="resetModal"
       @ok="handleOk"
     >
-      <form ref="form" @submit.stop.prevent="handleSubmit">
-        <b-form-group
-          :state="nameState"
-          label="Name"
-          label-for="name-input"
-          invalid-feedback="Name is required"
-        >
-          <b-form-input id="name-input" v-model="name" :state="nameState" required></b-form-input>
-        </b-form-group>
-      </form>
+      <cart-view />
     </b-modal>
   </div>
 </template>
 
 <script>
+import CartView from '../../views/Cart.vue';
+
 export default {
+  components: { CartView },
   computed: {
     isLoggedIn: function() {
       return this.$store.getters.isLoggedIn;

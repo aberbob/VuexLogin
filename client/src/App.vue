@@ -30,6 +30,9 @@ export default {
 
 
 <style>
+body {
+  padding-right: 0px !important; /* Keeps b-modals from messing with the nav bar */
+}
 * {
   box-sizing: border-box;
   margin: 0;

@@ -71,7 +71,7 @@ export default {
   },
   computed: {
     rows() {
-      return this.$store.state.cart;
+      return this.$store.getters.cart;
     },
     filteredList() {
       return this.partnumbers.filter(item => {
