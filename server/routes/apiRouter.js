@@ -1,8 +1,8 @@
 const express = require("express");
 const apiRouter = express.Router();
 const reset = "yes"
-const Sequelize = require('sequelize');
-const db = require('../config/db');
+// const Sequelize = require('sequelize');
+// const db = require('../config/db');
 const passport = require('passport');
 
 //Databases
@@ -15,8 +15,12 @@ const UsersTable = require("../models/UsersTable");
 const CustOrganizationsTable = require("../models/organization/CustOrganizationsTable");
 const InventoryLocationsTable = require("../models/inventory/InventoryLocationsTable");
 const LocationPartQtyTable = require("../models/inventory/LocationPartQtyTable");
-const InvoicesTable = require("../models/InvoicesTable");
-const InvoiceItemsTable = require("../models/InvoiceItemsTable");
+const OrdersTable = require("../models/orders/OrdersTable");
+const OrderItemsTable = require("../models/orders/OrderItemsTable");
+const OrderStatusesTable = require("../models/orders/OrderStatusesTable");
+const TransfersTable = require("../models/transfers/TransfersTable");
+const TransferItemsTable = require("../models/transfers/TransferItemsTable");
+const TransferStatusesTable = require("../models/transfers/TransferStatusesTable");
 const EquipmentProfilesTable = require("../models/EquipmentProfilesTable");
 const UserPermsTable = require("../models/UserPermsTable");
 const WOCategoriesTable = require("../models/workOrders/WOCategoriesTable");
@@ -77,8 +81,6 @@ apiRouter.get('/createDatabaseTables2', passport.authenticate('jwt', { session: 
     //Creates and Alters the tables
     CustContactsTable.sync({ alter: true })
     UsersTable.sync({ alter: true })
-    EquipmentProfilesTable.sync({ alter: true })
-    CustOrganizationsTable.sync({ alter: true })
     UserPermsTable.sync({ alter: true })
     CustContactStatusesTable.sync({ alter: true })
 
@@ -98,12 +100,14 @@ apiRouter.get('/createDatabaseTables3', passport.authenticate('jwt', { session: 
   } else if (reset === "yes") {
 
     //Creates and Alters the tables
-    CustContactsTable.sync({ alter: true })
-    UsersTable.sync({ alter: true })
-    EquipmentProfilesTable.sync({ alter: true })
+    OrdersTable.sync({ alter: true })
+    OrderItemsTable.sync({ alter: true })
+    OrderStatusesTable.sync({ alter: true })
     CustOrganizationsTable.sync({ alter: true })
-    InvoicesTable.sync({ alter: true })
-    InvoiceItemsTable.sync({ alter: true })
+
+    TransfersTable.sync({ alter: true })
+    TransferItemsTable.sync({ alter: true })
+    TransferStatusesTable.sync({ alter: true })
     WOCategoriesTable.sync({ alter: true })
     WorkOrdersTable.sync({ alter: true })
     WOStatusesTable.sync({ alter: true })
@@ -116,7 +120,12 @@ apiRouter.get('/createDatabaseTables3', passport.authenticate('jwt', { session: 
     CustOrganizationsTable.hasMany(WorkOrdersTable);
     UsersTable.hasMany(WorkOrdersTable);
     WOPrioritiesTable.hasMany(WorkOrdersTable);
-    InvoicesTable.hasMany(InvoiceItemsTable);
+    CustOrganizationsTable.hasMany(OrdersTable);
+    OrdersTable.hasMany(OrderItemsTable);
+    OrderStatusesTable.hasMany(OrdersTable);
+    CustOrganizationsTable.hasMany(TransfersTable);
+    TransfersTable.hasMany(TransferItemsTable);
+    TransferStatusesTable.hasMany(TransfersTable);
 
     res.sendStatus(200)
   }
@@ -185,6 +194,12 @@ apiRouter.get('/createDatabaseTables5', passport.authenticate('jwt', { session: 
 
 apiRouter.get('/deleteDefaultData', (req, res) => {
   if (reset === "yes") {
+    OrderStatusesTable.destroy({
+      where: {}
+    })
+    TransferStatusesTable.destroy({
+      where: {}
+    })
     PartsSubcategoryTable.destroy({
       where: {}
     })
@@ -201,9 +216,6 @@ apiRouter.get('/deleteDefaultData', (req, res) => {
       where: {}
     })
     CustContactStatusesTable.destroy({
-      where: {}
-    })
-    WOCategoriesTable.destroy({
       where: {}
     })
     OrgST101TypesTable.destroy({
@@ -270,79 +282,144 @@ apiRouter.get('/createDefaultData', (req, res) => {
     //Default Values
 
     PartsCategoryTable.bulkCreate([
-      { name: 'DownForce', id: 1 },
-      { name: 'Monitor', id: 2 },
-      { name: 'Drive Type', id: 3 },
-      { name: 'Meter', id: 4 },
-      { name: 'Discs', id: 5 },
+      { name: 'Disk', id: 1 },
+      { name: 'Display', id: 2 },
+      { name: 'DownForce', id: 3 },
+      { name: 'DriveType', id: 4 },
+      { name: 'FieldView', id: 5 },
       { name: 'Harnessing', id: 6 },
-      { name: 'SeedTubes', id: 7 },
-      { name: 'SeedFirmers', id: 8 },
-      { name: 'Liquid', id: 9 },
-      { name: 'Insecticide', id: 10 },
-      { name: 'Closing Wheels (MC)', id: 11 },
-      { name: 'Depth Adjust', id: 12 },
+      { name: 'Iron', id: 7 },
+      { name: 'Liquid', id: 8 },
+      { name: 'Lubricant', id: 9 },
+      { name: 'Marketing', id: 10 },
+      { name: 'Meter', id: 11 },
+      { name: 'MeterMax', id: 12 },
+      { name: 'RowCleaners', id: 13 },
+      { name: 'SeedDisk', id: 14 },
+      { name: 'SeederForce', id: 15 },
+      { name: 'SeedFirmer', id: 16 },
+      { name: 'SeedTube', id: 17 },
+      { name: 'ServiceTools', id: 18 },
+      { name: 'Vaccum', id: 19 },
+      { name: 'vSet', id: 20 },
+      { name: 'YieldSense', id: 21 },
     ])
 
     PartsSubcategoryTable.bulkCreate([
-      { name: 'DeltaForce', PartsCategoriesId: '1', id: 1 },
-      { name: 'AirForce', PartsCategoriesId: '1', id: 2 },
-      { name: 'SeederForce', PartsCategoriesId: '1', id: 3 },
-      { name: 'Gen3', PartsCategoriesId: '2', id: 4 },
-      { name: 'Gen2', PartsCategoriesId: '2', id: 5 },
-      { name: 'Gen1', PartsCategoriesId: '2', id: 6 },
-      { name: 'vDrive', PartsCategoriesId: '3', id: 7 },
-      { name: 'RowFlow', PartsCategoriesId: '3', id: 8 },
-      { name: 'vSet', PartsCategoriesId: '4', id: 9 },
-      { name: 'vSetSelect', PartsCategoriesId: '4', id: 10 },
-      { name: 'eSet', PartsCategoriesId: '4', id: 11 },
-      { name: 'Finger Meter', PartsCategoriesId: '4', id: 12 },
-      { name: 'mSet', PartsCategoriesId: '4', id: 13 },
-      { name: 'SRM', PartsCategoriesId: '6', id: 14 },
-      { name: 'SMC', PartsCategoriesId: '1', id: 15 },
-      { name: 'SeedTube', PartsCategoriesId: '1', id: 16 },
-      { name: 'Weigh Pins', PartsCategoriesId: '1', id: 17 },
-      { name: 'FurrowJet', PartsCategoriesId: '9', id: 18 },
-      { name: 'vApplyHD', PartsCategoriesId: '9', id: 19 },
-      { name: 'vDrive Insecticide', PartsCategoriesId: '10', id: 20 },
-      { name: 'FurrowForce', PartsCategoriesId: '11', id: 21 },
-      { name: 'SmartDepth', PartsCategoriesId: '12', id: 22 },
+      { name: 'vSetC', PartsCategoriesId: 1, id: 1 },
+      { name: '20|20 Gen2', PartsCategoriesId: 2, id: 2 },
+      { name: '20|20 Gen3', PartsCategoriesId: 2, id: 3 },
+      { name: 'Gen1', PartsCategoriesId: 2, id: 4 },
+      { name: 'Gen2', PartsCategoriesId: 2, id: 5 },
+      { name: 'AirForce', PartsCategoriesId: 3, id: 6 },
+      { name: 'DeltaForce', PartsCategoriesId: 3, id: 7 },
+      { name: 'RowFlow', PartsCategoriesId: 4, id: 8 },
+      { name: 'vDrive', PartsCategoriesId: 4, id: 9 },
+      { name: 'Accessories', PartsCategoriesId: 5, id: 10 },
+      { name: 'Field View Accessory Kits for iPad-Ready SeedSense Display Units', PartsCategoriesId: 5, id: 11 },
+      { name: 'FieldView Accessories', PartsCategoriesId: 5, id: 12 },
+      { name: 'FieldView Repair Parts', PartsCategoriesId: 5, id: 13 },
+      { name: 'Gen3 Module', PartsCategoriesId: 5, id: 14 },
+      { name: 'Display', PartsCategoriesId: 6, id: 15 },
+      { name: 'SMC', PartsCategoriesId: 6, id: 16 },
+      { name: 'SRM', PartsCategoriesId: 6, id: 17 },
+      { name: 'Weigh Pins', PartsCategoriesId: 6, id: 18 },
+      { name: 'PP Row Unit', PartsCategoriesId: 7, id: 19 },
+      { name: 'FlowSense', PartsCategoriesId: 8, id: 20 },
+      { name: 'FurrowJet', PartsCategoriesId: 8, id: 21 },
+      { name: 'vApplyHD', PartsCategoriesId: 8, id: 22 },
+      { name: 'Lubricant', PartsCategoriesId: 9, id: 23 },
+      { name: 'Sales/Show Materials', PartsCategoriesId: 10, id: 24 },
+      { name: 'eSet', PartsCategoriesId: 11, id: 25 },
+      { name: 'Finger Meter', PartsCategoriesId: 11, id: 26 },
+      { name: 'mSet', PartsCategoriesId: 11, id: 27 },
+      { name: 'vSet', PartsCategoriesId: 11, id: 28 },
+      { name: 'vSet Select', PartsCategoriesId: 11, id: 29 },
+      { name: 'vSet2', PartsCategoriesId: 11, id: 30 },
+      { name: 'vSetC', PartsCategoriesId: 11, id: 31 },
+      { name: 'Complete Meters', PartsCategoriesId: 12, id: 32 },
+      { name: 'Literature/Forms/Misc', PartsCategoriesId: 12, id: 33 },
+      { name: 'MeterMax Accessories', PartsCategoriesId: 12, id: 34 },
+      { name: 'MeterMax Plus Mounting Kits and Parts (Llimited Availability)', PartsCategoriesId: 12, id: 35 },
+      { name: 'MeterMax Ultra Parts and Accessories', PartsCategoriesId: 12, id: 36 },
+      { name: 'CleanSweep', PartsCategoriesId: 13, id: 37 },
+      { name: 'eSet', PartsCategoriesId: 14, id: 38 },
+      { name: 'Blockage Sensors', PartsCategoriesId: 15, id: 39 },
+      { name: 'Power Harnesses', PartsCategoriesId: 15, id: 40 },
+      { name: 'Radar & Lift Switch', PartsCategoriesId: 15, id: 41 },
+      { name: 'Rockshaft Control Kits', PartsCategoriesId: 15, id: 42 },
+      { name: 'Rockshaft Manifold & Hose Kits', PartsCategoriesId: 15, id: 43 },
+      { name: 'Row Unit Parts', PartsCategoriesId: 15, id: 44 },
+      { name: 'Seeder SRM Backbone Harnesses', PartsCategoriesId: 15, id: 45 },
+      { name: 'Seeder SRM Base', PartsCategoriesId: 15, id: 46 },
+      { name: 'Smart Connector - Gen 3', PartsCategoriesId: 15, id: 47 },
+      { name: 'SRM Row Unit Harnesses', PartsCategoriesId: 15, id: 48 },
+      { name: 'Keetons', PartsCategoriesId: 16, id: 49 },
+      { name: 'Bullseye', PartsCategoriesId: 17, id: 50 },
+      { name: 'SpeedTube', PartsCategoriesId: 17, id: 51 },
+      { name: 'Diagnostic Kits', PartsCategoriesId: 18, id: 52 },
+      { name: 'Repair Kit Parts', PartsCategoriesId: 18, id: 53 },
+      { name: 'Service Kits', PartsCategoriesId: 18, id: 54 },
+      { name: 'Service Tools', PartsCategoriesId: 18, id: 55 },
+      { name: 'Blowers', PartsCategoriesId: 19, id: 56 },
+      { name: 'Meter', PartsCategoriesId: 20, id: 57 },
+      { name: '20/20 & iPad', PartsCategoriesId: 21, id: 58 },
+      { name: 'Accessories', PartsCategoriesId: 21, id: 59 },
+      { name: 'Case IH 2x77, 2x88 YieldSense Base Kit', PartsCategoriesId: 21, id: 60 },
+      { name: 'Case IH x010, x120, x230 & x240 YieldSense Base Kit', PartsCategoriesId: 21, id: 61 },
+      { name: 'Case IH x088, x130 & x140 (2015 and Older) YieldSense Base Kit', PartsCategoriesId: 21, id: 62 },
+      { name: 'Case IH x140 (2016 and Newer) YieldSense Base Kit', PartsCategoriesId: 21, id: 63 },
+      { name: 'Chain/Paddle Kit', PartsCategoriesId: 21, id: 64 },
+      { name: 'JD 00/10 Series YieldSense Base Kit', PartsCategoriesId: 21, id: 65 },
+      { name: 'JD 50/60/70/S Series YieldSense Base Kit', PartsCategoriesId: 21, id: 66 },
+      { name: 'Lexion 6" Elevator Base Kit', PartsCategoriesId: 21, id: 67 },
+      { name: 'Lexion 9" Elevator Base Kit', PartsCategoriesId: 21, id: 68 },
+      { name: 'Lexion Adapter Harnesses', PartsCategoriesId: 21, id: 69 },
+      { name: 'Moisture Sensor', PartsCategoriesId: 21, id: 70 },
+      { name: 'OEM Replacement Sprocket and Idlers', PartsCategoriesId: 21, id: 71 },
+      { name: 'Parts and Specialty Kits', PartsCategoriesId: 21, id: 72 },
+      { name: 'Replacement Paddles, Crud Brush, Grain Property Kits', PartsCategoriesId: 21, id: 73 },
     ])
 
     WOCategoriesTable.bulkCreate([
-      { WOCategoriesname: 'Meter Test', id: 1 },
-      { WOCategoriesname: 'Service Call', id: 2 },
-      { WOCategoriesname: 'Drop Off', id: 3 },
-      { WOCategoriesname: 'Install', id: 4 },
-      { WOCategoriesname: 'Delivery', id: 5 },
-      { WOCategoriesname: 'Pickup', id: 6 },
-      { WOCategoriesname: 'Drop Ship', id: 7 },
+      { name: 'Meter Test', id: 1 },
+      { name: 'Service Call', id: 2 },
+      { name: 'Drop Off', id: 3 },
+      { name: 'Install', id: 4 },
+      { name: 'Delivery', id: 5 },
+      { name: 'Pickup', id: 6 },
+      { name: 'Drop Ship', id: 7 },
     ])
 
+    OrderStatusesTable.bulkCreate([
+      { name: 'Open', id: 1 },
+      { name: 'On Order', id: 2 },
+      { name: 'Invoiced', id: 3 },
+      { name: 'Paid', id: 4 },
+    ])
+    TransferStatusesTable.bulkCreate([
+      { name: 'Open', id: 1 },
+      { name: 'Ready', id: 2 },
+      { name: 'Transfered', id: 3 },
+    ])
     WOStatusesTable.bulkCreate([
-      { WOStatusesname: 'Schedule', id: 1 },
-      { WOStatusesname: 'Assigned', id: 2 },
-      { WOStatusesname: 'Open', id: 3 },
-      { WOStatusesname: 'Complete', id: 4 },
-      { WOStatusesname: 'Invoice', id: 5 },
+      { name: 'Schedule', id: 1 },
+      { name: 'Assigned', id: 2 },
+      { name: 'Open', id: 3 },
+      { name: 'Complete', id: 4 },
+      { name: 'Invoice', id: 5 },
     ])
 
     WOPrioritiesTable.bulkCreate([
-      { WOPrioritiesname: 'Soon', id: 1 },
-      { WOPrioritiesname: 'Normal', id: 2 },
-      { WOPrioritiesname: 'Urgent', id: 3 }
+      { name: 'Soon', id: 1 },
+      { name: 'Normal', id: 2 },
+      { name: 'Urgent', id: 3 }
     ])
 
     CustContactStatusesTable.bulkCreate([
       { name: 'Active', id: 1 },
       { name: 'Deceased', id: 2 },
       { name: 'Moved On', id: 3 },
-    ])
-
-    WOCategoriesTable.bulkCreate([
-      { name: 'Category 1', id: 1 },
-      { name: 'Category 2', id: 2 },
-      { name: 'Category 3', id: 3 }
     ])
 
     OrgMarketsTable.bulkCreate([

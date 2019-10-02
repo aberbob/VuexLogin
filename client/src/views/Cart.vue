@@ -2,11 +2,14 @@
   <div class="items">
     <!-- Use text in props -->
     <div class="container-fluid">
-      <h3>New Transfer</h3>Partnumber:
+      <!-- <h3>New Transfer</h3>Partnumber:
       <b-form-input @keyup.enter.native="addRow" v-model="search" list="my-list-id"></b-form-input>
       <datalist id="my-list-id">
-        <option v-bind:key="part.partnumber" v-for="part in this.$store.state.cart">{{ part.partnumber}}</option>
-      </datalist>
+        <option
+          v-bind:key="part.partnumber"
+          v-for="part in this.$store.state.cart"
+        >{{ part.partnumber}}</option>
+      </datalist>-->
       <table class="table table-bordered table-hover table-sm">
         <thead class="thead-dark">
           <tr>
@@ -16,19 +19,22 @@
             <th></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="rows.length > 0">
           <tr v-for="row in rows" v-bind:key="row.PartId">
             <td>{{row.partnumber}}</td>
             <td>{{row.description}}</td>
-            <td><input class="item-qty" type="number" v-model='row.qty' @input='persistCart()' /></td>
-            <td><a @click="removeFromCart(row)">Remove</a></td>
+            <td>
+              <input class="item-qty" type="number" v-model="row.qty" @input="persistCart()" />
+            </td>
+            <td>
+              <a @click="removeFromCart(row)">Remove</a>
+            </td>
           </tr>
         </tbody>
       </table>
-      {{filteredList}}
-      rows
-      {{rows}}
-      {{}}
+      <div v-if="!haverows">
+        <h5>Nothing in Cart</h5>
+      </div>
     </div>
   </div>
 </template>
@@ -41,16 +47,16 @@ import { mapActions } from "vuex";
 export default {
   name: "LocationInventory",
   methods: {
-    ...mapActions(['persistCart']),
+    ...mapActions(["persistCart"]),
     addRow() {
       if (filteredList.length == 0) {
         this.rows.push(filteredList[0]); // what to push unto the rows array?
       } else {
-        console.log("Can't... needs only one in the search")
+        console.log("Can't... needs only one in the search");
       }
     },
     removeFromCart(item) {
-      this.$store.commit('removeFromCart', item);
+      this.$store.commit("removeFromCart", item);
     }
   },
   components: {
@@ -79,6 +85,12 @@ export default {
   computed: {
     rows() {
       return this.$store.getters.cart;
+    },
+    haverows() {
+      if (this.rows.length > 0) {
+        return true;
+      }
+      return false;
     },
     filteredList() {
       return this.partnumbers.filter(item => {

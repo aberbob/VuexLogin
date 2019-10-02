@@ -7,7 +7,7 @@
       <form method="post" @submit.prevent="postNow">
         Name:
         <br />
-        <input type="text" name="name" v-model="OneItem.CustOrganizationsname" />
+        <input type="text" name="name" v-model="OneItem.name" />
         <br />street:
         <br />
         <input type="text" name="street" v-model="OneItem.street" />

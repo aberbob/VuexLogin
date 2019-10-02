@@ -2,11 +2,6 @@ const Sequelize = require('sequelize');
 const db = require('../../config/db');
 
 const WorkOrdersTable = db.define('WorkOrders', {
-    WorkOrderId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true // Automatically gets converted to SERIAL for postgres
-    },
     description: {
         type: Sequelize.STRING(50)
     },
@@ -17,25 +12,25 @@ const WorkOrdersTable = db.define('WorkOrders', {
         type: Sequelize.STRING(500)
     },
     EquipmentProfileId: {
-        type: Sequelize.INTEGER()
+        type: Sequelize.INTEGER(11)
     },
     WOCategoryId: {
-        type: Sequelize.INTEGER()
+        type: Sequelize.INTEGER(11)
     },
     WOStatusId: {
-        type: Sequelize.INTEGER()
+        type: Sequelize.INTEGER(11)
     },
     CustContactId: {
-        type: Sequelize.INTEGER()
+        type: Sequelize.INTEGER(11)
     },
     CustOrganizationId: {
-        type: Sequelize.INTEGER()
+        type: Sequelize.INTEGER(11)
     },
     UserId: {
-        type: Sequelize.INTEGER()
+        type: Sequelize.INTEGER(11)
     },
-    WOPrioirtyId: {
-        type: Sequelize.INTEGER()
+    WOPriorityId: {
+        type: Sequelize.INTEGER(11)
     }
 })
 

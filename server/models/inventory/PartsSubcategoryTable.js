@@ -3,7 +3,7 @@ const db = require('../../config/db');
 
 const PartsSubcategoryTable = db.define('PartsSubcategories', {
     name: {
-        type: Sequelize.STRING(25)
+        type: Sequelize.STRING(80)
     },
     PartsCategoriesId: {
         type: Sequelize.STRING(25)

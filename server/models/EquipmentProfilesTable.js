@@ -21,40 +21,40 @@ const EquipmentProfilesTable = db.define('EquipmentProfiles', {
         type: Sequelize.STRING(15)
     },
     PlanterClosingWheelId: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.INTEGER(11)
     },
     PlanterDepthAdjustId: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.INTEGER(11)
     },
     PlanterDownForceId: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.INTEGER(11)
     },
     PlanterDriveId: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.INTEGER(11)
     },
     PlanterInsecticideId: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.INTEGER(11)
     },
     PlanterMeterId: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.INTEGER(11)
     },
     PlanterLiquidId: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.INTEGER(11)
     },
     PlanterMonitorId: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.INTEGER(11)
     },
     PlanterHarnessingId: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.INTEGER(11)
     },
     PlanterSeedFirmerId: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.INTEGER(11)
     },
     PlanterSeedTubeId: {
-        type: Sequelize.STRING(20)
+        type: Sequelize.INTEGER(11)
     },
     CustOrganizationId: {
-        type: Sequelize.INTEGER(100)
+        type: Sequelize.INTEGER(11)
     }
 })
 

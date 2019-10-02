@@ -38,16 +38,12 @@
         :sort-direction="sortDirection"
         @filtered="onFiltered"
       >
-        <template slot="name" slot-scope="row">{{ row.item.WorkOrderId }}</template>
+        <template slot="name" slot-scope="row">{{ row.item.id }}</template>
 
-        <template slot="isActive" slot-scope="row">{{ row.item.WorkOrderId }}</template>
+        <template slot="isActive" slot-scope="row">{{ row.item.id }}</template>
 
         <template slot="actions" slot-scope="row">
-          <b-button
-            size="sm"
-            @click="info(row.item, row.item.WorkOrderId, $event.target)"
-            class="mr-1"
-          >Edit</b-button>
+          <b-button size="sm" @click="info(row.item, row.item.id, $event.target)" class="mr-1">Edit</b-button>
           <b-button
             size="sm"
             @click="row.toggleDetails"
@@ -88,11 +84,7 @@
           <b-col>
             Prioirty:
             <select v-model="infoModal.content.WOPrioirtyId">
-              <option
-                v-bind:key="org.id"
-                v-for="org in WOPriorities"
-                :value="org.id"
-              >{{org.WOPrioritiesname}}</option>
+              <option v-bind:key="org.id" v-for="org in WOPriorities" :value="org.id">{{org.name}}</option>
             </select>
           </b-col>
           <b-col>
@@ -110,7 +102,7 @@
                 v-bind:key="status.id"
                 v-for="status in WOStatuses"
                 :value="status.id"
-              >{{status.WOStatusesname}}</option>
+              >{{status.name}}</option>
             </select>
           </b-col>
           <b-col>
@@ -120,7 +112,7 @@
                 v-bind:key="status.id"
                 v-for="status in WOCategories"
                 :value="status.id"
-              >{{status.WOCategoriesname}}</option>
+              >{{status.name}}</option>
             </select>
           </b-col>
         </b-row>
@@ -142,8 +134,8 @@
                   <option
                     v-bind:key="org.CustOrganizationsId"
                     v-for="org in AllOrgs"
-                    :value="org.CustOrganizationsId"
-                  >{{org.CustOrganizationsname}}</option>
+                    :value="org.id"
+                  >{{org.name}}</option>
                 </select>
                 <br />Tech:
                 <br />
@@ -188,7 +180,7 @@ export default {
     return {
       fields: [
         {
-          key: "WorkOrderId",
+          key: "id",
           label: "ID",
           sortable: true,
           sortDirection: "desc"
@@ -199,11 +191,11 @@ export default {
           sortable: true,
           class: "text-center"
         },
-        { key: "WOCategoriesname", label: "Category" },
-        { key: "CustContactId", label: "CustContactId" },
-        { key: "CustOrganizationsname", label: "Organization" },
-        { key: "WOPrioritiesname", label: "Prioirty" },
-        { key: "WOStatusesname", label: "Status" },
+        { key: "WOCname", label: "Category" },
+        { key: "CCId", label: "CustContactId" },
+        { key: "COname", label: "Organization" },
+        { key: "WOPname", label: "Prioirty" },
+        { key: "WOSname", label: "Status" },
         { key: "actions", label: "Actions" }
       ],
       AllItems: [],
@@ -244,9 +236,7 @@ export default {
       .then(res => (this.WOPriorities = res.data));
     axios
       .get(this.$apiURL + "WOCategories")
-      .then(
-        res => ((this.WOCategories = res.data), (this.WOCategories1 = res.data))
-      );
+      .then(res => (this.WOCategories = res.data));
     axios
       .get(this.$apiURL + "EquipmentProfiles")
       .then(res => (this.EquipmentProfiles = res.data));
@@ -257,18 +247,13 @@ export default {
   },
   methods: {
     deleteitem: function() {
-      axios.delete(
-        this.$apiURL + "workorders/" + this.infoModal.content.WorkOrderId
-      );
+      axios.delete(this.$apiURL + "workorders/" + this.infoModal.content.id);
       this.$router.push("/workorders");
     },
     postNow: function() {
       axios
         .post(
-          this.$apiURL +
-            "workorders/" +
-            this.infoModal.content.WorkOrderId +
-            "/update",
+          this.$apiURL + "workorders/" + this.infoModal.content.id + "/update",
           {
             data: this.infoModal.content
           }

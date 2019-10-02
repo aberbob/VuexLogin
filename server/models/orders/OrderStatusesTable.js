@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../../config/db');
 
-const WOPrioritiesTable = db.define('WOPriorities', {
+const OrderStatusesTable = db.define('OrderStatuses', {
     name: {
         type: Sequelize.STRING(10)
     }
@@ -9,4 +9,4 @@ const WOPrioritiesTable = db.define('WOPriorities', {
 
 
 
-module.exports = WOPrioritiesTable;
+module.exports = OrderStatusesTable;

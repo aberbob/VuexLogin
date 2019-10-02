@@ -21,7 +21,7 @@ let appRouter = new Router({
             name: 'PartsAvailability',
             component: () => import(/* webpackChunkName: "about" */ './views/PartsAvailability.vue'),
             meta: {
-              noAuth: true,
+              requiresAuth: true,
             }
         },
         {
@@ -29,7 +29,7 @@ let appRouter = new Router({
             name: 'LocationInventory',
             component: () => import(/* webpackChunkName: "about" */ './views/LocationInventory.vue'),
             meta: {
-              noAuth: true,
+              requiresAuth: true,
             }
         },
         {
@@ -53,6 +53,22 @@ let appRouter = new Router({
             path: '/adduser',
             name: 'adduser',
             component: () => import(/* webpackChunkName: "about" */ './views/UserAdd.vue'),
+            meta: {
+              requiresAuth: true
+            }
+        },
+        {
+            path: '/transfers',
+            name: 'transfers',
+            component: () => import(/* webpackChunkName: "about" */ './views/Transfers.vue'),
+            meta: {
+              requiresAuth: true
+            }
+        },
+        {
+            path: '/orders',
+            name: 'orders',
+            component: () => import(/* webpackChunkName: "about" */ './views/Orders.vue'),
             meta: {
               requiresAuth: true
             }

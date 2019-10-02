@@ -2,12 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../../config/db');
 
 const CustOrganizationsTable = db.define('CustOrganizations', {
-    CustOrganizationsId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true // Automatically gets converted to SERIAL for postgres
-    },
-    CustOrganizationsname: {
+    name: {
         type: Sequelize.STRING(30)
     },
     street: {
@@ -41,22 +36,22 @@ const CustOrganizationsTable = db.define('CustOrganizations', {
         type: Sequelize.STRING(11)
     },
     OrgAccountTypeId: {
-        type: Sequelize.STRING(11)
+        type: Sequelize.INTEGER(11)
     },
     OrgFarmTypeId: {
-        type: Sequelize.STRING(11)
+        type: Sequelize.INTEGER(11)
     },
     OrgInvoicingTypeId: {
-        type: Sequelize.STRING(11)
+        type: Sequelize.INTEGER(11)
     },
     OrgMarketId: {
-        type: Sequelize.STRING(11)
+        type: Sequelize.INTEGER(11)
     },
     OrgServicePlanTypeId: {
-        type: Sequelize.STRING(11)
+        type: Sequelize.INTEGER(11)
     },
     OrgST101TypeId: {
-        type: Sequelize.STRING(11)
+        type: Sequelize.INTEGER(11)
     },
 })
 

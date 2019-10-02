@@ -48,7 +48,7 @@
       @hidden="resetModal"
       @ok="handleOk"
     >
-      <cart-view />
+      <CartView />
     </b-modal>
   </div>
 </template>

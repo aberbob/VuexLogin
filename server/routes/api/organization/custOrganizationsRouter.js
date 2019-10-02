@@ -17,7 +17,7 @@ custOrganizationsRouter.get("/", async (req, res) => {
 custOrganizationsRouter.get('/:id', async (req, res, next) => {
   dbTable
     .findOne({
-      where: { CustOrganizationsId: req.params.id }
+      where: { id: req.params.id }
     })
     .then(product => {
       //console.log(product);
@@ -69,7 +69,7 @@ custOrganizationsRouter.post("/:id/update", async (req, res) => {
     OrgMarketId: req.body.data.OrgMarketId,
     OrgServicePlanTypeId: req.body.data.OrgServicePlanTypeId,
     OrgST101TypeId: req.body.data.OrgST101TypeId,
-  }, { where: { CustOrganizationsId: req.params.id } });
+  }, { where: { id: req.params.id } });
   res.status(200)
 });
 
@@ -78,7 +78,7 @@ custOrganizationsRouter.delete("/:id", (req, res) => {
   console.log(req.params.id)
   dbTable.destroy({
     where: {
-      CustOrganizationsId: req.params.id
+      id: req.params.id
     }
   })
   res.status(200)

@@ -12,6 +12,7 @@ const UsersTable = db.define('Users', {
     },
     username: {
         type: Sequelize.STRING(20),
+        allowNull: false,
         unique: true,
     },
     password: {

@@ -21,7 +21,7 @@
       </thead>
       <tbody>
         <tr v-for="row in filteredList" v-bind:key="row.id">
-          <td>{{row.CustOrganizationsname}}</td>
+          <td>{{row.name}}</td>
           <td>{{row.street}}</td>
           <td>{{row.street2}}</td>
           <td>{{row.city}}</td>
@@ -66,7 +66,7 @@ export default {
     },
     filteredList() {
       return this.AllOrganizations.filter(item => {
-        return item.CustOrganizationsname.toLowerCase().match(this.search.toLowerCase());
+        return item.name.toLowerCase().match(this.search.toLowerCase());
       });
     }
   }

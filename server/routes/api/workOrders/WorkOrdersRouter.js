@@ -17,7 +17,7 @@ WorkOrdersRouter.get("/", async (req, res) => {
 });
 
 WorkOrdersRouter.get("/WODetailJoin", async (req, res) => {
-  db.query("SELECT WorkOrderId, WOStatusesname, CustOrganizationsname, WOPrioritiesname, WOCategoriesname, notes, description  FROM workorders LEFT JOIN wopriorities ON workorders.WOPrioirtyId=wopriorities.id LEFT JOIN wostatuses ON workorders.WOStatusId=wostatuses.id LEFT JOIN custorganizations ON workorders.CustOrganizationId=custorganizations.CustOrganizationsId LEFT JOIN wocategories ON workorders.WOCategoryId=wocategories.id").then(([results, metadata]) => {
+  db.query("SELECT workorders.id as id, WOStatuses.name as WOSname, CustOrganizations.name as COname, WOPriorities.name as WOPname, WOCategories.name as WOCname, notes, description  FROM workorders LEFT JOIN wopriorities ON workorders.WOPriorityId=wopriorities.id LEFT JOIN wostatuses ON workorders.WOStatusId=wostatuses.id LEFT JOIN custorganizations ON workorders.CustOrganizationId=custorganizations.Id LEFT JOIN wocategories ON workorders.WOCategoryId=wocategories.id").then(([results, metadata]) => {
     res.json(results); 
   })
 });
@@ -27,7 +27,7 @@ WorkOrdersRouter.get('/:id', async (req, res, next) => {
   console.log(`Get ${req.params.id}`)
   dbTable
     .findOne({
-      where: { WorkOrderId: req.params.id }
+      where: { id: req.params.id }
     })
     .then(product => {
       //console.log(product);
@@ -57,7 +57,7 @@ WorkOrdersRouter.post("/add", async (req, res) => {
 
 //UPDATE
 WorkOrdersRouter.post("/:id/update", async (req, res) => {
-  //console.log(req.body.data)
+  console.log(req.body.data)
   console.log('Update')
   await dbTable.update({
     description: req.body.data.description,
@@ -70,7 +70,7 @@ WorkOrdersRouter.post("/:id/update", async (req, res) => {
     CustOrganizationId: req.body.data.CustOrganizationId,
     UserId: req.body.data.UserId,
     WOPrioirtyId: req.body.data.WOPrioirtyId
-  }, { where: { WorkOrderId: req.params.id } });
+  }, { where: { id: req.params.id } });
   res.status(200)
 });
 
@@ -79,7 +79,7 @@ WorkOrdersRouter.delete("/:id", (req, res) => {
   console.log(`Server started on port ${req.params.id}`)
   dbTable.destroy({
     where: {
-      WorkOrderId: req.params.id
+      id: req.params.id
     }
   })
   res.status(200)

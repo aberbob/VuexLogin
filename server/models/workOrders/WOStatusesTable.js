@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../../config/db');
 
 const WOStatusesTable = db.define('WOStatuses', {
-    WOStatusesname: {
+    name: {
         type: Sequelize.STRING(10)
     }
 })
