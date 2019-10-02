@@ -16,8 +16,18 @@ export default {
   },
   mutations: {
     addToCart(state, item){
-        state.cart.push(item);
-        saveCart(state.cart);
+      state.cart.push(item);
+      saveCart(state.cart);
+    },
+    removeFromCart(state, item){
+      let itemIndex = state.cart.indexOf(item);
+      state.cart.splice(itemIndex, 1);
+      saveCart(state.cart);
+    }
+  },
+  actions: {
+    persistCart(context) {
+      saveCart(context.state.cart);
     }
   },
   getters: {

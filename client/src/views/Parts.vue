@@ -37,7 +37,7 @@
               <a v-bind:href="'parts/' + row.partnumber">Edit</a>
             </td>
             <td>
-              <a @click="addtocart(row)">Add</a>
+              <a @click="addtocart({...row, qty: 1})">Add</a>
             </td>
           </tr>
         </tbody>
