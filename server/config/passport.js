@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const { TOKEN_SECRET } = require('./dotenv');
 
 // Load User model
 const UserDB = require('../models/UsersTable');
@@ -50,13 +51,14 @@ passport.use(new LocalStrategy({
 
 passport.use(new JWTStrategy({
   jwtFromRequest: function (req) {
+    console.log(req)
     let token = null;
     if (req && req.cookies) {
       token = req.cookies['auth'];
     }
     return token;
   },
-  secretOrKey: 'your_jwt_secret'
+  secretOrKey: TOKEN_SECRET
 }, function (jwt_payload, done) {
   done(null, jwt_payload);  // Giving that there was no error and the payload itself to access user data
 }));

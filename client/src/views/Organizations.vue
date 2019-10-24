@@ -30,7 +30,7 @@
           <td>{{row.country}}</td>
           <td>{{row.phone}}</td>
           <td>
-            <a v-bind:href="'organizations/' + row.CustOrganizationsId">Edit</a>
+            <a v-bind:href="'organizations/' + row.id">Edit</a>
           </td>
         </tr>
       </tbody>

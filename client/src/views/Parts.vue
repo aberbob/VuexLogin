@@ -31,13 +31,14 @@
             <td>{{row.uom}}</td>
             <td>$ {{row.listprice}}</td>
             <td>
-              <a v-bind:href="'PartsAvailability/' + row.partnumber">Avail</a>
+              <b-button variant="outline-dark" size="sm" v-bind:href="'PartsAvailability/' + row.partnumber">Avail</b-button>
             </td>
             <td>
-              <a v-bind:href="'parts/' + row.partnumber">Edit</a>
+              <b-button variant="outline-dark" size="sm" v-bind:href="'parts/' + row.partnumber">Edit</b-button>
             </td>
             <td>
-              <a @click="addtocart({...row, qty: 1})">Add</a>
+              <b-button variant="outline-dark" size="sm" @click="addtocart({...row, qty: 1})">Add</b-button>
+              <!-- <a @click="addtocart({...row, qty: 1})">Add</a> -->
             </td>
           </tr>
         </tbody>

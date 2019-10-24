@@ -2,7 +2,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const { PORT, TOKEN_SECRET } = require('./config/dotenv');
 
+const EquipmentInspectionsRouter = require('./routes/api/EquipmentInspectionsRouter');
 const partsRouter = require('./routes/api/PartsRouter');
 const PartCategoriesRouter = require('./routes/api/inventory/PartCategoriesRouter');
 const PartSubcategoriesRouter = require('./routes/api/inventory/PartSubcategoriesRouter');
@@ -36,23 +38,22 @@ const PlanterMeterRouter = require('./routes/api/planter/PlanterMeterRouter');
 const PlanterMonitorRouter = require('./routes/api/planter/PlanterMonitorRouter');
 const PlanterSeedFirmersRouter = require('./routes/api/planter/PlanterSeedFirmersRouter');
 const PlanterSeedTubesRouter = require('./routes/api/planter/PlanterSeedTubesRouter');
-
+const CartDraftsRouter = require('./routes/api/CartDraftsRouter');
+const InfoRouter = require('./routes/api/InfoRouter');
 const AuthRouter = require('./routes/api/auth/index.js');
 
 const app = express();
 const volleyball = require('volleyball');
-const session = require('express-session');
+// const session = require('express-session');
 require('./config/passport');
 
 const middlwares = require('./routes/api/auth/middlewares')
 
-const TWO_HOURS = 1000 * 60 * 60 * 2
-const {
-  PORT = 5000,
-  SESS_ID = 'sid',
-  SESS_LIFETIME = TWO_HOURS,
-  SESS_SECRET = 'TESTING THIS OUT'
-} = process.env
+const TWO_HOURS = 1000 * 60 * 60 * 4
+// const {
+//   SESS_ID = 'sid',
+//   SESS_LIFETIME = TWO_HOURS,
+// } = process.env
 
 // Database
 const db = require('./config/db');
@@ -70,17 +71,17 @@ app.use(cors({
 }));
 app.use(cookieParser())
 app.use(volleyball);
-app.use(session({
-  name: SESS_ID,
-  resave: false,
-  saveUninitialized: false,
-  secret: SESS_SECRET,
-  cookie: {
-    maxAge: SESS_LIFETIME,
-    sameSite: true,
-    secure: false,
-  }
-}));
+// app.use(session({
+//   name: SESS_ID,
+//   resave: false,
+//   saveUninitialized: false,
+//   secret: TOKEN_SECRET,
+//   cookie: {
+//     maxAge: SESS_LIFETIME,
+//     sameSite: true,
+//     secure: false,
+//   }
+// }));
 //app.use(middlwares.checkTokenSetUser);
 
 //STATIC ROUTE
@@ -90,6 +91,7 @@ app.use('/', express.static(__dirname + '/public'));
 app.use('/auth', AuthRouter);
 
 //API routes
+app.use('/api/info', InfoRouter);
 app.use('/api/parts', partsRouter);
 app.use('/api/PartCategories', PartCategoriesRouter);
 app.use('/api/PartSubcategories', PartSubcategoriesRouter);
@@ -124,6 +126,8 @@ app.use('/api/PlanterMeter', PlanterMeterRouter);
 app.use('/api/PlanterMonitor', PlanterMonitorRouter);
 app.use('/api/PlanterSeedFirmers', PlanterSeedFirmersRouter);
 app.use('/api/PlanterSeedTubes', PlanterSeedTubesRouter);
+app.use('/api/CartDrafts', CartDraftsRouter);
+app.use('/api/EquipmentInspections', EquipmentInspectionsRouter);
 
 //Catch ALL
 app.get('/*', (req, res) => {

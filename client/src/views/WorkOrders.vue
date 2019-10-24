@@ -6,9 +6,11 @@
         <b-col md="6" class="my-1">
           <!-- <router-link class="mr-1" size="sm" to="/NewWorkOrder" tag="button">NewWorkOrder</router-link>
           <b-button class="mr-1" size="sm">New</b-button>-->
-          <router-link to="/NewWorkOrder">
+          <!-- <router-link to="/NewWorkOrder">
             <b-button class="mr-1" size="sm">New</b-button>
-          </router-link>
+          </router-link>-->
+          <b-button v-b-modal.newworkorder class="mr-1" size="sm">New</b-button>
+          <b-button @click="Refresh" class="mr-1" size="sm">Refresh</b-button>
         </b-col>
         <b-col md="6" class="my-1">
           <b-form-group label-cols-sm="3" label class="mb-0">
@@ -40,14 +42,20 @@
       >
         <template slot="name" slot-scope="row">{{ row.item.id }}</template>
 
-        <template slot="isActive" slot-scope="row">{{ row.item.id }}</template>
+        <template slot="test" slot-scope="row">
+          <a size="sm" @click="info(row.item, row.item.id, $event.target)" class="mr-1">Edit</a>
+        </template>
 
         <template slot="actions" slot-scope="row">
-          <b-button size="sm" @click="info(row.item, row.item.id, $event.target)" class="mr-1">Edit</b-button>
-          <b-button
-            size="sm"
-            @click="row.toggleDetails"
-          >{{ row.detailsShowing ? 'Hide' : 'Show' }} Details</b-button>
+          <div>
+            Test
+            <a @click="row.toggleDetails">TEdit</a>
+            <a size="sm" @click="info(row.item, row.item.id, $event.target)" class="mr-1">Edit</a>
+            <a
+              size="sm"
+              @click="row.toggleDetails"
+            >{{ row.detailsShowing ? 'Hide' : 'Show' }} Details</a>
+          </div>
         </template>
 
         <template slot="row-details" slot-scope="row">
@@ -82,8 +90,8 @@
       >
         <b-row>
           <b-col>
-            Prioirty:
-            <select v-model="infoModal.content.WOPrioirtyId">
+            Priority:
+            <select v-model="infoModal.content.WOPriorityId">
               <option v-bind:key="org.id" v-for="org in WOPriorities" :value="org.id">{{org.name}}</option>
             </select>
           </b-col>
@@ -131,11 +139,7 @@
                 <br />
                 <br />Organization:
                 <select v-model="infoModal.content.CustOrganizationId">
-                  <option
-                    v-bind:key="org.CustOrganizationsId"
-                    v-for="org in AllOrgs"
-                    :value="org.id"
-                  >{{org.name}}</option>
+                  <option v-bind:key="org.id" v-for="org in AllOrgs" :value="org.id">{{org.name}}</option>
                 </select>
                 <br />Tech:
                 <br />
@@ -149,7 +153,13 @@
             <input type="text" name="group" v-model="infoModal.content.notes" />
           </b-col>
         </b-row>
-
+        <div v-if="infoModal.content.WOCategoryId == '6'">
+          <b-button @click="CreateInspection();" v-if="!infoModal.inspection">Create Inspection</b-button>
+          <b-button
+            v-bind:href="'/EquipmentInspectionEdit/wo/' + infoModal.content.id"
+            v-if="infoModal.inspection"
+          >View Inspection</b-button>
+        </div>
         <div slot="modal-footer" class="modal-footer">
           <button
             type="submit"
@@ -164,17 +174,28 @@
         </div>
       </b-modal>
     </b-container>
+    <b-modal
+      id="newworkorder"
+      ref="modal"
+      title="New Work Order"
+      @show="resetNewModal"
+      @hidden="resetNewModal"
+      @ok="submit"
+    >
+      <NewWorkOrder />
+    </b-modal>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import NewWorkOrder from "./WorkOrderNew.vue";
 //import SubHeaderProducts from "../components/layout/SubHeaderProducts.vue";
 
 export default {
   name: "Items",
   components: {
-    //SubHeaderProducts
+    NewWorkOrder
   },
   data() {
     return {
@@ -194,8 +215,9 @@ export default {
         { key: "WOCname", label: "Category" },
         { key: "CCId", label: "CustContactId" },
         { key: "COname", label: "Organization" },
-        { key: "WOPname", label: "Prioirty" },
+        { key: "WOPname", label: "Priority" },
         { key: "WOSname", label: "Status" },
+        { key: "test", label: "Test" },
         { key: "actions", label: "Actions" }
       ],
       AllItems: [],
@@ -210,7 +232,8 @@ export default {
       infoModal: {
         id: "info-modal",
         title: "",
-        content: ""
+        content: "",
+        inspection: []
       },
       NewItem: {
         id: "NewItem",
@@ -246,6 +269,30 @@ export default {
     //.catch(err => console.log(err));
   },
   methods: {
+    Refresh() {
+      axios
+        .get(this.$apiURL + "workorders/WODetailJoin")
+        .then(res => (this.AllItems = res.data));
+    },
+    CreateInspection() {
+      const results = {
+        WorkOrderId: this.infoModal.content.id,
+        PlanterId: this.infoModal.content.EquipmentProfileId
+      };
+      axios
+        .post(this.$apiURL + "EquipmentInspections/add", {
+          data: results
+        })
+        .then(
+          axios
+            .get(
+              this.$apiURL +
+                "EquipmentInspections/wo/" +
+                this.infoModal.content.id
+            )
+            .then(res => (this.infoModal.inspection = res.data))
+        );
+    },
     deleteitem: function() {
       axios.delete(this.$apiURL + "workorders/" + this.infoModal.content.id);
       this.$router.push("/workorders");
@@ -262,6 +309,12 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
+      setTimeout(
+        function() {
+          Refresh();
+        }.bind(this),
+        1000
+      );
     },
     postnew: function() {
       //console.log(this.NewItem.content);
@@ -269,7 +322,7 @@ export default {
         .post(this.$apiURL + "workorders/add", {
           data: this.NewItem.content
         })
-        .then(this.$router.push("/workorders"))
+        .then(this.$router.push("/login"))
         .catch(function(error) {
           console.log(error);
         });
@@ -279,12 +332,16 @@ export default {
       axios
         .get(this.$apiURL + "workorders/" + index)
         .then(res => (this.infoModal.content = res.data));
+      axios
+        .get(this.$apiURL + "EquipmentInspections/wo/" + index)
+        .then(res => (this.infoModal.inspection = res.data));
       //this.infoModal.content = JSON.stringify(item, null, 2);
       this.$root.$emit("bv::show::modal", this.infoModal.id, button);
     },
     resetInfoModal() {
       this.infoModal.title = "";
       this.infoModal.content = "";
+      this.infoModal.inspection = "";
     },
     closeModal(button) {
       this.$root.$emit("bv::hide::modal", this.infoModal.id, button);

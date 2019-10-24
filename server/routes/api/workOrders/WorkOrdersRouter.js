@@ -17,7 +17,7 @@ WorkOrdersRouter.get("/", async (req, res) => {
 });
 
 WorkOrdersRouter.get("/WODetailJoin", async (req, res) => {
-  db.query("SELECT workorders.id as id, WOStatuses.name as WOSname, CustOrganizations.name as COname, WOPriorities.name as WOPname, WOCategories.name as WOCname, notes, description  FROM workorders LEFT JOIN wopriorities ON workorders.WOPriorityId=wopriorities.id LEFT JOIN wostatuses ON workorders.WOStatusId=wostatuses.id LEFT JOIN custorganizations ON workorders.CustOrganizationId=custorganizations.Id LEFT JOIN wocategories ON workorders.WOCategoryId=wocategories.id").then(([results, metadata]) => {
+  db.query("SELECT WorkOrders.id as id, WOStatuses.name as WOSname, CustOrganizations.name as COname, WOPriorities.name as WOPname, WOCategories.name as WOCname, notes, description  FROM WorkOrders LEFT JOIN WOPriorities ON WorkOrders.WOPriorityId=WOPriorities.id LEFT JOIN WOStatuses ON WorkOrders.WOStatusId=WOStatuses.id LEFT JOIN CustOrganizations ON WorkOrders.CustOrganizationId=CustOrganizations.Id LEFT JOIN WOCategories ON WorkOrders.WOCategoryId=WOCategories.id").then(([results, metadata]) => {
     res.json(results); 
   })
 });
@@ -39,6 +39,7 @@ WorkOrdersRouter.get('/:id', async (req, res, next) => {
 //ADD
 WorkOrdersRouter.post("/add", async (req, res) => {
   console.log('add')
+  console.log(req.body.data)
 
   await dbTable.create({
     description: req.body.data.description,
@@ -50,7 +51,7 @@ WorkOrdersRouter.post("/add", async (req, res) => {
     CustContactId: req.body.data.CustContactId,
     CustOrganizationId: req.body.data.CustOrganizationId,
     UserId: req.body.data.UserId,
-    WOPrioirtyId: req.body.data.WOPrioirtyId
+    WOPriorityId: req.body.data.WOPriorityId
   })
   res.status(200)
 });
@@ -69,7 +70,7 @@ WorkOrdersRouter.post("/:id/update", async (req, res) => {
     CustContactId: req.body.data.CustContactId,
     CustOrganizationId: req.body.data.CustOrganizationId,
     UserId: req.body.data.UserId,
-    WOPrioirtyId: req.body.data.WOPrioirtyId
+    WOPriorityId: req.body.data.WOPriorityId
   }, { where: { id: req.params.id } });
   res.status(200)
 });

@@ -27,7 +27,8 @@
               <input class="item-qty" type="number" v-model="row.qty" @input="persistCart()" />
             </td>
             <td>
-              <a @click="removeFromCart(row)">Remove</a>
+              <b-button variant="outline-dark" size="sm" @click="removeFromCart(row)">Remove</b-button>
+              <!-- <a @click="removeFromCart(row)">Remove</a> -->
             </td>
           </tr>
         </tbody>

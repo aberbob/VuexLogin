@@ -1,0 +1,2 @@
+[ ]equipment inspection creation or edit on button press from work order
+[ ]

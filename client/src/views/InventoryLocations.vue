@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <h3>Locations</h3>
       <div class="search-wrapper">
-        <input type="text" v-model="search" placeholder="Search...">
+        <input type="text" v-model="search" placeholder="Search..." />
       </div>
       <table class="table table-bordered table-hover table-sm">
         <thead class="thead-dark">
@@ -27,8 +27,10 @@
             <td>{{row.state}}</td>
             <td>{{row.zipcode}}</td>
             <td>
-              <a v-bind:href="'LocationInventory/' + row.id">Inventory</a>
-              <a v-bind:href="'InventoryLocations/' + row.id">Edit</a>
+              <b-button variant="outline-dark" size="sm" v-bind:href="'LocationInventory/' + row.id">Inventory</b-button>
+              <b-button variant="outline-dark" size="sm" v-bind:href="'InventoryLocations/' + row.id">Edit</b-button>
+              <!-- <a v-bind:href="'LocationInventory/' + row.id">Inventory</a>
+              <a v-bind:href="'InventoryLocations/' + row.id">Edit</a> -->
             </td>
           </tr>
         </tbody>
@@ -46,7 +48,8 @@ export default {
   components: {
     //SubHeaderProducts
   },
-  data() {4
+  data() {
+    4;
     return {
       AllItems: [],
       search: ""
@@ -64,8 +67,8 @@ export default {
     },
     filteredList() {
       return this.AllItems.filter(item => {
-        return (
-          item.InventoryLocationsname.toLowerCase().match(this.search.toLowerCase())
+        return item.InventoryLocationsname.toLowerCase().match(
+          this.search.toLowerCase()
         );
       });
     }

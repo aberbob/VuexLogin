@@ -222,12 +222,22 @@ let appRouter = new Router({
               requiresAuth: true
             }
         },
-        // {
-        //     path: '/WorkOrder/:id',
-        //     name: 'EditWorkOrder',
-        //     component: () => import(/* webpackChunkName: "about" */ './views/WorkOrderEdit.vue')
-        //  }
-        //,
+        {
+            path: '/EquipmentInspection/:id',
+            name: 'EquipmentInspection',
+            component: () => import(/* webpackChunkName: "about" */ './views/EquipmentInspection.vue'),
+            meta: {
+              requiresAuth: true
+            }
+         },
+        {
+            path: '/EquipmentInspectionEdit/wo/:wo',
+            name: 'EquipmentInspectionEdit',
+            component: () => import(/* webpackChunkName: "about" */ './views/EquipmentInspectionEdit.vue'),
+            meta: {
+              requiresAuth: true
+            }
+         },
         // {
         //     path: 'WorkOrderStatuses',
         //     name: 'WorkOrderStatuses',

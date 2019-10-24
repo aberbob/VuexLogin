@@ -5,8 +5,7 @@ const UsersTable = require("../../../models/UsersTable");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-
-require('dotenv').config();
+const { TOKEN_SECRET } = require('../../../config/dotenv');
 
 function responderror422(res) {
     const error = 'Unable to login.'
@@ -48,7 +47,7 @@ AuthRouter.post("/login", async (req, res) => {
             }
             // generate a signed son web token with the contents of user object and return it in the response
             // When giving the JWT library the user data, it needs to be a plain/vanilla javascript object
-            const token = jwt.sign(user, 'your_jwt_secret');
+            const token = jwt.sign(user, TOKEN_SECRET);
             res.cookie('auth', token, {
                 maxAge: 1209600000,  // Login expiry time, two weeks in milliseconds
                 // secure: true,  // Only pass cookie over https to prevent interception
@@ -59,48 +58,6 @@ AuthRouter.post("/login", async (req, res) => {
         });
     })(req, res);
 });
-
-// AuthRouter.post("/login", async (req, res) => {
-//     const result = Joi.validate(req.body.data, schema);
-//     if (result.error === null) {
-//         UsersTable
-//             .findOne({
-//                 where: { username: req.body.data.username }
-//             })
-//             .then(user => {
-//                 if (user) {
-//                     console.log(user)
-//                     bcrypt.compare(req.body.data.password, user.password).then((result) => {
-//                         if (result) {
-//                             const payload = {
-//                                 id: user.id,
-//                                 username: user.username
-//                             }
-//                             // req.session.user = user.id;
-
-//                             jwt.sign(payload, "process.env.TOKEN_SECRET", {
-//                                 expiresIn: '1h'
-//                             }, (err, token) => {
-//                                 if (err) {
-//                                     responderror422(res);
-//                                 } else {
-//                                     console.log(token)
-//                                     res.json(token)
-//                                 }
-//                             });
-//                             console.log(result)
-//                         } else {
-//                             responderror422(res)
-//                         }
-//                     });
-//                 } else {
-//                     responderror422(res)
-//                 }
-//             })
-//     } else {
-//         responderror422(res)
-//     }
-// });
 
 AuthRouter.post("/signup", async (req, res) => {
     console.log(req.body.data);

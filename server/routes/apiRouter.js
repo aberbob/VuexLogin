@@ -46,6 +46,24 @@ const PlanterMonitorTable = require("../models/planter/PlanterMonitorTable");
 const PlanterSeedFirmersTable = require("../models/planter/PlanterSeedFirmersTable");
 const PlanterSeedTubesTable = require("../models/planter/PlanterSeedTubesTable");
 
+apiRouter.get('/createTest', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  if (req.user.username != 'test.user') {
+    res.sendStatus(403);  // Only allow adminUser to use this endpoint
+  } else if (reset === "yes") {
+
+    //Creates and Alters the tables
+    OrgST101TypesTable.hasMany(CustOrganizationsTable);
+    OrgServicePlanTypesTable.hasMany(CustOrganizationsTable);
+    OrgMarketsTable.hasMany(CustOrganizationsTable);
+    OrgInvoicingTypesTable.hasMany(CustOrganizationsTable);
+    OrgFarmTypesTable.hasMany(CustOrganizationsTable);
+    OrgAccountTypesTable.hasMany(CustOrganizationsTable);
+
+    res.sendStatus(200)
+  }
+});
+
 apiRouter.get('/createDatabaseTables1', passport.authenticate('jwt', { session: false }), (req, res) => {
 
   if (req.user.username != 'test.user') {
@@ -384,11 +402,9 @@ apiRouter.get('/createDefaultData', (req, res) => {
     WOCategoriesTable.bulkCreate([
       { name: 'Meter Test', id: 1 },
       { name: 'Service Call', id: 2 },
-      { name: 'Drop Off', id: 3 },
-      { name: 'Install', id: 4 },
-      { name: 'Delivery', id: 5 },
-      { name: 'Pickup', id: 6 },
-      { name: 'Drop Ship', id: 7 },
+      { name: 'Repair', id: 3 },
+      { name: 'Install', id: 5 },
+      { name: 'Inspection', id: 6 },
     ])
 
     OrderStatusesTable.bulkCreate([

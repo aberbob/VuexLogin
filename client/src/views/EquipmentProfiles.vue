@@ -26,6 +26,7 @@
             <th>Down Force</th>
             <th>Depth Adjust</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -48,6 +49,9 @@
             <td>{{row.PDAname}}</td>
             <td>
               <a v-bind:href="'EquipmentProfiles/' + row.id">Edit</a>
+            </td>
+            <td>
+              <a v-bind:href="'/EquipmentInspection/' + row.id">Inspection</a>
             </td>
           </tr>
         </tbody>

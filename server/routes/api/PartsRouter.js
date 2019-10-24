@@ -17,7 +17,7 @@ PartsRouter.get("/", async (req, res) => {
 
 // GET ALL DETAILS
 PartsRouter.get("/alldetails", async (req, res) => {
-  db.query("SELECT parts.partnumber, parts.description, parts.notes, parts.listprice, partscategories.name as PCName, partssubcategories.name as PSCName  FROM parts LEFT JOIN partscategories ON parts.PartsCategoryId=partscategories.id LEFT JOIN partssubcategories ON parts.PartsSubcategoryId=partssubcategories.id").then(([results, metadata]) => {
+  db.query("SELECT Parts.partnumber, Parts.description, Parts.notes, Parts.listprice, PartsCategories.name as PCName, PartsSubcategories.name as PSCName  FROM Parts LEFT JOIN PartsCategories ON Parts.PartsCategoryId=PartsCategories.id LEFT JOIN PartsSubcategories ON Parts.PartsSubcategoryId=PartsSubcategories.id").then(([results, metadata]) => {
     res.json(results);
   })
 });

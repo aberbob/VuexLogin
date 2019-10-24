@@ -1,9 +1,9 @@
 <template>
   <div class="body">
     <fieldset>
-      <legend>
+      <!-- <legend>
         <h2 id="EditItemID">New ID: {{OneItem.id}}</h2>
-      </legend>
+      </legend> -->
       <form method="post" @submit.prevent="postNow">
         Description:
         <br />
@@ -34,7 +34,7 @@
             v-bind:key="status.id"
             v-for="status in WOCategories"
             :value="status.id"
-          >{{status.WOCategoriesname}}</option>
+          >{{status.name}}</option>
         </select>
         <br />Status:
         <select v-model="OneItem.WOStatusId">
@@ -42,26 +42,27 @@
             v-bind:key="status.id"
             v-for="status in WOStatuses"
             :value="status.id"
-          >{{status.WOStatusesname}}</option>
+          >{{status.name}}</option>
         </select>
         <br />Organization:
         <select v-model="OneItem.CustOrganizationId">
-          <option v-bind:key="org.CustOrganizationsId" v-for="org in AllOrgs" :value="org.CustOrganizationsId">{{org.CustOrganizationsname}}</option>
+          <option v-bind:key="org.id" v-for="org in AllOrgs" :value="org.id">{{org.name}}</option>
         </select>
         <br />Tech:
         <br />
         <input type="text" name="listprice" v-model="OneItem.UserId" />
-        <br />Prioirty:
-        <select v-model="OneItem.WOPrioirtyId">
+        <br />Priority:
+        <select v-model="OneItem.WOPriorityId">
           <option
             v-bind:key="org.id"
             v-for="org in WOPriorities"
             :value="org.id"
-          >{{org.WOPrioritiesname}}</option>
+          >{{org.name}}</option>
         </select>
         <br />
         <button type="submit" name="button">Submit</button>
       </form>
+      <!-- {{OneItem}} -->
     </fieldset>
   </div>
 </template>
@@ -83,7 +84,8 @@ export default {
       AllOrgs: [],
       WOPriorities: [],
       WOCategories: [],
-      EquipmentProfiles: []
+      EquipmentProfiles: [],
+      OneItem: []
     };
   },
   methods: {
