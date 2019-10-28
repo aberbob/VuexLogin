@@ -17,7 +17,7 @@
           ></b-form-input>
         </b-form-group>
         <b-form-group class="col-md-3 toprow" label="Work Order:" label-for="inputWO">
-          <b-form-input id="inputWO" type="text" v-model="Inspection.WorkOrderId" placeholder="WO"></b-form-input>
+          <b-form-input id="inputWO" type="text" v-model="Inspection.WorkOrdersId" placeholder="WO"></b-form-input>
         </b-form-group>
         <b-form-group
           id="input-group-1"

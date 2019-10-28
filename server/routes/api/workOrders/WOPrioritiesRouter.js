@@ -1,6 +1,6 @@
 const express = require("express");
 const WOPrioritiesRouter = express.Router();
-const dbTable = require("../../../models/workOrders/WOPrioritiesTable");
+const dbTable = require('../../../db/models').WOPriorities;
 
 // GET ALL
 WOPrioritiesRouter.get("/", async (req, res) => {

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     PlanterMeters.associate = function(models) {
         // associations can be defined here
-        PlanterMeters.hasMany(models.EquipmentProfiles);
+        PlanterMeters.hasMany(models.EquipmentProfiles, { foreignKey: 'PlanterMetersId' });
     };
     return PlanterMeters;
 };

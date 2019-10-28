@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     TransferStatusesTable.associate = function(models) {
         // associations can be defined here
-        TransferStatusesTable.hasMany(models.Transfers);
+        TransferStatusesTable.hasMany(models.Transfers, { foreignKey: 'TransfersId' });
     };
     return TransferStatusesTable;
 };

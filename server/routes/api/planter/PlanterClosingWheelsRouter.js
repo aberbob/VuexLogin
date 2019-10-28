@@ -1,6 +1,6 @@
 const express = require("express");
 const PlanterClosingWheelsRouter = express.Router();
-const dbTable = require("../../../models/planter/PlanterClosingWheelsTable");
+const dbTable = require('../../../db/models').PlanterClosingWheels;
 
 // GET ALL
 PlanterClosingWheelsRouter.get("/", async (req, res) => {

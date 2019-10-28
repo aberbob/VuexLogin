@@ -13,12 +13,12 @@
         <input type="text" name="description" v-model="OneItem.description" />
         <br />Category:
         <br />
-        <select v-model="OneItem.PartsCategoryId">
+        <select v-model="OneItem.PartsCategoriesId">
           <option v-bind:key="item.id" v-for="item in PartCategories" :value="item.id">{{item.name}}</option>
         </select>
         <br />SubCategory:
         <br />
-        <select v-model="OneItem.PartsSubcategoryId">
+        <select v-model="OneItem.PartsSubcategoriesId">
           <option
             v-bind:key="item.id"
             v-for="item in PartSubcategoriesCalc"

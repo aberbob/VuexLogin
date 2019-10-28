@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const OrderItems = sequelize.define('OrderItems', {
-        OrderId: {
+        OrdersId: {
             type: DataTypes.INTEGER(11)
         },
         qty: {
@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true
     });
     OrderItems.associate = function(models) {
-        OrderItems.belongsTo(models.Orders);
+        OrderItems.belongsTo(models.Orders, { foreignKey: 'OrdersId' });
     };
     return OrderItems;
 };

@@ -27,7 +27,7 @@ module.exports = {
             rowqty: {
                 type: Sequelize.STRING(15)
             },
-            PlanterClosingWheelId: {
+            PlanterClosingWheelsId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'PlanterClosingWheels',
@@ -36,7 +36,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            PlanterDepthAdjustId: {
+            PlanterDepthAdjustsId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'PlanterDepthAdjusts',
@@ -45,7 +45,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            PlanterDownForceId: {
+            PlanterDownForcesId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'PlanterDownForces',
@@ -54,7 +54,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            PlanterDriveId: {
+            PlanterDrivesId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'PlanterDrives',
@@ -63,7 +63,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            PlanterInsecticideId: {
+            PlanterInsecticidesId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'PlanterInsecticides',
@@ -72,7 +72,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            PlanterMeterId: {
+            PlanterMetersId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'PlanterMeters',
@@ -81,7 +81,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            PlanterLiquidId: {
+            PlanterLiquidsId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'PlanterLiquids',
@@ -90,7 +90,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            PlanterMonitorId: {
+            PlanterMonitorsId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'PlanterMonitors',
@@ -99,7 +99,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            PlanterHarnessingId: {
+            PlanterHarnessingsId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'PlanterHarnessings',
@@ -108,7 +108,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            PlanterSeedFirmerId: {
+            PlanterSeedFirmersId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'PlanterSeedFirmers',
@@ -117,7 +117,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            PlanterSeedTubeId: {
+            PlanterSeedTubesId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'PlanterSeedTubes',
@@ -126,7 +126,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            CustOrganizationId: {
+            CustOrganizationsId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'CustOrganizations',

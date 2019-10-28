@@ -1,11 +1,11 @@
 const express = require("express");
 const PartsRouter = express.Router();
-const dbTable = require("../../models/inventory/PartsTable");
+const dbTable = require('../../db/models').Parts;
 const db = require('../../config/db');
-const AvailabilityTable = require("../../models/inventory/LocationPartQtyTable");
+const passport = require('passport');
 
 // GET ALL
-PartsRouter.get("/", async (req, res) => {
+PartsRouter.get("/", passport.authenticate('jwt', { session: false }), async (req, res) => {
   dbTable
     .findAll()
     .then(products => {
@@ -17,22 +17,22 @@ PartsRouter.get("/", async (req, res) => {
 
 // GET ALL DETAILS
 PartsRouter.get("/alldetails", async (req, res) => {
-  db.query("SELECT Parts.partnumber, Parts.description, Parts.notes, Parts.listprice, PartsCategories.name as PCName, PartsSubcategories.name as PSCName  FROM Parts LEFT JOIN PartsCategories ON Parts.PartsCategoryId=PartsCategories.id LEFT JOIN PartsSubcategories ON Parts.PartsSubcategoryId=PartsSubcategories.id").then(([results, metadata]) => {
+  db.query("SELECT Parts.partnumber, Parts.description, Parts.notes, Parts.listprice, PartCategories.name as PCName, PartSubcategories.name as PSCName  FROM Parts LEFT JOIN PartCategories ON Parts.PartCategoriesId=PartCategories.id LEFT JOIN PartSubcategories ON Parts.PartSubcategoriesId=PartSubcategories.id").then(([results, metadata]) => {
     res.json(results);
   })
 });
 
 //GET ONE BY ID
 PartsRouter.get('/:id/availability', async (req, res, next) => {
-  db.query("SELECT locationpartqties.qty as qty, inventorylocations.name as ILname FROM locationpartqties LEFT JOIN inventorylocations ON locationpartqties.InventoryLocationId=inventorylocations.id WHERE PartId=?", 
-  { replacements: [req.params.id]}).then(([results, metadata]) => {
-    res.json(results);
-  })
-  .then(product => {
-    console.log(product);
-    res.json(product);
-  })
-  .catch(err => console.log(err));
+  db.query("SELECT locationpartqties.qty as qty, inventorylocations.name as ILname FROM locationpartqties LEFT JOIN inventorylocations ON locationpartqties.InventoryLocationsId=inventorylocations.id WHERE PartId=?",
+    { replacements: [req.params.id] }).then(([results, metadata]) => {
+      res.json(results);
+    })
+    .then(product => {
+      console.log(product);
+      res.json(product);
+    })
+    .catch(err => console.log(err));
 });
 
 //GET ONE BY ID
@@ -55,8 +55,8 @@ PartsRouter.post("/add", async (req, res) => {
   await dbTable.create({
     partnumber: req.body.data.partnumber,
     description: req.body.data.description,
-    PartsCategoryId: req.body.data.PartsCategoryId,
-    PartsSubcategoryId: req.body.data.PartsSubcategoryId,
+    PartsCategoriesId: req.body.data.PartsCategoriesId,
+    PartsSubcategoriesId: req.body.data.PartsSubcategoriesId,
     notes: req.body.data.notes,
     uom: req.body.data.uom,
     listprice: req.body.data.listprice
@@ -72,8 +72,8 @@ PartsRouter.post("/:id/update", async (req, res) => {
   await dbTable.update({
     partnumber: req.body.data.partnumber,
     description: req.body.data.description,
-    PartsCategoryId: req.body.data.PartsCategoryId,
-    PartsSubcategoryId: req.body.data.PartsSubcategoryId,
+    PartsCategoriesId: req.body.data.PartsCategoriesId,
+    PartsSubcategoriesId: req.body.data.PartsSubcategoriesId,
     notes: req.body.data.notes,
     uom: req.body.data.uom,
     listprice: req.body.data.listprice

@@ -1,6 +1,6 @@
 const express = require("express");
 const OrgMarketsRouter = express.Router();
-const dbTable = require("../../../models/organization/OrgMarketsTable");
+const dbTable = require('../../../db/models').OrgMarkets;
 
 // GET ALL
 OrgMarketsRouter.get("/", async (req, res) => {

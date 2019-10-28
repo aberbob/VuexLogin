@@ -20,6 +20,7 @@ const store = new Vuex.Store({
       state.status = 'success'
       state.token = window.$cookies.get('auth')
       state.user = user
+      state.name = user.fn + user.ln
     },
     auth_error(state) {
       state.status = 'error'
@@ -42,6 +43,7 @@ const store = new Vuex.Store({
         commit('auth_request')
         axios({ url: "api/auth/login", data: user, method: 'POST' })
           .then(resp => {
+            console.log(resp.data.user)
             const user = resp.data.user
             commit('auth_success', user)
             resolve(resp)
@@ -57,7 +59,8 @@ const store = new Vuex.Store({
   getters: {
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
-    user: state => state.user
+    user: state => state.user,
+    name: state => state.name
   },
   modules: {
     cartStoreModule

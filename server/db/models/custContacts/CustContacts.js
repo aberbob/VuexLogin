@@ -13,10 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         email: {
             type: DataTypes.STRING(11)
         },
-        CustOrganizationId: {
+        CustOrganizationsId: {
             type: DataTypes.INTEGER(11)
         },
-        CustContactStatusId: {
+        CustContactStatusesId: {
             type: DataTypes.INTEGER(12)
         }
     }, {
@@ -25,10 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     });
     CustContacts.associate = function(models) {
         // associations can be defined here
-        CustContacts.hasMany(models.WorkOrders);
+        CustContacts.hasMany(models.WorkOrders, { foreignKey: 'CustContactsId' });
 
-        CustContacts.belongsTo(models.CustOrganizations);
-        CustContacts.belongsTo(models.CustContactStatuses);
+        CustContacts.belongsTo(models.CustOrganizations, { foreignKey: 'CustOrganizationsId' });
+        CustContacts.belongsTo(models.CustContactStatuses, { foreignKey: 'CustContactStatusesId' });
 
     };
     return CustContacts;

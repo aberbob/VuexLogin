@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'UserPerms',
         freezeTableName: true
     });
-    UserPermsTable.associate = function(models) {
+    UserPermsTable.associate = function (models) {
         // associations can be defined here
-        UserPermsTable.hasMany(models.Users);
+        UserPermsTable.hasMany(models.Users, { foreignKey: 'permgroup' });
     };
     return UserPermsTable;
 };

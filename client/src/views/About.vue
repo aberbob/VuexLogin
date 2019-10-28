@@ -2,7 +2,7 @@
   <div class="about">
     <h1>About</h1>
     <p>This is and awesome App</p>
-    <p>welcome {{user.username}}</p>
+    <p>welcome {{this.$store.getters.user}}</p>
   </div>
 </template>
 
@@ -15,24 +15,7 @@ export default {
   data: () => ({
     user: {}
   }),
-  mounted() {
-    console.log(localStorage.token);
-    fetch("http://sagelysown.owlinventory.com/auth", {
-      headers: {
-        authorization: `Bearer ${localStorage.token}`
-      }
-    })
-      .then(res => res.json())
-      .then(result => {
-        if (result.user) {
-          this.user = result.user;
-        } else {
-          localStorage.removeItem("token");
-          this.$route.push("/login");
-        }
-        console.log(result);
-      });
-  },
+  mounted() {},
   name: "Contacts",
   components: {
     //SubHeaderAdmin

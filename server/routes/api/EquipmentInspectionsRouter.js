@@ -21,7 +21,7 @@ EquipmentInspectionsRouter.get("/", async (req, res) => {
 EquipmentInspectionsRouter.get('/:id', async (req, res, next) => {
   dbTable
     .findAll({
-      where: { PlanterId: req.params.id }
+      where: { PlantersId: req.params.id }
     })
     .then(product => {
       // product.measurements = JSON.parse(row.measurements)
@@ -37,7 +37,7 @@ EquipmentInspectionsRouter.get('/wo/:id', async (req, res, next) => {
   console.log('here1')
   dbTable
     .findOne({
-      where: { WorkOrderId: req.params.id }
+      where: { WorkOrdersId: req.params.id }
     })
     .then(product => {
       // product.measurements = JSON.parse(row.measurements)
@@ -52,13 +52,13 @@ EquipmentInspectionsRouter.post("/add", async (req, res) => {
   console.log('Inspectadd')
   console.log(req.body)
   console.log(req.body.data.date)
-  console.log(req.body.data.PlanterId)
+  console.log(req.body.data.PlantersId)
   console.log(req.body.data.measurements)
   await dbTable.create({
     date: req.body.data.date,
-    PlanterId: req.body.data.PlanterId,
+    PlantersId: req.body.data.PlantersId,
     measurements: req.body.data.measurements,
-    WorkOrderId: req.body.data.WorkOrderId,
+    WorkOrdersId: req.body.data.WorkOrderId,
   })
   res.status(200)
 });
@@ -70,7 +70,7 @@ EquipmentInspectionsRouter.post("/:id/update", async (req, res) => {
   console.log(req.body.data)
   await dbTable.update({
     date: req.body.data.date,
-    PlanterId: req.body.data.PlanterId,
+    PlantersId: req.body.data.PlantersId,
     measurements: req.body.data.measurements,
   }, { where: { partnumber: req.params.id } });
   res.status(200)

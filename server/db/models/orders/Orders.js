@@ -1,10 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const Orders = sequelize.define('Orders', {
-        CustOrganizationId: {
+        CustOrganizationsId: {
             type: DataTypes.INTEGER(11)
         },
-        OrderStatusId: {
+        OrderStatusesId: {
             type: DataTypes.INTEGER(11)
         },
         notes: {
@@ -19,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     });
     Orders.associate = function(models) {
         // associations can be defined here
-        Orders.hasMany(models.OrderItems);
+        Orders.hasMany(models.OrderItems, { foreignKey: 'OrdersId' });
 
-        Orders.belongsTo(models.CustOrganizations);
-        Orders.belongsTo(models.OrderStatuses);
+        Orders.belongsTo(models.CustOrganizations, { foreignKey: 'CustOrganizationsId' });
+        Orders.belongsTo(models.OrderStatuses, { foreignKey: 'OrderStatusesId' });
 
     };
     return Orders;

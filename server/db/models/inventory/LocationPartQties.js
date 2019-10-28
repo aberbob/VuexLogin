@@ -1,10 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const LocationPartQties = sequelize.define('LocationPartQties', {
-        InventoryLocationId: {
+        InventoryLocationsId: {
             type: DataTypes.INTEGER(10)
         },
-        PartId: {
+        PartsId: {
             type: DataTypes.INTEGER(15)
         },
         qty: {
@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true
     });
     LocationPartQties.associate = function(models) {
-        LocationPartQties.belongsTo(models.Parts);
-        LocationPartQties.belongsTo(models.InventoryLocations);
+        LocationPartQties.belongsTo(models.Parts), { foreignKey: 'PartsId' };
+        LocationPartQties.belongsTo(models.InventoryLocations, { foreignKey: 'InventoryLocationsId' });
 
     };
     return LocationPartQties;

@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     InventoryLocations.associate = function(models) {
         // associations can be defined here
-        InventoryLocations.hasMany(models.LocationPartQties);
+        InventoryLocations.hasMany(models.LocationPartQties, { foreignKey: 'InventoryLocationsId' });
     };
     return InventoryLocations;
 };

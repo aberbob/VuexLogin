@@ -10,39 +10,39 @@ module.exports = (sequelize, DataTypes) => {
         notes: {
             type: DataTypes.STRING(500)
         },
-        EquipmentProfileId: {
+        EquipmentProfilesId: {
             type: DataTypes.INTEGER(11)
         },
-        WOCategoryId: {
+        WOCategoriesId: {
             type: DataTypes.INTEGER(11)
         },
-        WOStatusId: {
+        WOStatusesId: {
             type: DataTypes.INTEGER(11)
         },
-        CustContactId: {
+        CustContactsId: {
             type: DataTypes.INTEGER(11)
         },
-        CustOrganizationId: {
+        CustOrganizationsId: {
             type: DataTypes.INTEGER(11)
         },
-        UserId: {
+        UsersId: {
             type: DataTypes.INTEGER(11)
         },
-        WOPriorityId: {
+        WOPrioritiesId: {
             type: DataTypes.INTEGER(11)
         }
     }, {
         tableName: 'WorkOrders',
         freezeTableName: true
     });
-    WorkOrdersTable.associate = function(models) {
-        WorkOrdersTable.belongsTo(models.EquipmentProfiles);
-        WorkOrdersTable.belongsTo(models.WOCategories);
-        WorkOrdersTable.belongsTo(models.WOStatuses);
-        WorkOrdersTable.belongsTo(models.CustContacts);
-        WorkOrdersTable.belongsTo(models.CustOrganizations);
-        WorkOrdersTable.belongsTo(models.Users);
-        WorkOrdersTable.belongsTo(models.WOPriorities);
+    WorkOrdersTable.associate = function (models) {
+        WorkOrdersTable.belongsTo(models.EquipmentProfiles, { foreignKey: 'EquipmentProfilesId' });
+        WorkOrdersTable.belongsTo(models.WOCategories, { foreignKey: 'WOCategoriesId' });
+        WorkOrdersTable.belongsTo(models.WOStatuses, { foreignKey: 'WOStatusesId' });
+        WorkOrdersTable.belongsTo(models.CustContacts, { foreignKey: 'CustContactsId' });
+        WorkOrdersTable.belongsTo(models.CustOrganizations, { foreignKey: 'CustOrganizationsId' });
+        WorkOrdersTable.belongsTo(models.Users, { foreignKey: 'UsersId' });
+        WorkOrdersTable.belongsTo(models.WOPriorities, { foreignKey: 'WOPrioritiesId' });
 
     };
     return WorkOrdersTable;

@@ -1,70 +1,148 @@
 <template>
-  <div class="body">
-    <fieldset>
-      <!-- <legend>
-        <h2 id="EditItemID">New ID: {{OneItem.id}}</h2>
-      </legend> -->
-      <form method="post" @submit.prevent="postNow">
-        Description:
-        <br />
-        <input type="text" name="partnumber" v-model="OneItem.description" />
-        <br />Type:
-        <br />
-        <input type="text" name="description" v-model="OneItem.type" />
-        <br />Notes:
-        <br />
-        <b-form-textarea
-          id="textarea"
-          v-model="OneItem.notes"
-          placeholder="..."
-          rows="3"
-          max-rows="3"
-        ></b-form-textarea>
-        <br />EquipmentProfileId:
-        <select v-model="OneItem.EquipmentProfileId">
-          <option
-            v-bind:key="status.id"
-            v-for="status in EquipmentProfiles"
-            :value="status.id"
-          >{{status.name}}</option>
-        </select>
-        <br />Category:
-        <select v-model="OneItem.WOCategoryId">
-          <option
-            v-bind:key="status.id"
-            v-for="status in WOCategories"
-            :value="status.id"
-          >{{status.name}}</option>
-        </select>
-        <br />Status:
-        <select v-model="OneItem.WOStatusId">
-          <option
-            v-bind:key="status.id"
-            v-for="status in WOStatuses"
-            :value="status.id"
-          >{{status.name}}</option>
-        </select>
-        <br />Organization:
-        <select v-model="OneItem.CustOrganizationId">
-          <option v-bind:key="org.id" v-for="org in AllOrgs" :value="org.id">{{org.name}}</option>
-        </select>
-        <br />Tech:
-        <br />
-        <input type="text" name="listprice" v-model="OneItem.UserId" />
-        <br />Priority:
-        <select v-model="OneItem.WOPriorityId">
-          <option
-            v-bind:key="org.id"
-            v-for="org in WOPriorities"
-            :value="org.id"
-          >{{org.name}}</option>
-        </select>
-        <br />
-        <button type="submit" name="button">Submit</button>
-      </form>
-      <!-- {{OneItem}} -->
-    </fieldset>
-  </div>
+  <b-modal
+    size="lg"
+    id="newworkorder"
+    ref="modal"
+    title="New Work Order"
+    @show="resetNewModal"
+    @hidden="resetNewModal"
+    @ok="postNow"
+  >
+    <div class="body">
+      <b-card
+        no-body
+        class="overflow-hidden"
+        style="max-width: 1200px; min-height: 500px; padding: 20px;"
+      >
+        <b-row no-gutters class="mt-2 mr-3">
+          <b-col md="4" class="fist_row">
+            <b-form-group
+              label-cols-sm="5"
+              label-cols-lg="4"
+              label-align-sm="right"
+              label="Category:"
+              label-for="input-horizontal"
+              label-class="pl-0"
+            >
+              <b-select id="input-horizontal" class="ipt-category" v-model="OneItem.WOCategoriesId">
+                <option
+                  v-bind:key="status.id"
+                  v-for="status in WOCategories"
+                  :value="status.id"
+                >{{status.name}}</option>
+              </b-select>
+            </b-form-group>
+          </b-col>
+          <b-col md="4" class="fist_row">
+            <b-form-group
+              label-cols-sm="5"
+              label-cols-lg="4"
+              label-align-sm="right"
+              label="Priority:"
+              label-for="input-horizontal"
+            >
+              <b-select id="input-horizontal" class="ipt-category" v-model="OneItem.WOPrioritiesId">
+                <option v-bind:key="org.id" v-for="org in WOPriorities" :value="org.id">{{org.name}}</option>
+              </b-select>
+            </b-form-group>
+          </b-col>
+          <b-col md="4" class="fist_row">
+            <b-form-group
+              label-cols-sm="5"
+              label-cols-lg="4"
+              label-align-sm="right"
+              label="Status:"
+              label-for="input-horizontal"
+            >
+              <b-select id="input-horizontal" class="ipt-category" v-model="OneItem.WOStatusesId">
+                <option
+                  v-bind:key="status.id"
+                  v-for="status in WOStatuses"
+                  :value="status.id"
+                >{{status.name}}</option>
+              </b-select>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row no-gutters class="mt-2 mr-3">
+          <b-col md="4" class="fist_row">
+            <b-form-group
+              label-cols-sm="5"
+              label-cols-lg="4"
+              label-align-sm="right"
+              label="Org:"
+              label-for="input-horizontal"
+            >
+              <b-select
+                id="input-horizontal"
+                class="ipt-category"
+                v-model="OneItem.CustOrganizationsId"
+              >
+                <option v-bind:key="org.id" v-for="org in AllOrgs" :value="org.id">{{org.name}}</option>
+              </b-select>
+            </b-form-group>
+          </b-col>
+          <b-col md="4" class="fist_row">
+            <b-form-group
+              label-cols-sm="5"
+              label-cols-lg="4"
+              label-align-sm="right"
+              label="Equip:"
+              label-for="input-horizontal"
+            >
+              <b-select
+                id="input-horizontal"
+                class="ipt-category"
+                v-model="OneItem.EquipmentProfilesId"
+              >
+                <option
+                  v-bind:key="status.id"
+                  v-for="status in EquipmentProfiles"
+                  :value="status.id"
+                >{{status.name}}</option>
+              </b-select>
+            </b-form-group>
+          </b-col>
+          <b-col md="4" class="fist_row">
+            <b-form-group
+              label-cols-sm="5"
+              label-cols-lg="4"
+              label-align-sm="right"
+              label="Tech:"
+              label-for="input-horizontal"
+            >
+              <b-form-input id="input-horizontal" v-model="tech" class="ipt-tech"></b-form-input>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row no-gutters class="mt-2">
+          <b-col md="3" align-self="center" class="thd-description" style="text-align: center">
+            <b-form-group
+              label-cols-sm="12"
+              label-cols-lg="12"
+              label-align-sm="right"
+              label-class="pr-3"
+              label="Description:"
+              label-for="input-horizontal"
+            ></b-form-group>
+          </b-col>
+          <b-col md="6" align-self="center" class="thd-description" style="text-align: center">
+            <b-form-group>
+              <b-input
+                class="ipt-description"
+                id="input-horizontal"
+                type="text"
+                name="partnumber"
+                v-model="OneItem.description"
+              />
+            </b-form-group>
+          </b-col>
+        </b-row>
+      </b-card>
+    </div>
+  </b-modal>
 </template>
 
 <script>
@@ -85,10 +163,13 @@ export default {
       WOPriorities: [],
       WOCategories: [],
       EquipmentProfiles: [],
-      OneItem: []
+      OneItem: {}
     };
   },
   methods: {
+    resetNewModal() {
+      this.OneItem = {};
+    },
     postNow: function() {
       axios
         .post(this.$apiURL + "workorders/add", {
@@ -97,9 +178,10 @@ export default {
         .then(
           setTimeout(
             function() {
-              this.$router.push("/workorders");
+              this.$parent.Refresh();
+              // this.$router.push("/workorders");
             }.bind(this),
-            1000
+            500
           )
         )
         // .then(this.$router.push("/workorders"))

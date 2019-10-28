@@ -9,7 +9,7 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
 
-            CustOrganizationId: {
+            CustOrganizationsId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'CustOrganizations',
@@ -18,7 +18,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            TransferStatusId: {
+            TransferStatusesId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'TransferStatuses',

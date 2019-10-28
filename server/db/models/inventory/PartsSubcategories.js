@@ -1,21 +1,21 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    const PartsSubcategories = sequelize.define('PartsSubcategories', {
+    const PartSubcategories = sequelize.define('PartSubcategories', {
         name: {
             type: DataTypes.STRING(80)
         },
-        PartsCategoriesId: {
+        PartCategoriesId: {
             type: DataTypes.STRING(25)
         }
     }, {
-        tableName: 'PartsSubcategories',
+        tableName: 'PartSubcategories',
         freezeTableName: true
     });
-    PartsSubcategories.associate = function(models) {
+    PartSubcategories.associate = function(models) {
         // associations can be defined here
-        PartsSubcategories.hasMany(models.Parts);
-        PartsSubcategories.belongsTo(models.PartsCategories);
+        PartSubcategories.hasMany(models.Parts, { foreignKey: 'PartSubcategoriesId' });
+        PartSubcategories.belongsTo(models.PartCategories, { foreignKey: 'PartCategoriesId' });
 
     };
-    return PartsSubcategories;
+    return PartSubcategories;
 };

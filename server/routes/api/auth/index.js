@@ -1,7 +1,7 @@
 const express = require("express");
 const AuthRouter = express.Router();
 const Joi = require('@hapi/joi');
-const UsersTable = require("../../../models/UsersTable");
+const UsersTable = require('../../../db/models').Users;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
@@ -34,7 +34,7 @@ AuthRouter.post("/login", async (req, res) => {
     //console.log(user)
     passport.authenticate('local', { session: false }, (err, user, info) => {
         console.log ('after passport')
-        console.log(user)
+        // console.log(user)
         console.log(err)
         if (err || !user) {
             return res.status(400).json({

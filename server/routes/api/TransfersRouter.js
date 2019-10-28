@@ -1,6 +1,6 @@
 const express = require("express");
 const TransfersRouter = express.Router();
-const dbTable = require("../../models/transfers/TransfersTable");
+const dbTable = require('../../db/models').Transfers;
 const db = require('../../config/db');
 
 // GET ALL
@@ -54,8 +54,8 @@ TransfersRouter.post("/add", async (req, res) => {
   await dbTable.create({
     partnumber: req.body.data.partnumber,
     description: req.body.data.description,
-    PartsCategoryId: req.body.data.PartsCategoryId,
-    PartsSubcategoryId: req.body.data.PartsSubcategoryId,
+    PartsCategoriesId: req.body.data.PartsCategoryId,
+    PartsSubcategoriesId: req.body.data.PartsSubcategoryId,
     notes: req.body.data.notes,
     uom: req.body.data.uom,
     listprice: req.body.data.listprice

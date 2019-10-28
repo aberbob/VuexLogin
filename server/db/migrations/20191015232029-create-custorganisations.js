@@ -42,7 +42,7 @@ module.exports = {
             billingcontact: {
                 type: Sequelize.STRING(11)
             },
-            OrgAccountTypeId: {
+            OrgAccountTypesId: {
                 type: Sequelize.INTEGER(11),
                 allowNull: true,
                 references: {
@@ -52,7 +52,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            OrgFarmTypeId: {
+            OrgFarmTypesId: {
                 type: Sequelize.INTEGER(11),
                 allowNull: true,
                 references: {
@@ -62,7 +62,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            OrgInvoicingTypeId: {
+            OrgInvoicingTypesId: {
                 type: Sequelize.INTEGER(11),
                 allowNull: true,
                 references: {
@@ -72,7 +72,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            OrgMarketId: {
+            OrgMarketsId: {
                 type: Sequelize.INTEGER(11),
                 allowNull: true,
                 references: {
@@ -82,7 +82,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            OrgServicePlanTypeId: {
+            OrgServicePlanTypesId: {
                 type: Sequelize.INTEGER(11),
                 allowNull: true,
                 references: {
@@ -92,7 +92,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            OrgST101TypeId: {
+            OrgST101TypesId: {
                 type: Sequelize.INTEGER(11),
                 allowNull: true,
                 references: {

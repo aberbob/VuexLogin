@@ -1,6 +1,6 @@
 const express = require("express");
 const PartCategoriesRouter = express.Router();
-const dbTable = require("../../../models/inventory/PartsCategoryTable");
+const dbTable = require('../../../db/models').PartCategories;
 
 // GET ALL
 PartCategoriesRouter.get("/", async (req, res) => {

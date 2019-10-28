@@ -12,7 +12,7 @@ const InventoryLocationsRouter = require('./routes/api/inventory/InventoryLocati
 const OrdersRouter = require('./routes/api/OrdersRouter');
 const TransfersRouter = require('./routes/api/TransfersRouter');
 const usersRouter = require('./routes/api/usersRouter');
-const apiRouter = require('./routes/apiRouter');
+// const apiRouter = require('./routes/apiRouter');
 const custOrganizationsRouter = require('./routes/api/organization/custOrganizationsRouter');
 const custContactsRouter = require('./routes/api/custContacts/CustContactsRouter');
 const CustContactStatusesRouter = require('./routes/api/custContacts/CustContactStatusesRouter');
@@ -41,6 +41,7 @@ const PlanterSeedTubesRouter = require('./routes/api/planter/PlanterSeedTubesRou
 const CartDraftsRouter = require('./routes/api/CartDraftsRouter');
 const InfoRouter = require('./routes/api/InfoRouter');
 const AuthRouter = require('./routes/api/auth/index.js');
+const MarketItemsRouter = require('./routes/api/market/MarketItemsRouter');
 
 const app = express();
 const volleyball = require('volleyball');
@@ -91,12 +92,13 @@ app.use('/', express.static(__dirname + '/public'));
 app.use('/auth', AuthRouter);
 
 //API routes
+app.use('/api/marketitems', MarketItemsRouter);
 app.use('/api/info', InfoRouter);
 app.use('/api/parts', partsRouter);
 app.use('/api/PartCategories', PartCategoriesRouter);
 app.use('/api/PartSubcategories', PartSubcategoriesRouter);
 app.use('/api/InventoryLocations', InventoryLocationsRouter);
-app.use('/api', apiRouter);
+// app.use('/api', apiRouter);
 app.use('/api/organizations', custOrganizationsRouter);
 app.use('/api/orders', OrdersRouter);
 app.use('/api/transfers', TransfersRouter);

@@ -1,6 +1,6 @@
 const express = require("express");
 const WOStatusesRouter = express.Router();
-const dbTable = require("../../../models/workOrders/WOStatusesTable");
+const dbTable = require('../../../db/models').WOStatuses;
 
 // GET ALL
 WOStatusesRouter.get("/", async (req, res) => {

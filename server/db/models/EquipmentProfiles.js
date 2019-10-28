@@ -19,40 +19,40 @@ module.exports = (sequelize, DataTypes) => {
         rowqty: {
             type: DataTypes.STRING(15)
         },
-        PlanterClosingWheelId: {
+        PlanterClosingWheelsId: {
             type: DataTypes.INTEGER(11)
         },
-        PlanterDepthAdjustId: {
+        PlanterDepthAdjustsId: {
             type: DataTypes.INTEGER(11)
         },
-        PlanterDownForceId: {
+        PlanterDownForcesId: {
             type: DataTypes.INTEGER(11)
         },
-        PlanterDriveId: {
+        PlanterDrivesId: {
             type: DataTypes.INTEGER(11)
         },
-        PlanterInsecticideId: {
+        PlanterInsecticidesId: {
             type: DataTypes.INTEGER(11)
         },
-        PlanterMeterId: {
+        PlanterMetersId: {
             type: DataTypes.INTEGER(11)
         },
-        PlanterLiquidId: {
+        PlanterLiquidsId: {
             type: DataTypes.INTEGER(11)
         },
-        PlanterMonitorId: {
+        PlanterMonitorsId: {
             type: DataTypes.INTEGER(11)
         },
-        PlanterHarnessingId: {
+        PlanterHarnessingsId: {
             type: DataTypes.INTEGER(11)
         },
-        PlanterSeedFirmerId: {
+        PlanterSeedFirmersId: {
             type: DataTypes.INTEGER(11)
         },
-        PlanterSeedTubeId: {
+        PlanterSeedTubesId: {
             type: DataTypes.INTEGER(11)
         },
-        CustOrganizationId: {
+        CustOrganizationsId: {
             type: DataTypes.INTEGER(11)
         }
     }, {
@@ -61,20 +61,20 @@ module.exports = (sequelize, DataTypes) => {
     });
     EquipmentProfilesTable.associate = function(models) {
         // associations can be defined here
-        EquipmentProfilesTable.hasMany(models.WorkOrders);
+        EquipmentProfilesTable.hasMany(models.WorkOrders, { foreignKey: 'EquipmentProfilesId' });
 
-        EquipmentProfilesTable.belongsTo(models.CustOrganizations);
-        EquipmentProfilesTable.belongsTo(models.PlanterClosingWheels);
-        EquipmentProfilesTable.belongsTo(models.PlanterDepthAdjusts);
-        EquipmentProfilesTable.belongsTo(models.PlanterDownForces);
-        EquipmentProfilesTable.belongsTo(models.PlanterDrives);
-        EquipmentProfilesTable.belongsTo(models.PlanterHarnessings);
-        EquipmentProfilesTable.belongsTo(models.PlanterInsecticides);
-        EquipmentProfilesTable.belongsTo(models.PlanterLiquids);
-        EquipmentProfilesTable.belongsTo(models.PlanterMeters);
-        EquipmentProfilesTable.belongsTo(models.PlanterMonitors);
-        EquipmentProfilesTable.belongsTo(models.PlanterSeedFirmers);
-        EquipmentProfilesTable.belongsTo(models.PlanterSeedTubes);
+        EquipmentProfilesTable.belongsTo(models.CustOrganizations, { foreignKey: 'CustOrganizationsId' });
+        EquipmentProfilesTable.belongsTo(models.PlanterClosingWheels, { foreignKey: 'PlanterClosingWheelsId' });
+        EquipmentProfilesTable.belongsTo(models.PlanterDepthAdjusts, { foreignKey: 'PlanterDepthAdjustsId' });
+        EquipmentProfilesTable.belongsTo(models.PlanterDownForces, { foreignKey: 'PlanterDownForcesId' });
+        EquipmentProfilesTable.belongsTo(models.PlanterDrives, { foreignKey: 'PlanterDrivesId' });
+        EquipmentProfilesTable.belongsTo(models.PlanterHarnessings, { foreignKey: 'PlanterHarnessingsId' });
+        EquipmentProfilesTable.belongsTo(models.PlanterInsecticides, { foreignKey: 'PlanterInsecticidesId' });
+        EquipmentProfilesTable.belongsTo(models.PlanterLiquids, { foreignKey: 'PlanterLiquidsId' });
+        EquipmentProfilesTable.belongsTo(models.PlanterMeters, { foreignKey: 'PlanterMetersId' });
+        EquipmentProfilesTable.belongsTo(models.PlanterMonitors, { foreignKey: 'PlanterMonitorsId' });
+        EquipmentProfilesTable.belongsTo(models.PlanterSeedFirmers, { foreignKey: 'PlanterSeedFirmersId' });
+        EquipmentProfilesTable.belongsTo(models.PlanterSeedTubes, { foreignKey: 'PlanterSeedTubesId' });
     };
     return EquipmentProfilesTable;
 };

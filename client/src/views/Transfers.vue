@@ -23,7 +23,7 @@
       <tbody>
         <tr v-for="row in filteredList" v-bind:key="row.id">
           <td>{{row.id}}</td>
-          <td>{{row.CustOrganizationId}}</td>
+          <td>{{row.CustOrganizationsId}}</td>
           <td>{{row.source}}</td>
           <td>{{row.destination}}</td>
           <td>
@@ -46,7 +46,7 @@
       <tbody>
         <tr v-for="row in filteredCList" v-bind:key="row.id">
           <td>{{row.id}}</td>
-          <td>{{row.CustOrganizationId}}</td>
+          <td>{{row.CustOrganizationsId}}</td>
           <td>{{row.source}}</td>
           <td>{{row.destination}}</td>
           <td>

@@ -1,6 +1,6 @@
 const express = require("express");
 const custOrganizationsRouter = express.Router();
-const dbTable = require("../../../models/organization/CustOrganizationsTable");
+const dbTable = require('../../../db/models').CustOrganizations;
 
 // GET ALL
 custOrganizationsRouter.get("/", async (req, res) => {
@@ -40,12 +40,12 @@ custOrganizationsRouter.post("/add", async (req, res) => {
     zip: req.body.data.zip,
     country: req.body.data.country,
     phone: req.body.data.phone,
-    OrgAccountTypeId: req.body.data.OrgAccountTypeId,
-    OrgFarmTypeId: req.body.data.OrgFarmTypeId,
-    OrgInvoicingTypeId: req.body.data.OrgInvoicingTypeId,
-    OrgMarketId: req.body.data.OrgMarketId,
-    OrgServicePlanTypeId: req.body.data.OrgServicePlanTypeId,
-    OrgST101TypeId: req.body.data.OrgST101TypeId,
+    OrgAccountTypesId: req.body.data.OrgAccountTypesId,
+    OrgFarmTypesId: req.body.data.OrgFarmTypesId,
+    OrgInvoicingTypesId: req.body.data.OrgInvoicingTypesId,
+    OrgMarketsId: req.body.data.OrgMarketsId,
+    OrgServicePlanTypesId: req.body.data.OrgServicePlanTypesId,
+    OrgST101TypesId: req.body.data.OrgST101TypesId,
   })
   res.status(200)
 });
@@ -63,12 +63,12 @@ custOrganizationsRouter.post("/:id/update", async (req, res) => {
     zip: req.body.data.zip,
     country: req.body.data.country,
     phone: req.body.data.phone,
-    OrgAccountTypeId: req.body.data.OrgAccountTypeId,
-    OrgFarmTypeId: req.body.data.OrgFarmTypeId,
-    OrgInvoicingTypeId: req.body.data.OrgInvoicingTypeId,
-    OrgMarketId: req.body.data.OrgMarketId,
-    OrgServicePlanTypeId: req.body.data.OrgServicePlanTypeId,
-    OrgST101TypeId: req.body.data.OrgST101TypeId,
+    OrgAccountTypesId: req.body.data.OrgAccountTypesId,
+    OrgFarmTypesId: req.body.data.OrgFarmTypesId,
+    OrgInvoicingTypesId: req.body.data.OrgInvoicingTypesId,
+    OrgMarketsId: req.body.data.OrgMarketsId,
+    OrgServicePlanTypesId: req.body.data.OrgServicePlanTypesId,
+    OrgST101TypesId: req.body.data.OrgST101TypesId,
   }, { where: { id: req.params.id } });
   res.status(200)
 });

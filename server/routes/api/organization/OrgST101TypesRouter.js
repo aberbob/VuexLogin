@@ -1,6 +1,6 @@
 const express = require("express");
 const OrgST101TypesRouter = express.Router();
-const dbTable = require("../../../models/organization/OrgST101TypesTable");
+const dbTable = require('../../../db/models').OrgST101Types;
 
 // GET ALL
 OrgST101TypesRouter.get("/", async (req, res) => {

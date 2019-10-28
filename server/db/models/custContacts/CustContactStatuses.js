@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     CustContactStatuses.associate = function(models) {
         // associations can be defined here
-        CustContactStatuses.hasMany(models.CustContacts);
+        CustContactStatuses.hasMany(models.CustContacts, { foreignKey: 'CustContactStatusesId' });
     };
     return CustContactStatuses;
 };

@@ -1,6 +1,6 @@
 const express = require("express");
 const PlanterMeterRouter = express.Router();
-const dbTable = require("../../../models/planter/PlanterMeterTable");
+const dbTable = require('../../../db/models').PlanterMeters;
 
 // GET ALL
 PlanterMeterRouter.get("/", async (req, res) => {

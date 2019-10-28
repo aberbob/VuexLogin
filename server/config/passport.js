@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const { TOKEN_SECRET } = require('./dotenv');
 
 // Load User model
-const UserDB = require('../models/UsersTable');
+const UserDB = require('../db/models').Users;
 
 //passport.js
 const passport = require('passport');
@@ -30,7 +30,7 @@ passport.use(new LocalStrategy({
           return cb(null, false, { message: 'Incorrect email or password.' });
         }
         if (user) {
-          console.log(user)
+          // console.log(user)
           bcrypt.compare(password, user.password).then((result) => {
             if (result) {
               const payload = {
@@ -51,7 +51,7 @@ passport.use(new LocalStrategy({
 
 passport.use(new JWTStrategy({
   jwtFromRequest: function (req) {
-    console.log(req)
+    // console.log(req)
     let token = null;
     if (req && req.cookies) {
       token = req.cookies['auth'];

@@ -25,11 +25,11 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'Users',
         freezeTableName: true
     });
-    UsersTable.associate = function(models) {
+    UsersTable.associate = function (models) {
         // associations can be defined here
-        UsersTable.hasMany(models.WorkOrders);
-        UsersTable.hasMany(models.CartDrafts);
-        UsersTable.belongsTo(models.UserPerms);
+        UsersTable.hasMany(models.WorkOrders, { foreignKey: 'UsersId' });
+        UsersTable.hasMany(models.CartDrafts, { foreignKey: 'UsersId' });
+        UsersTable.belongsTo(models.UserPerms, { foreignKey: 'permgroup' });
 
     };
     return UsersTable;

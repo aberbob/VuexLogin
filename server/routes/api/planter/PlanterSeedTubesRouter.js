@@ -1,6 +1,6 @@
 const express = require("express");
 const PlanterSeedTubesRouter = express.Router();
-const dbTable = require("../../../models/planter/PlanterSeedTubesTable");
+const dbTable = require('../../../db/models').PlanterSeedTubes;
 
 // GET ALL
 PlanterSeedTubesRouter.get("/", async (req, res) => {

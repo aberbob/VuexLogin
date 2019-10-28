@@ -1,6 +1,6 @@
 const express = require("express");
 const PlanterDepthAdjustRouter = express.Router();
-const dbTable = require("../../../models/planter/PlanterDepthAdjustTable");
+const dbTable = require('../../../db/models').PlanterDepthAdjusts;
 
 // GET ALL
 PlanterDepthAdjustRouter.get("/", async (req, res) => {

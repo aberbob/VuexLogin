@@ -1,6 +1,6 @@
 const express = require("express");
 const PlanterSeedFirmersRouter = express.Router();
-const dbTable = require("../../../models/planter/PlanterSeedFirmersTable");
+const dbTable = require('../../../db/models').PlanterSeedFirmers;
 
 // GET ALL
 PlanterSeedFirmersRouter.get("/", async (req, res) => {

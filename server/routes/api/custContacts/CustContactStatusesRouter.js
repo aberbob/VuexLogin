@@ -1,6 +1,6 @@
 const express = require("express");
 const CustContactStatusesRouter = express.Router();
-const dbTable = require("../../../models/custContacts/CustContactStatusesTable");
+const dbTable = require('../../../db/models').CustContactStatuses;
 
 // GET ALL
 CustContactStatusesRouter.get("/", async (req, res) => {

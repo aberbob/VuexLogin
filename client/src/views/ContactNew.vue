@@ -14,15 +14,15 @@
         <br />Phone Number:
         <input type="text" name="category" v-model="OneCustomer.phonenumber" />
         <br />Organization:
-        <select v-model="OneCustomer.CustOrganizationId">
+        <select v-model="OneCustomer.CustOrganizationsId">
           <option
-            v-bind:key="org.CustOrganizationsId"
+            v-bind:key="org.id"
             v-for="org in AllOrgs"
-            :value="org.CustOrganizationsId"
-          >{{org.CustOrganizationsname}}</option>
+            :value="org.id"
+          >{{org.name}}</option>
         </select>
         <br />Status:
-        <select v-model="OneCustomer.CustContactStatusId">
+        <select v-model="OneCustomer.CustContactStatusesId">
           <option
             v-bind:key="status.id"
             v-for="status in AllStatuses"

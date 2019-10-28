@@ -42,20 +42,16 @@
       >
         <template slot="name" slot-scope="row">{{ row.item.id }}</template>
 
-        <template slot="test" slot-scope="row">
+        <!-- <template slot="test" slot-scope="row">
           <a size="sm" @click="info(row.item, row.item.id, $event.target)" class="mr-1">Edit</a>
-        </template>
+        </template>-->
 
-        <template slot="actions" slot-scope="row">
-          <div>
-            Test
-            <a @click="row.toggleDetails">TEdit</a>
-            <a size="sm" @click="info(row.item, row.item.id, $event.target)" class="mr-1">Edit</a>
-            <a
-              size="sm"
-              @click="row.toggleDetails"
-            >{{ row.detailsShowing ? 'Hide' : 'Show' }} Details</a>
-          </div>
+        <template v-slot:cell(actions)="row">
+          <b-button size="sm" @click="info(row.item, row.item.id, $event.target)" class="mr-1">Edit</b-button>
+          <b-button
+            size="sm"
+            @click="row.toggleDetails"
+          >{{ row.detailsShowing ? 'Hide' : 'Show' }} Details</b-button>
         </template>
 
         <template slot="row-details" slot-scope="row">
@@ -86,12 +82,12 @@
         :id="infoModal.id"
         :title="infoModal.title"
         @hide="resetInfoModal"
-        @ok="postNow"
+        @ok="postEdit"
       >
-        <b-row>
+        <!-- <b-row>
           <b-col>
             Priority:
-            <select v-model="infoModal.content.WOPriorityId">
+            <select v-model="infoModal.content.WOPrioritiesId">
               <option v-bind:key="org.id" v-for="org in WOPriorities" :value="org.id">{{org.name}}</option>
             </select>
           </b-col>
@@ -105,7 +101,7 @@
           </b-col>
           <b-col>
             Status:
-            <select v-model="infoModal.content.WOStatusId">
+            <select v-model="infoModal.content.WOStatusesId">
               <option
                 v-bind:key="status.id"
                 v-for="status in WOStatuses"
@@ -115,7 +111,7 @@
           </b-col>
           <b-col>
             Category:
-            <select v-model="infoModal.content.WOCategoryId">
+            <select v-model="infoModal.content.WOCategoriesId">
               <option
                 v-bind:key="status.id"
                 v-for="status in WOCategories"
@@ -128,8 +124,8 @@
           <b-col cols="4">
             <fieldset>
               <form method="post" @submit.prevent="postNow">
-                <br />EquipmentProfileId:
-                <select v-model="infoModal.content.EquipmentProfileId">
+                <br />Equip:
+                <select v-model="infoModal.content.EquipmentProfilesId">
                   <option
                     v-bind:key="status.id"
                     v-for="status in EquipmentProfiles"
@@ -138,12 +134,19 @@
                 </select>
                 <br />
                 <br />Organization:
-                <select v-model="infoModal.content.CustOrganizationId">
+                <select v-model="infoModal.content.CustOrganizationsId">
                   <option v-bind:key="org.id" v-for="org in AllOrgs" :value="org.id">{{org.name}}</option>
                 </select>
                 <br />Tech:
                 <br />
-                <input type="text" name="listprice" v-model="infoModal.content.UserId" />
+               <input type="text" name="listprice" v-model="infoModal.content.UserId" />
+                <select v-model="infoModal.content.UsersId">
+                  <option
+                    v-bind:key="status.id"
+                    v-for="status in EquipmentProfiles"
+                    :value="status.id"
+                  >{{status.name}}</option>
+                </select>
               </form>
             </fieldset>
           </b-col>
@@ -152,19 +155,191 @@
             <br />
             <input type="text" name="group" v-model="infoModal.content.notes" />
           </b-col>
-        </b-row>
-        <div v-if="infoModal.content.WOCategoryId == '6'">
+        </b-row>-->
+        <div v-if="infoModal.content.WOCategoriesId == '6'">
           <b-button @click="CreateInspection();" v-if="!infoModal.inspection">Create Inspection</b-button>
           <b-button
             v-bind:href="'/EquipmentInspectionEdit/wo/' + infoModal.content.id"
             v-if="infoModal.inspection"
           >View Inspection</b-button>
         </div>
+        <b-card
+          no-body
+          class="overflow-hidden"
+          style="max-width: 1200px; min-height: 500px; padding: 20px;"
+        >
+          <b-row no-gutters class="mt-2 mr-3">
+            <b-col md="4" class="fist_row">
+              <b-form-group
+                label-cols-sm="5"
+                label-cols-lg="4"
+                label-align-sm="right"
+                label="Category:"
+                label-for="input-horizontal"
+                label-class="pl-0"
+              >
+                <b-select
+                  id="input-horizontal"
+                  class="ipt-category"
+                  v-model="infoModal.content.WOCategoriesId"
+                >
+                  <option
+                    v-bind:key="status.id"
+                    v-for="status in WOCategories"
+                    :value="status.id"
+                  >{{status.name}}</option>
+                </b-select>
+              </b-form-group>
+            </b-col>
+            <b-col md="4" class="fist_row">
+              <b-form-group
+                label-cols-sm="5"
+                label-cols-lg="4"
+                label-align-sm="right"
+                label="Priority:"
+                label-for="input-horizontal"
+              >
+                <b-select
+                  id="input-horizontal"
+                  class="ipt-category"
+                  v-model="infoModal.content.WOPrioritiesId"
+                >
+                  <option
+                    v-bind:key="org.id"
+                    v-for="org in WOPriorities"
+                    :value="org.id"
+                  >{{org.name}}</option>
+                </b-select>
+              </b-form-group>
+            </b-col>
+            <b-col md="4" class="fist_row">
+              <b-form-group
+                label-cols-sm="5"
+                label-cols-lg="4"
+                label-align-sm="right"
+                label="Status:"
+                label-for="input-horizontal"
+              >
+                <b-select
+                  id="input-horizontal"
+                  class="ipt-category"
+                  v-model="infoModal.content.WOStatusesId"
+                >
+                  <option
+                    v-bind:key="status.id"
+                    v-for="status in WOStatuses"
+                    :value="status.id"
+                  >{{status.name}}</option>
+                </b-select>
+              </b-form-group>
+            </b-col>
+          </b-row>
+
+          <b-row no-gutters class="mt-2 mr-3">
+            <b-col md="4" class="fist_row">
+              <b-form-group
+                label-cols-sm="5"
+                label-cols-lg="4"
+                label-align-sm="right"
+                label="Org:"
+                label-for="input-horizontal"
+              >
+                <b-select
+                  id="input-horizontal"
+                  class="ipt-category"
+                  v-model="infoModal.content.CustOrganizationsId"
+                >
+                  <option v-bind:key="org.id" v-for="org in AllOrgs" :value="org.id">{{org.name}}</option>
+                </b-select>
+              </b-form-group>
+            </b-col>
+            <b-col md="4" class="fist_row">
+              <b-form-group
+                label-cols-sm="5"
+                label-cols-lg="4"
+                label-align-sm="right"
+                label="Equip:"
+                label-for="input-horizontal"
+              >
+                <b-select
+                  id="input-horizontal"
+                  class="ipt-category"
+                  v-model="infoModal.content.EquipmentProfilesId"
+                >
+                  <option
+                    v-bind:key="status.id"
+                    v-for="status in EquipmentProfiles"
+                    :value="status.id"
+                  >{{status.name}}</option>
+                </b-select>
+              </b-form-group>
+            </b-col>
+            <b-col md="4" class="fist_row">
+              <b-form-group
+                label-cols-sm="5"
+                label-cols-lg="4"
+                label-align-sm="right"
+                label="Tech:"
+                label-for="input-horizontal"
+              >
+                <b-form-input id="input-horizontal" v-model="tech" class="ipt-tech"></b-form-input>
+              </b-form-group>
+            </b-col>
+          </b-row>
+
+          <b-row no-gutters class="mt-2">
+            <b-col md="3" align-self="center" class="thd-description" style="text-align: center">
+              <b-form-group
+                label-cols-sm="12"
+                label-cols-lg="12"
+                label-align-sm="right"
+                label-class="pr-3"
+                label="Description:"
+                label-for="input-horizontal"
+              ></b-form-group>
+            </b-col>
+            <b-col md="6" align-self="center" class="thd-description" style="text-align: center">
+              <b-form-group>
+                <b-input
+                  class="ipt-description"
+                  id="input-horizontal"
+                  type="text"
+                  name="partnumber"
+                  v-model="infoModal.content.description"
+                />
+              </b-form-group>
+            </b-col>
+          </b-row>
+          <b-row no-gutters class="mt-2">
+            <b-col md="3" class="label-note">
+              <b-form-group
+                label-cols-sm="12"
+                label-cols-lg="12"
+                label-align-sm="right"
+                label="Notes:"
+                label-class="pr-3"
+                label-for="input-horizontal"
+              ></b-form-group>
+            </b-col>
+            <b-col md="6" class="label-note">
+              <b-form-group>
+                <b-form-input id="input-horizontal" v-model="note" class="ipt-notes"></b-form-input>
+              </b-form-group>
+            </b-col>
+            <b-button variant="success" @click="addUser" class="btn-add">Add</b-button>
+          </b-row>
+
+          <b-row no gutters class="mt-2">
+            <b-col md="10" sm="12" lg="10" offset-md="1" offset-lg="1">
+              <b-table responsive :items="items" :fields="notefields" :tbody-tr-class="rowClass"></b-table>
+            </b-col>
+          </b-row>
+        </b-card>
         <div slot="modal-footer" class="modal-footer">
           <button
             type="submit"
             class="btn btn-success"
-            @click="postNow(); closeModal($event.target);"
+            @click="postEdit(); closeModal($event.target);"
           >Save</button>
           <button
             type="button"
@@ -174,16 +349,7 @@
         </div>
       </b-modal>
     </b-container>
-    <b-modal
-      id="newworkorder"
-      ref="modal"
-      title="New Work Order"
-      @show="resetNewModal"
-      @hidden="resetNewModal"
-      @ok="submit"
-    >
-      <NewWorkOrder />
-    </b-modal>
+    <NewWorkOrder />
   </div>
 </template>
 
@@ -209,16 +375,38 @@ export default {
         {
           key: "description",
           label: "Description",
-          sortable: true,
           class: "text-center"
         },
         { key: "WOCname", label: "Category" },
-        { key: "CCId", label: "CustContactId" },
         { key: "COname", label: "Organization" },
-        { key: "WOPname", label: "Priority" },
-        { key: "WOSname", label: "Status" },
-        { key: "test", label: "Test" },
+        { key: "CCId", label: "Contact" },
+        { key: "WOPname", label: "Priority", sortable: true },
+        { key: "WOSname", label: "Status", sortable: true },
         { key: "actions", label: "Actions" }
+      ],
+      notefields: [
+        {
+          key: "date",
+          label: "Dates",
+          class: "md-3 lg-3",
+          variant: "none",
+          width: "30%",
+          tdClass: "align-centers"
+        },
+        {
+          key: "note",
+          label: "Note",
+          class: "sm-4 lg-4",
+          variant: "none",
+          width: "40%"
+        },
+        {
+          key: "user",
+          label: "User",
+          class: "sm-3 lg-3",
+          variant: "none",
+          width: "30%"
+        }
       ],
       AllItems: [],
       search: "",
@@ -244,7 +432,9 @@ export default {
       AllOrgs: [],
       WOPriorities: [],
       WOCategories: [],
-      EquipmentProfiles: []
+      EquipmentProfiles: [],
+      Users: [],
+      note: ""
     };
   },
   created() {
@@ -266,6 +456,7 @@ export default {
     axios
       .get(this.$apiURL + "workorders/WODetailJoin")
       .then(res => (this.AllItems = res.data));
+    axios.get(this.$apiURL + "users").then(res => (this.Users = res.data));
     //.catch(err => console.log(err));
   },
   methods: {
@@ -277,7 +468,7 @@ export default {
     CreateInspection() {
       const results = {
         WorkOrderId: this.infoModal.content.id,
-        PlanterId: this.infoModal.content.EquipmentProfileId
+        PlanterId: this.infoModal.content.EquipmentProfilesId
       };
       axios
         .post(this.$apiURL + "EquipmentInspections/add", {
@@ -295,9 +486,9 @@ export default {
     },
     deleteitem: function() {
       axios.delete(this.$apiURL + "workorders/" + this.infoModal.content.id);
-      this.$router.push("/workorders");
+      // this.$router.push("/workorders");
     },
-    postNow: function() {
+    postEdit: function() {
       axios
         .post(
           this.$apiURL + "workorders/" + this.infoModal.content.id + "/update",
@@ -305,15 +496,15 @@ export default {
             data: this.infoModal.content
           }
         )
-        .then(this.$router.push("/workorders"))
+        // .then(this.$router.push("/workorders"))
         .catch(function(error) {
           console.log(error);
         });
       setTimeout(
         function() {
-          Refresh();
+          this.Refresh();
         }.bind(this),
-        1000
+        500
       );
     },
     postnew: function() {

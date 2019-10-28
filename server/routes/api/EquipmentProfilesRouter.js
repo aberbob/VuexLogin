@@ -1,6 +1,6 @@
 const express = require("express");
 const EquipmentProfilesRouter = express.Router();
-const dbTable = require("../../models/EquipmentProfilesTable");
+const dbTable = require('../../db/models').EquipmentProfiles;
 const db = require('../../config/db');
 
 // GET ALL
@@ -18,8 +18,8 @@ EquipmentProfilesRouter.get("/", async (req, res) => {
 // GET ALL
 EquipmentProfilesRouter.get("/alldetails", async (req, res) => {
   console.log('EquipmentAll')
-  db.query("SELECT EquipmentProfiles.id, EquipmentProfiles.name, EquipmentProfiles.make, EquipmentProfiles.model, EquipmentProfiles.rowqty, EquipmentProfiles.description, EquipmentProfiles.type, PlanterHarnessings.name as PHName, PlanterClosingWheels.name as PCWname, PlanterSeedTubes.name as PSTname, PlanterSeedFirmers.name  as PSFname, PlanterMonitors.name as PMonname, PlanterMeters.name as PMname, PlanterLiquids.name as PLname, PlanterDrives.name as PDname, PlanterInsecticides.name as PIname, PlanterDownForces.name as PDFname, PlanterDepthAdjusts.name as PDAname, CustOrganizations.name  as COname FROM EquipmentProfiles LEFT JOIN PlanterHarnessings ON EquipmentProfiles.PlanterHarnessingId=PlanterHarnessings.id LEFT JOIN PlanterClosingWheels ON EquipmentProfiles.PlanterClosingWheelId=PlanterClosingWheels.id LEFT JOIN PlanterSeedTubes ON EquipmentProfiles.PlanterSeedTubeId=PlanterSeedTubes.id LEFT JOIN PlanterSeedFirmers ON EquipmentProfiles.PlanterSeedFirmerId=PlanterSeedFirmers.id LEFT JOIN PlanterMonitors ON EquipmentProfiles.PlanterMonitorId=PlanterMonitors.id LEFT JOIN PlanterMeters ON EquipmentProfiles.PlanterMeterId=PlanterMeters.id LEFT JOIN PlanterLiquids ON EquipmentProfiles.PlanterLiquidId=PlanterLiquids.id LEFT JOIN PlanterInsecticides ON EquipmentProfiles.PlanterInsecticideId=PlanterInsecticides.id LEFT JOIN PlanterDrives ON EquipmentProfiles.PlanterDriveId=PlanterDrives.id LEFT JOIN PlanterDownForces ON EquipmentProfiles.PlanterDownForceId=PlanterDownForces.id LEFT JOIN PlanterDepthAdjusts ON EquipmentProfiles.PlanterDepthAdjustId=PlanterDepthAdjusts.id LEFT JOIN CustOrganizations ON EquipmentProfiles.CustOrganizationId=CustOrganizations.id;").then(([results, metadata]) => {
-    res.json(results); 
+  db.query("SELECT EquipmentProfiles.id, EquipmentProfiles.name, EquipmentProfiles.make, EquipmentProfiles.model, EquipmentProfiles.rowqty, EquipmentProfiles.description, EquipmentProfiles.type, PlanterHarnessings.name as PHName, PlanterClosingWheels.name as PCWname, PlanterSeedTubes.name as PSTname, PlanterSeedFirmers.name  as PSFname, PlanterMonitors.name as PMonname, PlanterMeters.name as PMname, PlanterLiquids.name as PLname, PlanterDrives.name as PDname, PlanterInsecticides.name as PIname, PlanterDownForces.name as PDFname, PlanterDepthAdjusts.name as PDAname, CustOrganizations.name  as COname FROM EquipmentProfiles LEFT JOIN PlanterHarnessings ON EquipmentProfiles.PlanterHarnessingsId=PlanterHarnessings.id LEFT JOIN PlanterClosingWheels ON EquipmentProfiles.PlanterClosingWheelsId=PlanterClosingWheels.id LEFT JOIN PlanterSeedTubes ON EquipmentProfiles.PlanterSeedTubesId=PlanterSeedTubes.id LEFT JOIN PlanterSeedFirmers ON EquipmentProfiles.PlanterSeedFirmersId=PlanterSeedFirmers.id LEFT JOIN PlanterMonitors ON EquipmentProfiles.PlanterMonitorsId=PlanterMonitors.id LEFT JOIN PlanterMeters ON EquipmentProfiles.PlanterMetersId=PlanterMeters.id LEFT JOIN PlanterLiquids ON EquipmentProfiles.PlanterLiquidsId=PlanterLiquids.id LEFT JOIN PlanterInsecticides ON EquipmentProfiles.PlanterInsecticidesId=PlanterInsecticides.id LEFT JOIN PlanterDrives ON EquipmentProfiles.PlanterDrivesId=PlanterDrives.id LEFT JOIN PlanterDownForces ON EquipmentProfiles.PlanterDownForcesId=PlanterDownForces.id LEFT JOIN PlanterDepthAdjusts ON EquipmentProfiles.PlanterDepthAdjustsId=PlanterDepthAdjusts.id LEFT JOIN CustOrganizations ON EquipmentProfiles.CustOrganizationsId=CustOrganizations.id;").then(([results, metadata]) => {
+    res.json(results);
   })
 });
 
@@ -47,17 +47,17 @@ EquipmentProfilesRouter.post("/add", async (req, res) => {
     make: req.body.data.make,
     model: req.body.data.model,
     rowqty: req.body.data.rowqty,
-    PlanterClosingWheelId: req.body.data.PlanterClosingWheelId,
-    PlanterDepthAdjustId: req.body.data.PlanterDepthAdjustId,
-    PlanterDownForceId: req.body.data.PlanterDownForceId,
-    PlanterDriveId: req.body.data.PlanterDriveId,
-    PlanterMeterId: req.body.data.PlanterMeterId,
-    PlanterInsecticideId: req.body.data.PlanterInsecticideId,
-    PlanterLiquidId: req.body.data.PlanterLiquidId,
-    PlanterSeedFirmerId: req.body.data.PlanterSeedFirmerId,
-    PlanterSeedTubeId: req.body.data.PlanterSeedTubeId,
-    PlanterMonitorId: req.body.data.PlanterMonitorId,
-    PlanterHarnessingId: req.body.data.PlanterHarnessingId,
+    PlanterClosingWheelsId: req.body.data.PlanterClosingWheelsId,
+    PlanterDepthAdjustsId: req.body.data.PlanterDepthAdjustsId,
+    PlanterDownForcesId: req.body.data.PlanterDownForcesId,
+    PlanterDrivesId: req.body.data.PlanterDrivesId,
+    PlanterMetersId: req.body.data.PlanterMetersId,
+    PlanterInsecticidesId: req.body.data.PlanterInsecticidesId,
+    PlanterLiquidsId: req.body.data.PlanterLiquidsId,
+    PlanterSeedFirmersId: req.body.data.PlanterSeedFirmersId,
+    PlanterSeedTubesId: req.body.data.PlanterSeedTubesId,
+    PlanterMonitorsId: req.body.data.PlanterMonitorsId,
+    PlanterHarnessingsId: req.body.data.PlanterHarnessingsId,
   })
   res.status(200)
 });
@@ -73,30 +73,41 @@ EquipmentProfilesRouter.post("/:id/update", async (req, res) => {
     make: req.body.data.make,
     model: req.body.data.model,
     rowqty: req.body.data.rowqty,
-    PlanterClosingWheelId: req.body.data.PlanterClosingWheelId,
-    PlanterDepthAdjustId: req.body.data.PlanterDepthAdjustId,
-    PlanterDownForceId: req.body.data.PlanterDownForceId,
-    PlanterDriveId: req.body.data.PlanterDriveId,
-    PlanterMeterId: req.body.data.PlanterMeterId,
-    PlanterInsecticideId: req.body.data.PlanterInsecticideId,
-    PlanterLiquidId: req.body.data.PlanterLiquidId,
-    PlanterSeedFirmerId: req.body.data.PlanterSeedFirmerId,
-    PlanterSeedTubeId: req.body.data.PlanterSeedTubeId,
-    PlanterMonitorId: req.body.data.PlanterMonitorId,
-    PlanterHarnessingId: req.body.data.PlanterHarnessingId,
-    
-  }, { where: { id: req.params.id } });
+    PlanterClosingWheelsId: req.body.data.PlanterClosingWheelsId,
+    PlanterDepthAdjustsId: req.body.data.PlanterDepthAdjustsId,
+    PlanterDownForcesId: req.body.data.PlanterDownForcesId,
+    PlanterDrivesId: req.body.data.PlanterDrivesId,
+    PlanterMetersId: req.body.data.PlanterMetersId,
+    PlanterInsecticidesId: req.body.data.PlanterInsecticidesId,
+    PlanterLiquidsId: req.body.data.PlanterLiquidsId,
+    PlanterSeedFirmersId: req.body.data.PlanterSeedFirmersId,
+    PlanterSeedTubesId: req.body.data.PlanterSeedTubesId,
+    PlanterMonitorsId: req.body.data.PlanterMonitorsId,
+    PlanterHarnessingsId: req.body.data.PlanterHarnessingsId,
+
+  }, { where: { id: req.params.id } })
+    .then(function (result) {
+      res.status(200);
+    });
   res.status(200)
 });
 
 //DELETE
 EquipmentProfilesRouter.delete("/:id", (req, res) => {
   console.log('delete' + req.params.id)
-  dbTable.destroy({
-    where: {
-      id: req.params.id
-    }
-  })
+  dbTable
+    .destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    .then(function (result) {
+      res.status(200);
+    })
+    .catch(function (err) {
+      console.log(err);
+      res.status(500);
+    });
   res.status(200)
 });
 module.exports = EquipmentProfilesRouter;

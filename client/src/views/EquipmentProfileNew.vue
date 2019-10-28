@@ -9,7 +9,7 @@
         <br />
         <input type="text" name="name" v-model="OneItem.name" />
         <br />Organization:
-        <select v-model="OneItem.CustOrganizationId">
+        <select v-model="OneItem.CustOrganizationsId">
           <option v-bind:key="org.id" v-for="org in AllOrgs" :value="org.id">{{org.name}}</option>
         </select>
         <br />Make:
@@ -23,52 +23,52 @@
         <input type="text" name="rowqty" v-model="OneItem.rowqty" />
         <br />Depth Adjust:
         <br />
-        <select v-model="OneItem.PlanterDepthAdjustId">
+        <select v-model="OneItem.PlanterDepthAdjustsId">
           <option v-bind:key="org.id" v-for="org in PlanterDepthAdjust" :value="org.id">{{org.name}}</option>
         </select>
         <br />DownForce:
         <br />
-        <select v-model="OneItem.PlanterDownForceId">
+        <select v-model="OneItem.PlanterDownForcesId">
           <option v-bind:key="org.id" v-for="org in PlanterDownForce" :value="org.id">{{org.name}}</option>
         </select>
         <br />Drive Type:
         <br />
-        <select v-model="OneItem.PlanterDriveId">
+        <select v-model="OneItem.PlanterDrivesId">
           <option v-bind:key="org.id" v-for="org in PlanterDrive" :value="org.id">{{org.name}}</option>
         </select>
         <br />Insecticide:
         <br />
-        <select v-model="OneItem.PlanterInsecticideId">
+        <select v-model="OneItem.PlanterInsecticidesId">
           <option v-bind:key="org.id" v-for="org in PlanterInsecticide" :value="org.id">{{org.name}}</option>
         </select>
         <br />Liquid:
         <br />
-        <select v-model="OneItem.PlanterLiquidId">
+        <select v-model="OneItem.PlanterLiquidsId">
           <option v-bind:key="org.id" v-for="org in PlanterLiquid" :value="org.id">{{org.name}}</option>
         </select>
         <br />Meter:
         <br />
-        <select v-model="OneItem.PlanterMeterId">
+        <select v-model="OneItem.PlanterMetersId">
           <option v-bind:key="org.id" v-for="org in PlanterMeter" :value="org.id">{{org.name}}</option>
         </select>
         <br />Monitor:
         <br />
-        <select v-model="OneItem.PlanterMonitorId">
+        <select v-model="OneItem.PlanterMonitorsId">
           <option v-bind:key="org.id" v-for="org in PlanterMonitor" :value="org.id">{{org.name}}</option>
         </select>
         <br />Seed Firmer:
         <br />
-        <select v-model="OneItem.PlanterSeedFirmerId">
+        <select v-model="OneItem.PlanterSeedFirmersId">
           <option v-bind:key="org.id" v-for="org in PlanterSeedFirmers" :value="org.id">{{org.name}}</option>
         </select>
         <br />Seed Tube:
         <br />
-        <select v-model="OneItem.PlanterSeedTubeId">
+        <select v-model="OneItem.PlanterSeedTubesId">
           <option v-bind:key="org.id" v-for="org in PlanterSeedTubes" :value="org.id">{{org.name}}</option>
         </select>
         <br />Closing Wheel:
         <br />
-        <select v-model="OneItem.PlanterClosingWheelId">
+        <select v-model="OneItem.PlanterClosingWheelsId">
           <option
             v-bind:key="org.id"
             v-for="org in PlanterClosingWheels"
@@ -77,7 +77,7 @@
         </select>
         <br />Harnessing:
         <br />
-        <select v-model="OneItem.PlanterHarnessingId">
+        <select v-model="OneItem.PlanterHarnessingsId">
           <option v-bind:key="org.id" v-for="org in PlanterHarnessing" :value="org.id">{{org.name}}</option>
         </select>
         <br />

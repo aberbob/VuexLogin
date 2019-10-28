@@ -1,10 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const Parts = sequelize.define('Parts', {
-        PartsSubcategoryId: {
+        PartSubcategoriesId: {
             type: DataTypes.INTEGER(5)
         },
-        PartsCategoryId: {
+        PartCategoriesId: {
+            type: DataTypes.INTEGER(5)
+        },
+        PartVendorsId: {
             type: DataTypes.INTEGER(5)
         },
         partnumber: {
@@ -31,10 +34,11 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true
     });
     Parts.associate = function(models) {
-        Parts.hasMany(models.LocationPartQties);
+        Parts.hasMany(models.LocationPartQties, { foreignKey: 'PartsId' });
 
-        Parts.belongsTo(models.PartsSubcategories);
-        Parts.belongsTo(models.PartsCategories);
+        Parts.belongsTo(models.PartSubcategories, { foreignKey: 'PartSubcategoriesId' });
+        Parts.belongsTo(models.PartCategories, { foreignKey: 'PartCategoriesId' });
+        Parts.belongsTo(models.PartVendors, { foreignKey: 'PartVendorsId' });
 
     };
     return Parts;

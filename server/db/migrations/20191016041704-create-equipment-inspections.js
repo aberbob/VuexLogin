@@ -14,10 +14,10 @@ module.exports = {
       measurements: {
         type: Sequelize.STRING
       },
-      PlanterId: {
+      PlantersId: {
         type: Sequelize.INTEGER
       },
-      WorkOrderId: {
+      WorkOrdersId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

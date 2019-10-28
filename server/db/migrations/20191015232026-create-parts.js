@@ -8,21 +8,21 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            PartsSubcategoryId: {
+            PartSubcategoriesId: {
                 type: Sequelize.INTEGER(5),
                 allowNull: true,
                 references: {
-                    model: 'PartsSubcategories',
+                    model: 'PartSubcategories',
                     key: 'id'
                 },
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            PartsCategoryId: {
+            PartCategoriesId: {
                 type: Sequelize.INTEGER(5),
                 allowNull: true,
                 references: {
-                    model: 'PartsCategories',
+                    model: 'PartCategories',
                     key: 'id'
                 },
                 onUpdate: 'cascade',
@@ -45,7 +45,10 @@ module.exports = {
                 type: Sequelize.DECIMAL(13, 2)
             },
             tabxable: {
-                type: Sequelize.STRING(10)
+                type: Sequelize.INTEGER
+            },
+            VendorsId: {
+                type: Sequelize.INTEGER(5)
             },
             createdAt: {
                 allowNull: false,

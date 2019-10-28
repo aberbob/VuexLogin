@@ -9,7 +9,7 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
 
-            TransferId: {
+            TransfersId: {
                 type: Sequelize.INTEGER(11)
             },
             qty: {

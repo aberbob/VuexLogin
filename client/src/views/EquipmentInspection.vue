@@ -5,28 +5,33 @@
       <div class="row">
         <b-form-group
           id="input-group-1"
-          class="col-md-3 toprow"
+          class="col-md-4 toprow"
           label="Planter:"
           label-for="inputtitle"
         >
           <b-form-input
-            disabled
             id="inputtitle"
+            v-model="form.ptitle"
             type="text"
-            v-model="Equipment.name"
+            required
             placeholder="Planter1"
           ></b-form-input>
-          <b-form-group class="col-md-3 toprow" label="Work Order:" label-for="inputWO">
-            <b-form-input id="inputWO" type="text" v-model="form.WO" placeholder="WO"></b-form-input>
-          </b-form-group>
         </b-form-group>
         <b-form-group
           id="input-group-1"
-          class="col-md-3 toprow"
+          class="col-md-4 toprow"
+          label="Work Order:"
+          label-for="inputworkorder"
+        >
+          <b-form-input id="inputworkorder" v-model="form.pworkorder" type="text" required></b-form-input>
+        </b-form-group>
+        <b-form-group
+          id="input-group-1"
+          class="col-md-4 toprow"
           label="Date:"
           label-for="inputdate"
         >
-          <datepicker v-model="form.date" class="form-control" id="inputdate"></datepicker>
+          <datepicker v-model="form.pdate" class="form-control" id="inputdate"></datepicker>
         </b-form-group>
       </div>
       <div class="row">

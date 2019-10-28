@@ -18,15 +18,15 @@
         <br />
         <input type="text" name="group" v-model="OneItem.phonenumber" />
         <br />Organization:
-        <select v-model="OneItem.CustOrganizationId">
+        <select v-model="OneItem.CustOrganizationsId">
           <option
-            v-bind:key="org.CustOrganizationsId"
+            v-bind:key="org.id"
             v-for="org in AllOrgs"
-            :value="org.CustOrganizationsId"
-          >{{org.CustOrganizationsname}}</option>
+            :value="org.id"
+          >{{org.name}}</option>
         </select>
         <br />Status:
-        <select v-model="OneItem.CustContactStatusId">
+        <select v-model="OneItem.CustContactStatusesId">
           <option
             v-bind:key="status.id"
             v-for="status in AllStatuses"

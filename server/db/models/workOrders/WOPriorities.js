@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     WOPrioritiesTable.associate = function(models) {
         // associations can be defined here
-        WOPrioritiesTable.hasMany(models.WorkOrders);
+        WOPrioritiesTable.hasMany(models.WorkOrders, { foreignKey: 'WorkOrdersId' });
     };
     return WOPrioritiesTable;
 };

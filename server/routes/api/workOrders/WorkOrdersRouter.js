@@ -1,8 +1,6 @@
 const express = require("express");
 const WorkOrdersRouter = express.Router();
-const dbTable = require("../../../models/workOrders/WorkOrdersTable");
-const WOStatusesTable = require("../../../models/workOrders/WOStatusesTable");
-const Sequelize = require('sequelize');
+const dbTable = require('../../../db/models').WorkOrders;
 const db = require('../../../config/db');
 
 // GET ALL
@@ -17,8 +15,8 @@ WorkOrdersRouter.get("/", async (req, res) => {
 });
 
 WorkOrdersRouter.get("/WODetailJoin", async (req, res) => {
-  db.query("SELECT WorkOrders.id as id, WOStatuses.name as WOSname, CustOrganizations.name as COname, WOPriorities.name as WOPname, WOCategories.name as WOCname, notes, description  FROM WorkOrders LEFT JOIN WOPriorities ON WorkOrders.WOPriorityId=WOPriorities.id LEFT JOIN WOStatuses ON WorkOrders.WOStatusId=WOStatuses.id LEFT JOIN CustOrganizations ON WorkOrders.CustOrganizationId=CustOrganizations.Id LEFT JOIN WOCategories ON WorkOrders.WOCategoryId=WOCategories.id").then(([results, metadata]) => {
-    res.json(results); 
+  db.query("SELECT WorkOrders.id as id, WOStatuses.name as WOSname, CustOrganizations.name as COname, WOPriorities.name as WOPname, WOCategories.name as WOCname, notes, description  FROM WorkOrders LEFT JOIN WOPriorities ON WorkOrders.WOPrioritiesId=WOPriorities.id LEFT JOIN WOStatuses ON WorkOrders.WOStatusesId=WOStatuses.id LEFT JOIN CustOrganizations ON WorkOrders.CustOrganizationsId=CustOrganizations.Id LEFT JOIN WOCategories ON WorkOrders.WOCategoriesId=WOCategories.id").then(([results, metadata]) => {
+    res.json(results);
   })
 });
 
@@ -41,18 +39,22 @@ WorkOrdersRouter.post("/add", async (req, res) => {
   console.log('add')
   console.log(req.body.data)
 
-  await dbTable.create({
-    description: req.body.data.description,
-    type: req.body.data.type,
-    notes: req.body.data.notes,
-    EquipmentProfileId: req.body.data.EquipmentProfileId,
-    WOCategoryId: req.body.data.WOCategoryId,
-    WOStatusId: req.body.data.WOStatusId,
-    CustContactId: req.body.data.CustContactId,
-    CustOrganizationId: req.body.data.CustOrganizationId,
-    UserId: req.body.data.UserId,
-    WOPriorityId: req.body.data.WOPriorityId
-  })
+  await dbTable
+    .create({
+      description: req.body.data.description,
+      type: req.body.data.type,
+      notes: req.body.data.notes,
+      EquipmentProfilesId: req.body.data.EquipmentProfilesId,
+      WOCategoriesId: req.body.data.WOCategoriesId,
+      WOStatusesId: req.body.data.WOStatusesId,
+      CustContactsId: req.body.data.CustContactsId,
+      CustOrganizationsId: req.body.data.CustOrganizationsId,
+      UsersId: req.body.data.UsersId,
+      WOPrioritiesId: req.body.data.WOPrioritiesId
+    })
+    .then(function (result) {
+      res.status(200);
+    })
   res.status(200)
 });
 
@@ -64,14 +66,17 @@ WorkOrdersRouter.post("/:id/update", async (req, res) => {
     description: req.body.data.description,
     type: req.body.data.type,
     notes: req.body.data.notes,
-    EquipmentProfileId: req.body.data.EquipmentProfileId,
-    WOCategoryId: req.body.data.WOCategoryId,
-    WOStatusId: req.body.data.WOStatusId,
-    CustContactId: req.body.data.CustContactId,
-    CustOrganizationId: req.body.data.CustOrganizationId,
-    UserId: req.body.data.UserId,
-    WOPriorityId: req.body.data.WOPriorityId
-  }, { where: { id: req.params.id } });
+    EquipmentProfilesId: req.body.data.EquipmentProfilesId,
+    WOCategoriesId: req.body.data.WOCategoriesId,
+    WOStatusesId: req.body.data.WOStatusesId,
+    CustContactsId: req.body.data.CustContactsId,
+    CustOrganizationsId: req.body.data.CustOrganizationsId,
+    UsersId: req.body.data.UsersId,
+    WOPrioritiesId: req.body.data.WOPrioritiesId
+  }, { where: { id: req.params.id } })
+    .then(function (result) {
+      res.status(200);
+    });
   res.status(200)
 });
 
@@ -83,6 +88,9 @@ WorkOrdersRouter.delete("/:id", (req, res) => {
       id: req.params.id
     }
   })
+    .then(function (result) {
+      res.status(200);
+    })
   res.status(200)
 });
 module.exports = WorkOrdersRouter;

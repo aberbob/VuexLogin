@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     OrgServicePlanTypes.associate = function(models) {
         // associations can be defined here
-        OrgServicePlanTypes.hasMany(models.CustOrganizations);
+        OrgServicePlanTypes.hasMany(models.CustOrganizations, { foreignKey: 'OrgServicePlanTypesId' });
     };
     return OrgServicePlanTypes;
 };

@@ -31,7 +31,7 @@
         <input type="text" name="phone" v-model="OneOrganization.phone" />
         <br />Account:
         <br />
-        <select v-model="OneOrganization.OrgAccountTypeId">
+        <select v-model="OneOrganization.OrgAccountTypesId">
           <option
             v-bind:key="item.id"
             v-for="item in OrgAccountTypes"
@@ -40,12 +40,12 @@
         </select>
         <br />Farm Type:
         <br />
-        <select v-model="OneOrganization.OrgFarmTypeId">
+        <select v-model="OneOrganization.OrgFarmTypesId">
           <option v-bind:key="item.id" v-for="item in OrgFarmTypes" :value="item.id">{{item.name}}</option>
         </select>
         <br />Invoicing:
         <br />
-        <select v-model="OneOrganization.OrgInvoicingTypeId">
+        <select v-model="OneOrganization.OrgInvoicingTypesId">
           <option
             v-bind:key="item.id"
             v-for="item in OrgInvoicingTypes"
@@ -54,12 +54,12 @@
         </select>
         <br />Market:
         <br />
-        <select v-model="OneOrganization.OrgMarketId">
+        <select v-model="OneOrganization.OrgMarketsId">
           <option v-bind:key="item.id" v-for="item in OrgMarkets" :value="item.id">{{item.name}}</option>
         </select>
         <br />Service Plan:
         <br />
-        <select v-model="OneOrganization.OrgServicePlanTypeId">
+        <select v-model="OneOrganization.OrgServicePlanTypesId">
           <option
             v-bind:key="item.id"
             v-for="item in OrgServicePlanTypes"
@@ -68,7 +68,7 @@
         </select>
         <br />ST101 Type:
         <br />
-        <select v-model="OneOrganization.OrgST101TypeId">
+        <select v-model="OneOrganization.OrgST101TypesId">
           <option v-bind:key="item.id" v-for="item in OrgST101Types" :value="item.id">{{item.name}}</option>
         </select>
         <button type="submit" name="button">Submit</button>

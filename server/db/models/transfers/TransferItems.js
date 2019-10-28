@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const TransferItemTable = sequelize.define('TransferItems', {
-        TransferId: {
+        TransfersId: {
             type: DataTypes.INTEGER(11),
             references: {
                 model: 'Transfers',
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true
     });
     TransferItemTable.associate = function(models) {
-        TransferItemTable.belongsTo(models.Transfers);
+        TransferItemTable.belongsTo(models.Transfers, { foreignKey: 'TransfersId' });
     };
     return TransferItemTable;
 };

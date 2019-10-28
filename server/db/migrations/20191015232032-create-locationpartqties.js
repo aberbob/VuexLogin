@@ -9,7 +9,7 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
 
-            InventoryLocationId: {
+            InventoryLocationsId: {
                 type: Sequelize.INTEGER(10),
                 references: {
                     model: 'InventoryLocations',
@@ -18,7 +18,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            PartId: {
+            PartsId: {
                 type: Sequelize.INTEGER(15),
                 references: {
                     model: 'Parts',

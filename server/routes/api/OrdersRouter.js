@@ -1,6 +1,6 @@
 const express = require("express");
 const OrdersRouter = express.Router();
-const dbTable = require("../../models/orders/OrdersTable");
+const dbTable = require('../../db/models').Orders;
 const db = require('../../config/db');
 
 // GET ALL

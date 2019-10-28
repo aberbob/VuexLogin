@@ -1,6 +1,6 @@
 const express = require("express");
 const custContactsRouter = express.Router();
-const dbTable = require("../../../models/custContacts/CustContactsTable");
+const dbTable = require('../../../db/models').CustContacts;
 const db = require('../../../config/db');
 
 // GET ALL
@@ -16,8 +16,8 @@ custContactsRouter.get("/", async (req, res) => {
 
 // GET ALL
 custContactsRouter.get("/alldetails", async (req, res) => {
-  db.query("SELECT custcontacts.id, custcontacts.fn, custcontacts.ln, custcontacts.email, custcontacts.phonenumber, custcontactstatuses.name as CSName, custorganizations.CustOrganizationsName as COName FROM custcontacts LEFT JOIN custcontactstatuses ON custcontacts.CustContactStatusId=custcontactstatuses.id LEFT JOIN custorganizations ON custcontacts.CustOrganizationId=custorganizations.CustOrganizationsId").then(([results, metadata]) => {
-    res.json(results); 
+  db.query("SELECT CustContacts.id, CustContacts.fn, CustContacts.ln, CustContacts.email, CustContacts.phonenumber, CustContactStatuses.name as CSName, CustOrganizations.name as COName FROM CustContacts LEFT JOIN CustContactStatuses ON CustContacts.CustContactStatusesId=CustContactStatuses.id LEFT JOIN CustOrganizations ON CustContacts.CustOrganizationsId=CustOrganizations.Id").then(([results, metadata]) => {
+    res.json(results);
   })
 });
 
@@ -44,8 +44,8 @@ custContactsRouter.post("/add", async (req, res) => {
     ln: req.body.data.ln,
     email: req.body.data.email,
     phonenumber: req.body.data.phonenumber,
-    CustOrganizationId: req.body.data.CustOrganizationId,
-    CustContactStatusId: req.body.data.CustContactStatusId
+    CustOrganizationsId: req.body.data.CustOrganizationsId,
+    CustContactStatusesId: req.body.data.CustContactStatusesId
   })
   res.status(200)
 });
@@ -59,8 +59,8 @@ custContactsRouter.post("/:id/update", async (req, res) => {
     ln: req.body.data.ln,
     email: req.body.data.email,
     phonenumber: req.body.data.phonenumber,
-    CustOrganizationId: req.body.data.CustOrganizationId,
-    CustContactStatusId: req.body.data.CustContactStatusId
+    CustOrganizationsId: req.body.data.CustOrganizationsId,
+    CustContactStatusesId: req.body.data.CustContactStatusesId
   }, { where: { id: req.params.id } });
   res.status(200)
 });

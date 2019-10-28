@@ -25,6 +25,14 @@ let appRouter = new Router({
             }
         },
         {
+            path: '/Market',
+            name: 'Market',
+            component: () => import(/* webpackChunkName: "about" */ './views/Market.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+        },
+        {
             path: '/LocationInventory/:id',
             name: 'LocationInventory',
             component: () => import(/* webpackChunkName: "about" */ './views/LocationInventory.vue'),

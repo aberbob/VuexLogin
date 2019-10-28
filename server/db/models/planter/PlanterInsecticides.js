@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     PlanterInsecticides.associate = function(models) {
         // associations can be defined here
-        PlanterInsecticides.hasMany(models.EquipmentProfiles);
+        PlanterInsecticides.hasMany(models.EquipmentProfiles, { foreignKey: 'PlanterInsecticidesId' });
     };
     return PlanterInsecticides;
 };

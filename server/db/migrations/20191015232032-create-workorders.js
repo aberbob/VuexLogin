@@ -18,7 +18,7 @@ module.exports = {
             notes: {
                 type: Sequelize.STRING(500)
             },
-            EquipmentProfileId: {
+            EquipmentProfilesId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'EquipmentProfiles',
@@ -27,7 +27,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            WOCategoryId: {
+            WOCategoriesId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'WOCategories',
@@ -36,7 +36,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            WOStatusId: {
+            WOStatusesId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'WOStatuses',
@@ -45,7 +45,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            CustContactId: {
+            CustContactsId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'CustContacts',
@@ -54,7 +54,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            CustOrganizationId: {
+            CustOrganizationsId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'CustOrganizations',
@@ -63,7 +63,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            UserId: {
+            UsersId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'Users',
@@ -72,7 +72,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            WOPriorityId: {
+            WOPrioritiesId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'WOPriorities',

@@ -1,6 +1,6 @@
 const express = require("express");
 const PlanterDriveRouter = express.Router();
-const dbTable = require("../../../models/planter/PlanterDriveTable");
+const dbTable = require('../../../db/models').PlanterDrives;
 
 // GET ALL
 PlanterDriveRouter.get("/", async (req, res) => {

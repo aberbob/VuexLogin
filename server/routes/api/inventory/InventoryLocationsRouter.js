@@ -1,6 +1,6 @@
 const express = require("express");
 const InventoryLocationsRouter = express.Router();
-const dbTable = require("../../../models/inventory/InventoryLocationsTable");
+const dbTable = require('../../../db/models').InventoryLocations;
 const db = require('../../../config/db');
 
 // GET ALL

@@ -1,6 +1,6 @@
 const express = require("express");
 const OrgInvoicingTypesRouter = express.Router();
-const dbTable = require("../../../models/organization/OrgInvoicingTypesTable");
+const dbTable = require('../../../db/models').OrgInvoicingTypes;
 
 // GET ALL
 OrgInvoicingTypesRouter.get("/", async (req, res) => {

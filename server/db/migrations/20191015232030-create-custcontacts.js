@@ -21,7 +21,7 @@ module.exports = {
             email: {
                 type: Sequelize.STRING(11)
             },
-            CustOrganizationId: {
+            CustOrganizationsId: {
                 type: Sequelize.INTEGER(11),
                 references: {
                     model: 'CustOrganizations',
@@ -30,7 +30,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            CustContactStatusId: {
+            CustContactStatusesId: {
                 type: Sequelize.INTEGER(12),
                 references: {
                     model: 'CustContactStatuses',
