@@ -29,7 +29,7 @@ export default {
       saveCart(context.state.cart);
     },
     loadSavedCart({commit}) {
-      return axios.post("api/CartDrafts/").then(resp => {
+      return axios.get("api/CartDrafts/").then(resp => {
         commit('initializeCart', resp.data);
       });
     }
