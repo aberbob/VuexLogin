@@ -26,5 +26,8 @@ Vue.config.devtools = true
 new Vue({
   router,
   store,
+  created () {
+    this.$store.dispatch('loadSavedCart');
+  },
   render: h => h(App)
 }).$mount('#app')
