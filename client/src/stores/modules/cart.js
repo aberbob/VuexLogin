@@ -12,7 +12,12 @@ export default {
   },
   mutations: {
     addToCart(state, item){
-      state.cart.push(item);
+      let existingItem = state.cart.find(cartItem => cartItem.partnumber == item.partnumber);
+      if (existingItem) {
+        existingItem.qty += item.qty;
+      } else {
+        state.cart.push(item);
+      }
       saveCart(state.cart);
     },
     removeFromCart(state, item){
